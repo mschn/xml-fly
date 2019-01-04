@@ -6,5 +6,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'xml-fly';
+
+  xmlFileContent: string;
+
+  onFileChange(event: Event) {
+    const reader = new FileReader();
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length) {
+      const file = target.files[0];
+      reader.readAsText(file);
+      reader.onload = () => {
+        this.xmlFileContent = reader.result.toString();
+      };
+    }
+  }
+
 }

@@ -1,0 +1,12 @@
+<div *ngIf="parserError" class="alert alert-warning" role="alert">
+  {{parserError}}
+</div>
+
+<div class="d-flex flex-row mb-2" *ngIf="selectedNode">
+  {{ selectedNode.tagName }}
+</div>
+
+<div *ngFor="let node of document.childNodes" class="border-right">
+  <app-node [node]="node" (selection)="onSelectedNode($event)"></app-node>
+</div>
+
