@@ -6,13 +6,13 @@
 
   <div class="header d-flex flex-row">
     <ng-container *ngIf="!isTextNode()">
-      <button class="btn btn-light" 
+      <button class="btn" 
         *ngIf="collapsed" (click)="toggle(false, $event)">
-        +
+        <fa-icon [icon]="['far', 'plus-square']"></fa-icon>
       </button>
-      <button class="btn btn-light" 
+      <button class="btn" 
         *ngIf="!collapsed" (click)="toggle(true, $event)">
-        -
+        <fa-icon [icon]="['far', 'minus-square']"></fa-icon>
       </button>
     </ng-container>
 

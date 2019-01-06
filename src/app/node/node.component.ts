@@ -13,8 +13,6 @@ export class NodeComponent implements OnInit {
 
   collapsed = false;
 
-  constructor() { }
-
   ngOnInit() {
   }
 

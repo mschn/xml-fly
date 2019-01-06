@@ -5,6 +5,11 @@ import { AppComponent } from './app.component';
 import { XmlViewComponent } from './xml-view/xml-view.component';
 import { NodeComponent } from './node/node.component';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPlusSquare, faMinusSquare, faFolderOpen } from '@fortawesome/free-regular-svg-icons';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -12,9 +17,15 @@ import { NodeComponent } from './node/node.component';
     NodeComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    library.add(faPlusSquare, faMinusSquare, faFolderOpen);
+  }
+
+}
