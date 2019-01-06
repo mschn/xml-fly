@@ -5,6 +5,17 @@
   [class.selected]=node.selected>
 
   <div class="header d-flex flex-row">
+    <ng-container *ngIf="!isTextNode()">
+      <button class="btn btn-light" 
+        *ngIf="collapsed" (click)="toggle(false, $event)">
+        +
+      </button>
+      <button class="btn btn-light" 
+        *ngIf="!collapsed" (click)="toggle(true, $event)">
+        -
+      </button>
+    </ng-container>
+
     <div class="tagname p-1 pl-3">
       {{ node.tagName }}
     </div>
@@ -14,7 +25,9 @@
   </div>
 
   <ng-container *ngIf="node.childNodes">
-    <div class="pl-3" *ngFor="let childNode of node.childNodes">
+    <div class="pl-3"
+        *ngFor="let childNode of node.childNodes"
+        [class.collapsed]="collapsed">
       <app-node [node]="childNode" (selection)="onSelectedNode($event)"></app-node>
     </div>
   </ng-container>

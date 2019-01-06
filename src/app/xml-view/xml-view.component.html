@@ -12,7 +12,8 @@
   </ol>
 </nav>
 
-<div *ngFor="let node of document.childNodes" class="border-right">
+<div *ngFor="let node of document.childNodes" 
+  class="border-right border-bottom">
   <app-node [node]="node" (selection)="onSelectedNode($event)"></app-node>
 </div>
 

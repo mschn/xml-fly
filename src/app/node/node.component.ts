@@ -11,6 +11,8 @@ export class NodeComponent implements OnInit {
 
   @Output() selection = new EventEmitter<Node>();
 
+  collapsed = false;
+
   constructor() { }
 
   ngOnInit() {
@@ -29,6 +31,11 @@ export class NodeComponent implements OnInit {
 
   onSelectedNode(node: Node) {
     this.selection.emit(node);
+  }
+
+  toggle(collapsed: boolean, event: Event) {
+    this.collapsed = collapsed;
+    event.stopPropagation();
   }
 
 }
