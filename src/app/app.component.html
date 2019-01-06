@@ -1,12 +1,16 @@
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="#">Xml Fly</a>
       <form class="form-inline navbar-nav mr-auto">
-          <label class="btn btn-default btn-file">
+          <label class="btn btn-default btn-outline-secondary btn-file">
               Open <input type="file" (change)="onFileChange($event)">
           </label>
       </form>
 </nav>
 
-<div class="m-3" *ngIf="xmlFileContent">
+<div *ngIf="loading">
+    <app-loader></app-loader>
+</div>
+
+<div class="m-3" *ngIf="!loading && xmlFileContent">
   <app-xml-view [xmlString]="xmlFileContent"></app-xml-view>
 </div>

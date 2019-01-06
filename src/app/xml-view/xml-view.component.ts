@@ -22,7 +22,6 @@ export class XmlViewComponent implements OnInit {
     } else {
       this.parserError =  null;
     }
-    console.log(this.document);
   }
 
   constructor() { }
@@ -31,7 +30,27 @@ export class XmlViewComponent implements OnInit {
   }
 
   onSelectedNode(node: Node) {
+    this.setSelected(this.selectedNode, false);
     this.selectedNode = node;
+    this.setSelected(this.selectedNode, true);
+  }
+
+  setSelected(node: Node, state: boolean) {
+    if (!node) {
+      return;
+    }
+    const elt = node as any;
+    elt.selected = state;
+  }
+
+  getSelectedNodeHierarchy(): Node[] {
+    const ret = [];
+    let node = this.selectedNode;
+    while (node && node.parentNode) {
+      ret.push(node);
+      node = node.parentNode;
+    }
+    return ret.reverse();
   }
 
 }

@@ -2,9 +2,15 @@
   {{parserError}}
 </div>
 
-<div class="d-flex flex-row mb-2" *ngIf="selectedNode">
-  {{ selectedNode.tagName }}
-</div>
+<nav *ngIf="selectedNode" class="sticky-top">
+  <ol class="breadcrumb">
+    <li *ngFor="let node of getSelectedNodeHierarchy()" class="breadcrumb-item">
+      <a (click)="onSelectedNode(node)">
+        {{ node.tagName }}
+      </a>
+    </li>
+  </ol>
+</nav>
 
 <div *ngFor="let node of document.childNodes" class="border-right">
   <app-node [node]="node" (selection)="onSelectedNode($event)"></app-node>

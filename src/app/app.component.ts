@@ -9,7 +9,11 @@ export class AppComponent {
 
   xmlFileContent: string;
 
+  loading = false;
+
   onFileChange(event: Event) {
+    this.loading = true;
+    this.xmlFileContent = null;
     const reader = new FileReader();
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length) {
@@ -17,6 +21,7 @@ export class AppComponent {
       reader.readAsText(file);
       reader.onload = () => {
         this.xmlFileContent = reader.result.toString();
+        this.loading = false;
       };
     }
   }

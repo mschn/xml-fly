@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-node',
   templateUrl: './node.component.html',
-  styleUrls: ['./node.component.css']
+  styleUrls: ['./node.component.scss']
 })
 export class NodeComponent implements OnInit {
 
@@ -25,7 +25,6 @@ export class NodeComponent implements OnInit {
   clickNode(event: Event) {
     event.stopPropagation();
     this.selection.emit(this.node);
-    console.log(this.node);
   }
 
   onSelectedNode(node: Node) {

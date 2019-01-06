@@ -1,18 +1,22 @@
-<div *ngIf="node.tagName" class="border border-right-0 mb-2" (click)="clickNode($event)">
+<div
+  *ngIf="node.tagName"
+  class="node"
+  (click)="clickNode($event)"
+  [class.selected]=node.selected>
 
-  <div class="d-flex flex-row">
-    <div class="p-2">
+  <div class="header d-flex flex-row">
+    <div class="tagname p-1 pl-3">
       {{ node.tagName }}
     </div>
-    <div *ngIf="isTextNode()" class="border-left p-2">
+    <div *ngIf="isTextNode()" class="border-left p-1">
       {{ node.textContent }}
     </div>
   </div>
 
   <ng-container *ngIf="node.childNodes">
-    <div class="pl-5" *ngFor="let childNode of node.childNodes">
+    <div class="pl-3" *ngFor="let childNode of node.childNodes">
       <app-node [node]="childNode" (selection)="onSelectedNode($event)"></app-node>
     </div>
   </ng-container>
-
+    
 </div>
