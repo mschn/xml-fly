@@ -2,21 +2,37 @@
     border: 1px solid #d8d8d8;
     border-width: 1px 0 0 1px;
     background-color: white;
-    line-height: 1.7rem;
 
     &.selected {
         background-color: #f5f5f5;
-    
-        & > .header {
-            .tagname {
-                font-weight: bold
-            }
+
+        & > .inner {
+            border-left-color: #007eff;
         }
-    
+    }
+
+    .btn-sm {
+        line-height: 1;
+    }
+
+    .indent {
+        padding-left: 2.1em;
+    }
+
+    .tagname {
+        flex: 0 0 20%;
+    }
+
+    .textcontent {
+        flex: 1 1 80%;
+        word-break: break-all;
     }
 
     .collapsed {
         display: none;
     }
 
+    .inner {
+        border-left: 4px solid transparent;
+    }
 }

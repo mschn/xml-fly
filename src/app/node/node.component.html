@@ -4,32 +4,39 @@
   (click)="clickNode($event)"
   [class.selected]=node.selected>
 
-  <div class="header d-flex flex-row">
-    <ng-container *ngIf="!isTextNode()">
-      <button class="btn" 
-        *ngIf="collapsed" (click)="toggle(false, $event)">
-        <fa-icon [icon]="['far', 'plus-square']"></fa-icon>
-      </button>
-      <button class="btn" 
-        *ngIf="!collapsed" (click)="toggle(true, $event)">
-        <fa-icon [icon]="['far', 'minus-square']"></fa-icon>
-      </button>
-    </ng-container>
+  <div class="inner">
 
-    <div class="tagname p-1 pl-3">
-      {{ node.tagName }}
+    <div class="header d-flex flex-row">
+      <ng-container *ngIf="!isTextNode()">
+        <button class="btn btn-sm" 
+          *ngIf="collapsed" (click)="toggle(false, $event)">
+          <fa-icon [icon]="['far', 'plus-square']"></fa-icon>
+        </button>
+        <button class="btn btn-sm" 
+          *ngIf="!collapsed" (click)="toggle(true, $event)">
+          <fa-icon [icon]="['far', 'minus-square']"></fa-icon>
+        </button>
+      </ng-container>
+
+      <div class="tagname p-1">
+        <ng-container *ngIf="isTextNode()">
+          <fa-icon [icon]="['fas', 'code']"></fa-icon>
+        </ng-container>
+        {{ node.tagName }}
+      </div>
+      <div *ngIf="isTextNode()" class="textcontent border-left p-1">
+        {{ node.textContent }}
+      </div>
     </div>
-    <div *ngIf="isTextNode()" class="border-left p-1">
-      {{ node.textContent }}
-    </div>
+
+    <ng-container *ngIf="node.childNodes">
+      <div class="indent"
+          *ngFor="let childNode of node.childNodes"
+          [class.collapsed]="collapsed">
+        <app-node [node]="childNode" (selection)="onSelectedNode($event)"></app-node>
+      </div>
+    </ng-container>
+      
   </div>
 
-  <ng-container *ngIf="node.childNodes">
-    <div class="pl-3"
-        *ngFor="let childNode of node.childNodes"
-        [class.collapsed]="collapsed">
-      <app-node [node]="childNode" (selection)="onSelectedNode($event)"></app-node>
-    </div>
-  </ng-container>
-    
 </div>

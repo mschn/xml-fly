@@ -2,12 +2,13 @@
   {{parserError}}
 </div>
 
-<nav *ngIf="selectedNode" class="sticky-top">
+<nav class="sticky-top">
   <ol class="breadcrumb">
     <li *ngFor="let node of getSelectedNodeHierarchy()" class="breadcrumb-item">
-      <a (click)="onSelectedNode(node)">
-        {{ node.tagName }}
-      </a>
+      <a href (click)="!!onSelectedNode(node)">{{ node.tagName }}</a>
+    </li>
+    <li *ngIf="!selectedNode">
+      Click a node to select it
     </li>
   </ol>
 </nav>

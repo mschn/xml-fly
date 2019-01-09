@@ -8,7 +8,7 @@ import { NodeComponent } from './node/node.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlusSquare, faMinusSquare, faFolderOpen } from '@fortawesome/free-regular-svg-icons';
-
+import { faCode } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { faPlusSquare, faMinusSquare, faFolderOpen } from '@fortawesome/free-reg
 })
 export class AppModule {
   constructor() {
-    library.add(faPlusSquare, faMinusSquare, faFolderOpen);
+    library.add(faPlusSquare, faMinusSquare, faFolderOpen, faCode);
   }
 
 }
