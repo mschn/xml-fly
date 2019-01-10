@@ -1,42 +1,54 @@
 <div
   *ngIf="node.tagName"
   class="node"
+  [class.odd]="depth % 2 === 1"
   (click)="clickNode($event)"
   [class.selected]=node.selected>
 
-  <div class="inner">
 
-    <div class="header d-flex flex-row">
-      <ng-container *ngIf="!isTextNode()">
-        <button class="btn btn-sm" 
-          *ngIf="collapsed" (click)="toggle(false, $event)">
-          <fa-icon [icon]="['far', 'plus-square']"></fa-icon>
-        </button>
-        <button class="btn btn-sm" 
-          *ngIf="!collapsed" (click)="toggle(true, $event)">
-          <fa-icon [icon]="['far', 'minus-square']"></fa-icon>
-        </button>
-      </ng-container>
+  <div class="header d-flex flex-row">
+    <ng-container *ngIf="!isTextNode()">
+      <button class="btn btn-sm" 
+        *ngIf="collapsed" (click)="toggle(false, $event)">
+        <i class="material-icons">expand_more</i>
+      </button>
+      <button class="btn btn-sm" 
+        *ngIf="!collapsed" (click)="toggle(true, $event)">
+        <i class="material-icons">expand_more</i>
+      </button>
+    </ng-container>
 
-      <div class="tagname p-1">
-        <ng-container *ngIf="isTextNode()">
-          <fa-icon [icon]="['fas', 'code']"></fa-icon>
-        </ng-container>
-        {{ node.tagName }}
-      </div>
-      <div *ngIf="isTextNode()" class="textcontent border-left p-1">
-        {{ node.textContent }}
+    <div *ngIf="isTextNode()" class="type">
+      <i class="material-icons">code</i>
+    </div>
+    <div class="name p-1 font-weight-bold">
+      {{ node.tagName }}
+    </div>
+    <div *ngIf="isTextNode()" class="value border-left p-1">
+      {{ node.textContent }}
+    </div>
+  </div>
+
+  <div class="indent attr" *ngFor="let attr of node.attributes">
+    <div class="node d-flex flex-row pl-1">
+      <i class="material-icons">short_text</i>
+      <div class="name p-1">
+        {{ attr.name }}
+      </div>        
+      <div class="value p-1 border-left">
+        {{ attr.value }}
       </div>
     </div>
 
-    <ng-container *ngIf="node.childNodes">
-      <div class="indent"
-          *ngFor="let childNode of node.childNodes"
-          [class.collapsed]="collapsed">
-        <app-node [node]="childNode" (selection)="onSelectedNode($event)"></app-node>
-      </div>
-    </ng-container>
-      
   </div>
+
+  <ng-container *ngIf="node.childNodes">
+    <div class="indent"
+        *ngFor="let childNode of node.childNodes"
+        [class.collapsed]="collapsed">
+      <app-node [node]="childNode" (selection)="onSelectedNode($event)"></app-node>
+    </div>
+  </ng-container>
+    
 
 </div>
