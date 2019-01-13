@@ -4,16 +4,22 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   selector: 'app-node',
   templateUrl: './node.component.html',
   styleUrls: ['./node.component.scss']
+
 })
 export class NodeComponent implements OnInit {
 
   @Input() node: Node;
 
-  @Output() selection = new EventEmitter<Node>();
+  @Input() noTagName = false;
 
-  collapsed = false;
+  private collapsed = false;
+
+  @Input() arrayInParent = false;
 
   ngOnInit() {
+    if (this.arrayInParent) {
+      this.collapsed = true;
+    }
   }
 
   isTextNode(): boolean {
@@ -22,18 +28,23 @@ export class NodeComponent implements OnInit {
       && this.node.childNodes[0] instanceof Text);
   }
 
-  clickNode(event: Event) {
-    event.stopPropagation();
-    this.selection.emit(this.node);
+  getChildNodes(): any {
+    const nodes = {};
+    for (let i = 0 ; i < this.node.childNodes.length; i++) {
+      const node = this.node.childNodes[i] as Element;
+      if (!nodes.hasOwnProperty(node.tagName)) {
+        nodes[node.tagName] = [];
+      }
+      nodes[node.tagName].push(node);
+    }
+    return Object.values(nodes);
   }
 
-  onSelectedNode(node: Node) {
-    this.selection.emit(node);
+  show(event: Event) {
+    this.collapsed = false;
   }
 
-  toggle(collapsed: boolean, event: Event) {
-    this.collapsed = collapsed;
-    event.stopPropagation();
+  hide(event: Event) {
+    this.collapsed = true;
   }
-
 }

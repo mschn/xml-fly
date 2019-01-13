@@ -2,19 +2,8 @@
   {{parserError}}
 </div>
 
-<nav class="sticky-top">
-  <ol class="breadcrumb">
-    <li *ngFor="let node of getSelectedNodeHierarchy()" class="breadcrumb-item">
-      <a href (click)="!!onSelectedNode(node)">{{ node.tagName }}</a>
-    </li>
-    <li *ngIf="!selectedNode">
-      Click a node to select it
-    </li>
-  </ol>
-</nav>
-
 <div *ngFor="let node of document.childNodes" 
-  class="border-right border-bottom">
-  <app-node [node]="node" (selection)="onSelectedNode($event)"></app-node>
+  class="m-1 border-bottom border-right shadow-sm">
+  <app-node [node]="node"></app-node>
 </div>
 

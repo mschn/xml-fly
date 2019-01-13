@@ -1,27 +1,26 @@
-<div
-  *ngIf="node.tagName"
-  class="node"
-  [class.odd]="depth % 2 === 1"
-  (click)="clickNode($event)"
-  [class.selected]=node.selected>
-
+<div *ngIf="node.tagName"
+  class="node">
 
   <div class="header d-flex flex-row">
+    <!-- expand / collapse button -->
     <ng-container *ngIf="!isTextNode()">
-      <button class="btn btn-sm" 
-        *ngIf="collapsed" (click)="toggle(false, $event)">
+      <div class="btn btn-sm" 
+        [hidden]="!collapsed"
+        (click)="show($event)">
         <i class="material-icons">expand_more</i>
-      </button>
-      <button class="btn btn-sm" 
-        *ngIf="!collapsed" (click)="toggle(true, $event)">
-        <i class="material-icons">expand_more</i>
-      </button>
+      </div>
+      <div class="btn btn-sm" 
+        [hidden]="collapsed"
+        (click)="hide($event)">
+        <i class="material-icons">expand_less</i>
+      </div>
     </ng-container>
 
-    <div *ngIf="isTextNode()" class="type">
+    <!-- tag name -->
+    <div *ngIf="isTextNode() && !noTagName" class="type">
       <i class="material-icons">code</i>
     </div>
-    <div class="name p-1 font-weight-bold">
+    <div *ngIf="!noTagName" class="name p-1 font-weight-bold">
       {{ node.tagName }}
     </div>
     <div *ngIf="isTextNode()" class="value border-left p-1">
@@ -29,8 +28,11 @@
     </div>
   </div>
 
-  <div class="indent attr" *ngFor="let attr of node.attributes">
-    <div class="node d-flex flex-row pl-1">
+  <!-- attributes -->
+  <div class="pl-3 attr" 
+      [hidden]="collapsed"
+      *ngFor="let attr of node.attributes">
+    <div class="node d-flex flex-row">
       <i class="material-icons">short_text</i>
       <div class="name p-1">
         {{ attr.name }}
@@ -39,16 +41,22 @@
         {{ attr.value }}
       </div>
     </div>
-
   </div>
 
-  <ng-container *ngIf="node.childNodes">
-    <div class="indent"
-        *ngFor="let childNode of node.childNodes"
-        [class.collapsed]="collapsed">
-      <app-node [node]="childNode" (selection)="onSelectedNode($event)"></app-node>
+  <!-- children nodes -->
+  <ng-container *ngFor="let childNodes of node.childNodesGroups">
+    <!-- array -->
+    <div class="pl-3"
+         *ngIf="childNodes.length > 1"
+         [hidden]="collapsed">
+      <app-array [nodes]="childNodes"></app-array>
+    </div>
+    <!-- single node -->
+    <div class="pl-3"
+        *ngIf="childNodes.length === 1"
+        [hidden]="collapsed">
+      <app-node [node]="childNodes[0]" [arrayInParent]="arrayInParent"></app-node>
     </div>
   </ng-container>
-    
 
 </div>

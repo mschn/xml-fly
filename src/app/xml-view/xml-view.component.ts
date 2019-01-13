@@ -15,42 +15,32 @@ export class XmlViewComponent implements OnInit {
 
   @Input() set xmlString (value: string) {
     const parser = new DOMParser();
-    this.document = parser.parseFromString(value, 'application/xml');
-    const parsererror = this.document.querySelector('html body parsererror div');
+    const document = parser.parseFromString(value, 'application/xml');
+    const parsererror = document.querySelector('html body parsererror div');
     if (parsererror) {
       this.parserError = parsererror.textContent;
     } else {
       this.parserError =  null;
     }
+    this.groupArrays(document);
+    this.document = document;
+  }
+
+  private groupArrays (parentNode: Node) {
+    const nodes = {};
+    for (let i = 0; i < parentNode.childNodes.length; i++) {
+      const node = parentNode.childNodes[i] as Element;
+      if (!nodes.hasOwnProperty(node.tagName)) {
+        nodes[node.tagName] = [];
+      }
+      this.groupArrays(node);
+      nodes[node.tagName].push(node);
+    }
+    (parentNode as any).childNodesGroups = Object.values(nodes);
   }
 
   constructor() { }
 
   ngOnInit() {
   }
-
-  onSelectedNode(node: Node) {
-    this.setSelected(this.selectedNode, false);
-    this.selectedNode = node;
-    this.setSelected(this.selectedNode, true);
-  }
-
-  setSelected(node: Node, state: boolean) {
-    if (!node) {
-      return;
-    }
-    const elt = node as any;
-    elt.selected = state;
-  }
-
-  getSelectedNodeHierarchy(): Node[] {
-    const ret = [];
-    let node = this.selectedNode;
-    while (node && node.parentNode) {
-      ret.push(node);
-      node = node.parentNode;
-    }
-    return ret.reverse();
-  }
-
 }

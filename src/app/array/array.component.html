@@ -1,0 +1,38 @@
+<div class="border-top border-left">
+
+  <div class="p-1">
+    <span class="font-weight-bold">
+      {{ nodes[0].tagName }}
+    </span>
+    <span>
+      ({{ nodes.length }})
+    </span>
+  </div>
+
+  <table class="border-top border-left ml-3">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="p-1"
+          *ngFor="let childNode of nodes[0].childNodes">
+            {{ childNode.tagName }}
+          </th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <tr *ngFor="let node of nodes; let i = index">
+          <td class="p-1">
+            {{ i }}
+          </td>
+          <td class=""
+              *ngFor="let childNode of node.childNodes">
+            <app-node [node]="childNode" [arrayInParent]="true" [noTagName]="true"></app-node>
+          </td>
+        </tr>
+      </tbody>
+    
+    
+    </table>
+</div>
+
