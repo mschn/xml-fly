@@ -4,6 +4,10 @@
     background-color: white;
     font-size: .8rem;
 
+    &.noTagName {
+        border: 0;
+    }
+
     &.odd {
         background-color: #efefef;
     }
