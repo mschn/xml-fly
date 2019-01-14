@@ -1,7 +1,6 @@
-<div class="border-top border-left">
+<div class="array">
 
-  <div>
-
+  <div class="header">
     <!-- expand / collapse button -->
     <ng-container>
       <button class="btn btn-sm" 
@@ -25,7 +24,7 @@
   </div>
 
   <div class="ml-3">
-    <table class="border-top border-left" [hidden]="collapsed">
+    <table class="" [hidden]="collapsed">
         <thead *ngIf="!isTextNode(nodes[0])">
           <tr>
             <th class="p-1">#</th>

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-abstract-node',
-  template: '',
-  styleUrls: ['./abstract-node.component.css']
+  template: ''
 })
 export class AbstractNodeComponent implements OnInit {
 

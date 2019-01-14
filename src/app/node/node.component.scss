@@ -1,9 +1,10 @@
 .node {
-    border-left: 1px solid #d8d8d8;
+    border-left: 3px solid #d8d8d8;
     border-top: 1px solid #d8d8d8;
-    background-color: white;
     font-size: .8rem;
-
+    display: table;
+    width: 100%;
+    
     &.noTagName {
         border: 0;
     }
@@ -25,15 +26,12 @@
         }
     }
 
-    .name {
-        width: 100px;
-    }
-
     .value {
-        width: 120px;
-        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        word-break: break-all;
+        max-height: 4rem;
+        min-width: 120px;
     }
 
     .inner {
