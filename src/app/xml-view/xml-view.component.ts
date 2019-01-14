@@ -27,7 +27,7 @@ export class XmlViewComponent implements OnInit {
   }
 
   private groupArrays (parentNode: Node) {
-    const nodes = {};
+    const nodes: {[s: string]: Array<Element> } = {};
     for (let i = 0; i < parentNode.childNodes.length; i++) {
       const node = parentNode.childNodes[i] as Element;
       if (!nodes.hasOwnProperty(node.tagName)) {

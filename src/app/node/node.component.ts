@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AbstractNodeComponent } from '../abstract-node/abstract-node.component';
 
 @Component({
   selector: 'app-node',
@@ -6,13 +7,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./node.component.scss']
 
 })
-export class NodeComponent implements OnInit {
+export class NodeComponent extends AbstractNodeComponent implements OnInit {
 
   @Input() node: Node;
 
   @Input() noTagName = false;
-
-  private collapsed = false;
 
   @Input() arrayInParent = false;
 
@@ -23,28 +22,6 @@ export class NodeComponent implements OnInit {
   }
 
   isTextNode(): boolean {
-    return (this.node.childNodes
-      && this.node.childNodes.length === 1
-      && this.node.childNodes[0] instanceof Text);
-  }
-
-  getChildNodes(): any {
-    const nodes = {};
-    for (let i = 0 ; i < this.node.childNodes.length; i++) {
-      const node = this.node.childNodes[i] as Element;
-      if (!nodes.hasOwnProperty(node.tagName)) {
-        nodes[node.tagName] = [];
-      }
-      nodes[node.tagName].push(node);
-    }
-    return Object.values(nodes);
-  }
-
-  show(event: Event) {
-    this.collapsed = false;
-  }
-
-  hide(event: Event) {
-    this.collapsed = true;
+    return super.isTextNode(this.node);
   }
 }
