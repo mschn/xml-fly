@@ -17,6 +17,6 @@
     </form>
 </nav>
 
-<div class="mt-5 pt-2" *ngIf="!loading && xmlFileContent">
+<div class="main mx-3 mb-3 border-bottom" *ngIf="!loading && xmlFileContent">
     <app-xml-view [xmlString]="xmlFileContent"></app-xml-view>
 </div>

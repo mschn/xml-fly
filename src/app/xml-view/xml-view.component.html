@@ -2,8 +2,7 @@
   {{parserError}}
 </div>
 
-<div *ngFor="let node of document.childNodes" 
-  class="m-2">
+<div *ngFor="let node of document.childNodes">
   <app-node [node]="node"></app-node>
 </div>
 
