@@ -2,6 +2,10 @@
   display: none;
 }
 
+nav {
+  flex: 0 0 auto;
+}
+
 .main {
-  margin-top: 65px;
+  height: 100%;
 }

@@ -1,35 +1,41 @@
+<div class="main d-flex flex-column">
 
-<nav class="nav nav-tabs fixed-top bg-light px-2 pt-1">
-    <a class="navbar-brand" href="#">Xml Fly</a>
+        <nav class="nav nav-tabs bg-light px-2 pt-1">
+                <a class="navbar-brand" href="#">Xml Fly</a>
+            
+                <div class="nav-item" 
+                    *ngFor="let file of files">
+                    <a class="nav-link"
+                       [class.active]="file.selected"
+                       (click)="selectFile(file)"
+                       href="#">
+                        {{ file.name }}
+                    </a>
+                </div>
+            
+                <form class="ml-2 form-inline navbar-nav mr-auto">
+            
+                    <label class="btn btn-outline-primary btn-file" *ngIf="!loading">
+                        <i class="material-icons mr-1">folder_open</i>
+                        Open <input type="file" (change)="openFile($event)">
+                    </label>
+            
+                    <button *ngIf="loading"
+                        class="btn btn-outline-primary" type="button" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+            
+                </form>
+            </nav>
+            
 
-    <div class="nav-item" 
-        *ngFor="let file of files">
-        <a class="nav-link"
-           [class.active]="file.selected"
-           (click)="selectFile(file)"
-           href="#">
-            {{ file.name }}
-        </a>
-    </div>
 
-    <form class="ml-2 form-inline navbar-nav mr-auto">
+            <div class="border-bottom flex-fill overflow-auto">
+                <div *ngFor="let file of files" [hidden]="!file.selected">
+                    <app-xml-view [xmlString]="file.xmlFileContent"></app-xml-view>
+                </div>
+            </div>
 
-        <label class="btn btn-outline-primary btn-file" *ngIf="!loading">
-            <i class="material-icons mr-1">folder_open</i>
-            Open <input type="file" (change)="openFile($event)">
-        </label>
-
-        <button *ngIf="loading"
-            class="btn btn-outline-primary" type="button" disabled>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Loading...
-        </button>
-
-    </form>
-</nav>
-
-<div class="main mx-3 mb-3 border-bottom">
-    <div *ngFor="let file of files" [hidden]="!file.selected">
-        <app-xml-view [xmlString]="file.xmlFileContent"></app-xml-view>
-    </div>
 </div>
+
