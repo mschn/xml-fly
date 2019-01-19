@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractNodeComponent } from '../abstract-node/abstract-node.component';
+import { DataService } from 'src/app/data.service';
 
 @Component({
   selector: 'app-node',
@@ -14,6 +15,10 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
   @Input() noTagName = false;
 
   @Input() arrayInParent = false;
+
+  constructor(dataService: DataService) {
+    super(dataService);
+   }
 
   ngOnInit() {
     if (this.arrayInParent) {

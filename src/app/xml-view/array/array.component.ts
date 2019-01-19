@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AbstractNodeComponent } from '../abstract-node/abstract-node.component';
+import { DataService } from 'src/app/data.service';
 
 @Component({
   selector: 'app-array',
@@ -10,8 +11,8 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
 
   @Input() nodes: Node[];
 
-  constructor() {
-    super();
+  constructor(dataService: DataService) {
+    super(dataService);
    }
 
   ngOnInit() {

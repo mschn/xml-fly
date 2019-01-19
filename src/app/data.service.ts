@@ -10,12 +10,19 @@ export class DataService {
   files: Array<XmlFile>;
   selectedFile: XmlFile;
 
+  obsSelectedFile: XmlFile;
+
   constructor() {
     this.files = new Array<XmlFile>();
+    this.obsSelectedFile = new XmlFile();
   }
 
   getFiles(): Observable<XmlFile[]> {
     return of(this.files);
+  }
+
+  getSelectedFile(): Observable<XmlFile> {
+    return of(this.obsSelectedFile);
   }
 
   openFile(event: Event): Promise<{}> {
@@ -30,12 +37,27 @@ export class DataService {
           f.name = file.name;
           f.selected = true;
           f.xmlFileContent = reader.result.toString();
-          this.selectFile(f);
-          this.files.push(f);
+
+          const existingFile = this.findFile(f);
+          if (existingFile) {
+            this.selectFile(existingFile);
+          } else {
+            this.selectFile(f);
+            this.files.push(f);
+          }
           resolve();
         };
       }
     });
+  }
+
+  private findFile(file: XmlFile): XmlFile {
+    for (const f of this.files) {
+      if (file.xmlFileContent === f.xmlFileContent) {
+        return f;
+      }
+    }
+    return null;
   }
 
   selectFile(file: XmlFile): void {
@@ -44,10 +66,12 @@ export class DataService {
     }
     file.selected = true;
     this.selectedFile = file;
+
+    this.obsSelectedFile.selectedNode = this.selectedFile.selectedNode;
   }
 
   selectNode(node: Node): void {
-    this.selectedFile.selectedNode = node;
+    this.obsSelectedFile.selectedNode = node;
   }
 
 }

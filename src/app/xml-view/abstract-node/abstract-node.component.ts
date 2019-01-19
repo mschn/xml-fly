@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/data.service';
 
 @Component({
   selector: 'app-abstract-node',
@@ -10,7 +11,7 @@ export class AbstractNodeComponent implements OnInit {
 
   collapsed = false;
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
   }
@@ -37,7 +38,8 @@ export class AbstractNodeComponent implements OnInit {
     this.collapsed = true;
   }
 
-  onClick(node: Node) {
-    // foo
+  onClick(event: Event, node: Node) {
+    event.stopPropagation();
+    this.dataService.selectNode(node);
   }
 }

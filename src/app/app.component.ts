@@ -11,6 +11,7 @@ import { first } from 'rxjs/operators';
 export class AppComponent implements OnInit {
 
   files: Array<XmlFile>;
+  selectedFile: XmlFile;
 
   loading = false;
 
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.getFiles().subscribe(files => this.files = files);
+    this.dataService.getSelectedFile().subscribe(file => this.selectedFile = file);
   }
 
   openFile(event: Event) {

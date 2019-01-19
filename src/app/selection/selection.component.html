@@ -1,3 +1,10 @@
-<p>
-  selection works!
-</p>
+<div>
+  <div class="p-1 border-bottom">
+      <span *ngFor="let node of getNodePath(file?.selectedNode); let lastNode = last">
+          {{ node }} <span *ngIf="!lastNode" class="separator">/</span>
+      </span>      
+  </div>
+  <div class="p-1 textcontent">
+    {{ file?.selectedNode?.textContent }}
+  </div>
+</div>

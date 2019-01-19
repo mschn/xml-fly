@@ -1,6 +1,7 @@
 <div *ngIf="node.tagName"
   [class.noTagName]="noTagName"
   [class.first-node]="!node.parentNode.parentNode"
+  (click)="onClick($event, node)"
   class="node">
 
   <div class="header d-flex flex-row">

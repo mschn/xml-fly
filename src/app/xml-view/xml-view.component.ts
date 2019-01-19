@@ -11,8 +11,6 @@ export class XmlViewComponent implements OnInit {
 
   parserError: string;
 
-  selectedNode: Node;
-
   @Input() set xmlString (value: string) {
     const parser = new DOMParser();
     const document = parser.parseFromString(value, 'application/xml');
