@@ -1,4 +1,5 @@
 .textcontent {
     max-height: 200px;
     overflow: auto;
+    word-break: break-all;
 }
