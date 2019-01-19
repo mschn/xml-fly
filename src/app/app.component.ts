@@ -1,49 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { XmlFile } from './model';
+import { DataService } from './data.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-
-  xmlFileContent: string;
+export class AppComponent implements OnInit {
 
   files: Array<XmlFile>;
-  selectedFile: XmlFile;
 
   loading = false;
 
-  constructor() {
-    this.files = new Array<XmlFile>();
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    this.dataService.getFiles().subscribe(files => this.files = files);
   }
 
   openFile(event: Event) {
     this.loading = true;
-    const reader = new FileReader();
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files.length) {
-      const file = target.files[0];
-      reader.readAsText(file);
-      reader.onload = () => {
-        const f = new XmlFile();
-        f.name = file.name;
-        f.selected = true;
-        f.xmlFileContent = reader.result.toString();
-        this.selectFile(f);
-        this.files.push(f);
-        this.loading = false;
-      };
-    }
+    this.dataService.openFile(event).then(_ => this.loading = false);
   }
 
   selectFile(file: XmlFile) {
-    if (this.selectedFile) {
-      this.selectedFile.selected = false;
-    }
-    file.selected = true;
-    this.selectedFile = file;
+    this.dataService.selectFile(file);
   }
 
 }

@@ -36,4 +36,8 @@ export class AbstractNodeComponent implements OnInit {
   hide(event: Event) {
     this.collapsed = true;
   }
+
+  onClick(node: Node) {
+    // foo
+  }
 }

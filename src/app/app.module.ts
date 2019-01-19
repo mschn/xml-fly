@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { XmlViewComponent } from './xml-view/xml-view.component';
-import { NodeComponent } from './node/node.component';
-import { ArrayComponent } from './array/array.component';
-import { AbstractNodeComponent } from './abstract-node/abstract-node.component';
+import { NodeComponent } from './xml-view/node/node.component';
+import { ArrayComponent } from './xml-view/array/array.component';
+import { AbstractNodeComponent } from './xml-view/abstract-node/abstract-node.component';
+import { SelectionComponent } from './selection/selection.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { AbstractNodeComponent } from './abstract-node/abstract-node.component';
     XmlViewComponent,
     NodeComponent,
     ArrayComponent,
-    AbstractNodeComponent
+    AbstractNodeComponent,
+    SelectionComponent
   ],
   imports: [
     BrowserModule
