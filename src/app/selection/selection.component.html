@@ -1,8 +1,8 @@
-<div>
+<div *ngIf="selection?.type">
   <div class="p-1 border-bottom">
     {{ selection.path }}
   </div>
-  <div class="p-1 textcontent">
+  <div class="p-3 textcontent">
     {{ selection.value }}
   </div>
 </div>

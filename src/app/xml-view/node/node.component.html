@@ -1,6 +1,7 @@
 <div *ngIf="node.tagName"
   [class.noTagName]="noTagName"
   [class.first-node]="!node.parentNode.parentNode"
+  [class.text-node]="isTextNode()"
   (click)="onNodeClick($event, node)"
   class="node">
 
@@ -23,8 +24,7 @@
     <div *ngIf="isTextNode() && !noTagName" class="type">
       <i class="material-icons">code</i>
     </div>
-    <div *ngIf="!noTagName" class="p-1"
-      [class.font-weight-bold]="!isTextNode()"
+    <div *ngIf="!noTagName" class="p-1 tagname"
       [class.name]="isTextNode()">
       {{ node.tagName }}
     </div>

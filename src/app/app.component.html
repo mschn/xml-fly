@@ -13,15 +13,15 @@
             </a>
         </div>
     
-        <form class="ml-2 form-inline navbar-nav mr-auto">
+        <form class="ml-1 mt-1 form-inline navbar-nav mr-auto">
     
-            <label class="btn btn-outline-primary btn-file" *ngIf="!loading">
+            <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading">
                 <i class="material-icons mr-1">folder_open</i>
                 Open <input type="file" (change)="openFile($event)">
             </label>
     
             <button *ngIf="loading"
-                class="btn btn-outline-primary" type="button" disabled>
+                class="btn btn-sm btn-primary" type="button" disabled>
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 Loading...
             </button>

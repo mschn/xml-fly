@@ -11,12 +11,10 @@
         border-top: 1px solid #d8d8d8;
     }
 
-    &.odd {
-        background-color: #efefef;
-    }
-
-    .material-icons {
-        margin: .25rem 0 0 .25rem;
+    &.text-node > .header {
+        .type, .name {
+            background-color: #ffffeb;
+        }
     }
 
     .btn-sm {
@@ -35,6 +33,11 @@
         min-width: 120px;
     }
 
+    .tagname:not(.name) {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
     .name {
         min-width: 100px;
         width: 100px;
@@ -45,6 +48,12 @@
 
     .inner {
         border-left: 4px solid transparent;
+    }
+
+    .attr {
+        i, .name {
+            background-color: #f8f8f8;
+        }
     }
 }
 

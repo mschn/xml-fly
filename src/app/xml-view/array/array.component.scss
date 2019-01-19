@@ -3,6 +3,11 @@
     border-top: 1px solid #d8d8d8;
     background: white;
 
+    .tagname {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
     table {
         width: 100%;
         border-left: 1px solid #d8d8d8;
@@ -12,7 +17,7 @@
 
             th {
                 border-left: 1px solid #d8d8d8;
-                background: #ffffbd;
+                background: #e7f5ff;
                 font-weight: normal;
             }
             td {
@@ -30,7 +35,7 @@
 
             td:first-child {
                 border-top: 1px solid #d8d8d8;
-                background: #ffffbd;
+                background: #e7f5ff;
             }
 
         }
