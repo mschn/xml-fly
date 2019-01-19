@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from '../data.service';
-import { XmlFile } from '../model';
+import { XmlFile, Selection } from '../model';
 
 @Component({
   selector: 'app-selection',
@@ -9,27 +9,13 @@ import { XmlFile } from '../model';
 })
 export class SelectionComponent implements OnInit {
 
-  file: XmlFile;
+  selection: Selection;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.getSelectedFile().subscribe(file => {
-      this.file = file;
+    this.dataService.getSelection().subscribe(selection => {
+      this.selection = selection;
     });
   }
-
-  getNodePath(node: Node): Node[] {
-    const ret = [];
-    if (!node) {
-      return ret;
-    }
-    let curNode = node;
-    while (curNode.parentNode) {
-      ret.push((curNode as Element).tagName);
-      curNode = curNode.parentNode;
-    }
-    return ret.reverse();
-  }
-
 }

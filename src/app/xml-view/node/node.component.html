@@ -1,7 +1,7 @@
 <div *ngIf="node.tagName"
   [class.noTagName]="noTagName"
   [class.first-node]="!node.parentNode.parentNode"
-  (click)="onClick($event, node)"
+  (click)="onNodeClick($event, node)"
   class="node">
 
   <div class="header d-flex flex-row">
@@ -38,7 +38,8 @@
   <div class="pl-3 attr" 
       [hidden]="collapsed"
       *ngFor="let attr of node.attributes">
-    <div class="node d-flex flex-row">
+    <div class="node d-flex flex-row"
+        (click)="onAttrClick($event, attr)">
       <i class="material-icons">short_text</i>
       <div class="name p-1">
         {{ attr.name }}

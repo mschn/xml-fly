@@ -4,3 +4,9 @@ export class XmlFile {
     xmlFileContent: string;
     selectedNode: Node;
 }
+
+export class Selection {
+    type: 'Node' | 'Attr';
+    path: string;
+    value: string;
+}

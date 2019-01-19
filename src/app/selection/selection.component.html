@@ -1,10 +1,8 @@
 <div>
   <div class="p-1 border-bottom">
-      <span *ngFor="let node of getNodePath(file?.selectedNode); let lastNode = last">
-          {{ node }} <span *ngIf="!lastNode" class="separator">/</span>
-      </span>      
+    {{ selection.path }}
   </div>
   <div class="p-1 textcontent">
-    {{ file?.selectedNode?.textContent }}
+    {{ selection.value }}
   </div>
 </div>

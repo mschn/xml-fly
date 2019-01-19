@@ -29,4 +29,17 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
   isTextNode(): boolean {
     return super.isTextNode(this.node);
   }
+
+  onNodeClick(event: Event) {
+    event.stopPropagation();
+    if (this.isTextNode()) {
+      this.dataService.selectNode(this.node);
+    }
+  }
+
+  onAttrClick(event: Event, attr: Attr) {
+    event.stopPropagation();
+    this.dataService.selectAttr(attr, this.node);
+  }
+
 }

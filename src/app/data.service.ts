@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { XmlFile } from './model';
+import { XmlFile, Selection } from './model';
 import { of, Observable } from 'rxjs';
 
 @Injectable({
@@ -10,19 +10,19 @@ export class DataService {
   files: Array<XmlFile>;
   selectedFile: XmlFile;
 
-  obsSelectedFile: XmlFile;
+  selection: Selection;
 
   constructor() {
     this.files = new Array<XmlFile>();
-    this.obsSelectedFile = new XmlFile();
+    this.selection = new Selection();
   }
 
   getFiles(): Observable<XmlFile[]> {
     return of(this.files);
   }
 
-  getSelectedFile(): Observable<XmlFile> {
-    return of(this.obsSelectedFile);
+  getSelection(): Observable<Selection> {
+    return of(this.selection);
   }
 
   openFile(event: Event): Promise<{}> {
@@ -65,13 +65,31 @@ export class DataService {
       this.selectedFile.selected = false;
     }
     file.selected = true;
+    this.selection.type = null;
     this.selectedFile = file;
-
-    this.obsSelectedFile.selectedNode = this.selectedFile.selectedNode;
   }
 
   selectNode(node: Node): void {
-    this.obsSelectedFile.selectedNode = node;
+    this.selection.type = 'Node';
+    this.selection.path = this.getNodePath(node);
+    this.selection.value = node.textContent;
+  }
+
+  private getNodePath(node: Node): string {
+    const paths = [];
+    let curNode = node;
+    while (curNode.parentNode) {
+      paths.push((curNode as Element).tagName);
+      curNode = curNode.parentNode;
+    }
+    return paths.reverse().join('/');
+  }
+
+  selectAttr(attr: Attr, node: Node): void {
+    this.selection.type = 'Attr';
+    this.selection.path = `${this.getNodePath(node)}@${attr.name}`;
+    this.selection.value = attr.value;
+
   }
 
 }

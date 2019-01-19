@@ -11,7 +11,7 @@ export class AbstractNodeComponent implements OnInit {
 
   collapsed = false;
 
-  constructor(private dataService: DataService) { }
+  constructor(protected dataService: DataService) { }
 
   ngOnInit() {
   }
@@ -36,10 +36,5 @@ export class AbstractNodeComponent implements OnInit {
 
   hide(event: Event) {
     this.collapsed = true;
-  }
-
-  onClick(event: Event, node: Node) {
-    event.stopPropagation();
-    this.dataService.selectNode(node);
   }
 }
