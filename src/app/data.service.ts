@@ -75,19 +75,20 @@ export class DataService {
     this.selection.value = node.textContent;
   }
 
-  private getNodePath(node: Node): string {
+  private getNodePath(node: Node): string[] {
     const paths = [];
     let curNode = node;
     while (curNode.parentNode) {
       paths.push((curNode as Element).tagName);
       curNode = curNode.parentNode;
     }
-    return paths.reverse().join('/');
+    return paths.reverse();
   }
 
   selectAttr(attr: Attr, node: Node): void {
     this.selection.type = 'Attr';
-    this.selection.path = `${this.getNodePath(node)}/${attr.name}`;
+    this.selection.path = this.getNodePath(node);
+    this.selection.path.push(attr.name);
     this.selection.value = attr.value;
 
   }

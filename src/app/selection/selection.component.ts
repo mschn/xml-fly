@@ -5,7 +5,7 @@ import { XmlFile, Selection } from '../model';
 @Component({
   selector: 'app-selection',
   templateUrl: './selection.component.html',
-  styleUrls: ['./selection.component.css']
+  styleUrls: ['./selection.component.scss']
 })
 export class SelectionComponent implements OnInit {
 

@@ -7,6 +7,6 @@ export class XmlFile {
 
 export class Selection {
     type: 'Node' | 'Attr';
-    path: string;
+    path: string[];
     value: string;
 }

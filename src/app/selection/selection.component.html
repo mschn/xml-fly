@@ -4,7 +4,10 @@
           class="icon-attr">@</span>
       <span *ngIf="selection.type === 'Node'"
           class="icon-tag">#</span>
-      {{ selection.path }}
+        <span *ngFor="let node of selection.path; let lastNode = last">
+            {{ node }}
+            <span class="separator" *ngIf="!lastNode">/</span>
+        </span>
   </div>
   <div class="p-3 textcontent">
     {{ selection.value }}
