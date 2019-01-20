@@ -25,29 +25,25 @@ export class DataService {
     return of(this.selection);
   }
 
-  openFile(event: Event): Promise<{}> {
+  openFile(file: File): Promise<{}> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      const target = event.target as HTMLInputElement;
-      if (target.files && target.files.length) {
-        const file = target.files[0];
-        reader.readAsText(file);
-        reader.onload = () => {
-          const f = new XmlFile();
-          f.name = file.name;
-          f.selected = true;
-          f.xmlFileContent = reader.result.toString();
+      reader.readAsText(file);
+      reader.onload = () => {
+        const f = new XmlFile();
+        f.name = file.name;
+        f.selected = true;
+        f.xmlFileContent = reader.result.toString();
 
-          const existingFile = this.findFile(f);
-          if (existingFile) {
-            this.selectFile(existingFile);
-          } else {
-            this.selectFile(f);
-            this.files.push(f);
-          }
-          resolve();
-        };
-      }
+        const existingFile = this.findFile(f);
+        if (existingFile) {
+          this.selectFile(existingFile);
+        } else {
+          this.selectFile(f);
+          this.files.push(f);
+        }
+        resolve();
+      };
     });
   }
 

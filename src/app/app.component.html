@@ -1,4 +1,9 @@
-<div class="h-100 d-flex flex-column">
+<div class="h-100 d-flex flex-column"
+    (dragover)="dragFalse()"
+    (dragleave)="dragFalse()"
+    (dragend)="dragFalse()"
+    (drop)="onDrop($event)"
+>
 
     <nav class="nav navbar-dark bg-primary px-2">
     

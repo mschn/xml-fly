@@ -19,9 +19,31 @@ export class AppComponent implements OnInit {
     this.dataService.getFiles().subscribe(files => this.files = files);
   }
 
+  dragFalse() {
+    return false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    if (event.dataTransfer && event.dataTransfer.files) {
+      this.loading = true;
+      const file = event.dataTransfer.files[0];
+      setTimeout(() => {
+        this.dataService.openFile(file).then(() => this.loading = false);
+      });
+    }
+    return false;
+  }
+
   openFile(event: Event) {
-    this.loading = true;
-    this.dataService.openFile(event).then(_ => this.loading = false);
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length) {
+      this.loading = true;
+      const file = target.files[0];
+      setTimeout(() => {
+        this.dataService.openFile(file).then(() => this.loading = false);
+      });
+    }
   }
 
   selectFile(file: XmlFile) {
