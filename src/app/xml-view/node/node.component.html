@@ -11,21 +11,19 @@
       <button class="btn btn-sm" 
         [hidden]="!collapsed"
         (click)="show($event)">
-        <i class="material-icons">expand_more</i>
+        <span class="icon-expand"></span>
       </button>
       <button class="btn btn-sm" 
         [hidden]="collapsed"
         (click)="hide($event)">
-        <i class="material-icons">expand_less</i>
+        <span class="icon-collapse"></span>
       </button>
     </ng-container>
 
     <!-- tag name -->
-    <div *ngIf="isTextNode() && !noTagName" class="type">
-      <i class="material-icons">code</i>
-    </div>
     <div *ngIf="!noTagName" class="p-1 tagname"
       [class.name]="isTextNode()">
+      <span *ngIf="isTextNode()" class="type icon-tag">#</span>
       {{ node.tagName }}
     </div>
     <div *ngIf="isTextNode()" class="value p-1"
@@ -39,9 +37,9 @@
       [hidden]="collapsed"
       *ngFor="let attr of node.attributes">
     <div class="node d-flex flex-row"
-        (click)="onAttrClick($event, attr)">
-      <i class="material-icons">short_text</i>
+        (click)="onAttrClick($event, attr, node)">
       <div class="name p-1">
+        <span class="icon-attr">@</span>
         {{ attr.name }}
       </div>        
       <div class="value p-1 border-left">

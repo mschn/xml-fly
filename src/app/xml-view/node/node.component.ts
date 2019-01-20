@@ -37,9 +37,5 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
     }
   }
 
-  onAttrClick(event: Event, attr: Attr) {
-    event.stopPropagation();
-    this.dataService.selectAttr(attr, this.node);
-  }
 
 }

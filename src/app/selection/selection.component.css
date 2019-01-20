@@ -1,7 +1,16 @@
+.header {
+}
+
 .textcontent {
     max-height: 8rem;
     overflow: auto;
     word-break: break-all;
     font-size: .8rem;
-    background-color: #e8e8e8;
+}
+
+.icon-tag {
+    color: #0095ff;
+}
+.icon-attr {
+    color: #ea7d1f;
 }

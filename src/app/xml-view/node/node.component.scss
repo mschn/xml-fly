@@ -13,17 +13,45 @@
 
     &.text-node > .header {
         .type, .name {
-            background-color: #ffffeb;
+            background-color: #f8f8f8;
         }
     }
+
+    .icon-attr, .icon-tag {
+        font-size: .9rem;
+        font-weight: bold;
+        width: 1rem;
+        display: inline-block;
+        text-align: right;
+    }
+    .icon-tag {
+        color: #0095ff;
+    }
+    .icon-attr {
+        color: #ea7d1f;
+    }
+
 
     .btn-sm {
         line-height: 1;
         padding: 0;
 
-        .material-icons {
-            margin: 0;
+        .icon-expand, .icon-collapse {
+            background-repeat: no-repeat;
+            width: 1rem;
+            height: 1rem;
+            display: inline-block;
+            margin: .3rem;
         }
+
+        .icon-expand {
+            background-image: url(/assets/icons/plus-square-regular.svg);
+        }
+
+        .icon-collapse {
+            background-image: url(/assets/icons/minus-square-regular.svg);
+        }
+
     }
 
     .value {
@@ -36,6 +64,7 @@
     .tagname:not(.name) {
         font-size: 1rem;
         font-weight: bold;
+        line-height: 1;
     }
 
     .name {

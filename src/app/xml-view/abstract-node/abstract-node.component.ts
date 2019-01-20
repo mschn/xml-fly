@@ -37,4 +37,9 @@ export class AbstractNodeComponent implements OnInit {
   hide(event: Event) {
     this.collapsed = true;
   }
+
+  onAttrClick(event: Event, attr: Attr, node: Node) {
+    event.stopPropagation();
+    this.dataService.selectAttr(attr, node);
+  }
 }

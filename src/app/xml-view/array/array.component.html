@@ -6,12 +6,12 @@
       <button class="btn btn-sm" 
         [hidden]="!collapsed"
         (click)="show($event)">
-        <i class="material-icons">expand_more</i>
+        <span class="icon-expand"></span>
       </button>
       <button class="btn btn-sm" 
         [hidden]="collapsed"
         (click)="hide($event)">
-        <i class="material-icons">expand_less</i>
+        <span class="icon-collapse"></span>
       </button>
     </ng-container>
 
@@ -27,9 +27,15 @@
     <table class="" [hidden]="collapsed">
         <thead *ngIf="!isTextNode(nodes[0])">
           <tr>
-            <th class="p-1">#</th>
+            <th class="p-1"></th>
+            <th class="p-1"
+              *ngFor="let attr of nodes[0].attributes">
+              <span class="type icon-attr">@</span>
+              {{ attr.name }}
+            </th>
             <th class="p-1"
             *ngFor="let childNode of nodes[0].childNodes">
+              <span class="type icon-tag">#</span>
               {{ childNode.tagName }}
             </th>
           </tr>
@@ -44,6 +50,12 @@
               {{ getText(node) }}            
             </td>
             <ng-container *ngIf="!isTextNode(node)">
+              <ng-container *ngFor="let attr of node.attributes">
+                  <td class="p-1 border-top"
+                  (click)="onAttrClick($event, attr, node)">
+                   {{ attr.value }}
+                 </td>             
+              </ng-container>
               <td class="" *ngFor="let childNode of node.childNodes">
                 <app-node [node]="childNode" [arrayInParent]="true" [noTagName]="true"></app-node>
               </td>      

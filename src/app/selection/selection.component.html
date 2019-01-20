@@ -1,6 +1,10 @@
 <div *ngIf="selection?.type">
-  <div class="p-1 border-bottom">
-    {{ selection.path }}
+  <div class="p-3 header bg-dark text-light">
+      <span *ngIf="selection.type === 'Attr'"
+          class="icon-attr">@</span>
+      <span *ngIf="selection.type === 'Node'"
+          class="icon-tag">#</span>
+      {{ selection.path }}
   </div>
   <div class="p-3 textcontent">
     {{ selection.value }}

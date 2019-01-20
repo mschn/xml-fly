@@ -1,7 +1,6 @@
 <div class="h-100 d-flex flex-column">
 
     <nav class="nav nav-tabs bg-light px-2 pt-1">
-        <a class="navbar-brand" href="#">Xml Fly</a>
     
         <div class="nav-item" 
             *ngFor="let file of files">
@@ -13,10 +12,9 @@
             </a>
         </div>
     
-        <form class="ml-1 mt-1 form-inline navbar-nav mr-auto">
+        <form class="m-1 form-inline navbar-nav mr-auto">
     
             <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading">
-                <i class="material-icons mr-1">folder_open</i>
                 Open <input type="file" (change)="openFile($event)">
             </label>
     
