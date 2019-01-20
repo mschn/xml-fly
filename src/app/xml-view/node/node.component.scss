@@ -59,6 +59,7 @@
         text-overflow: ellipsis;
         word-break: break-all;
         min-width: 120px;
+        cursor: pointer;
     }
 
     .tagname:not(.name) {
