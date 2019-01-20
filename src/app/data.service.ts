@@ -87,7 +87,7 @@ export class DataService {
 
   selectAttr(attr: Attr, node: Node): void {
     this.selection.type = 'Attr';
-    this.selection.path = `${this.getNodePath(node)}@${attr.name}`;
+    this.selection.path = `${this.getNodePath(node)}/${attr.name}`;
     this.selection.value = attr.value;
 
   }
