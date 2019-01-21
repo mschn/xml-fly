@@ -34,7 +34,20 @@ export class XmlViewComponent implements OnInit {
       this.groupArrays(node);
       nodes[node.tagName].push(node);
     }
-    (parentNode as any).childNodesGroups = Object.values(nodes);
+    const nodeGroups = Object.values(nodes);
+    this.removeEmptyTextNodes(nodeGroups);
+    (parentNode as any).childNodesGroups = Object.values(nodeGroups);
+  }
+
+  private removeEmptyTextNodes(nodesGroups: Element[][]) {
+    for (let i = nodesGroups.length - 1; i >= 0; i--) {
+      const nodeGroup = nodesGroups[i];
+      if (nodeGroup.every(element => {
+        return element instanceof Text && element.textContent.trim() === '';
+      })) {
+        nodesGroups.splice(i, 1);
+      }
+    }
   }
 
   constructor() { }

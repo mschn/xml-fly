@@ -3,12 +3,12 @@
   <div class="header">
     <!-- expand / collapse button -->
     <ng-container>
-      <button class="btn btn-sm" 
+      <button class="btn btn-sm"
         [hidden]="!collapsed"
         (click)="show($event)">
         <span class="icon-expand"></span>
       </button>
-      <button class="btn btn-sm" 
+      <button class="btn btn-sm"
         [hidden]="collapsed"
         (click)="hide($event)">
         <span class="icon-collapse"></span>
@@ -33,32 +33,35 @@
               <span class="type icon-attr">@</span>
               {{ attr.name }}
             </th>
-            <th class="p-1"
-            *ngFor="let childNode of nodes[0].childNodes">
-              <span class="type icon-tag">#</span>
-              {{ childNode.tagName }}
-            </th>
+            <ng-container *ngFor="let childNode of nodes[0].childNodes">
+              <th class="p-1" *ngIf="!isEmptyTextNode(childNode)">
+                <span class="type icon-tag">#</span>
+                {{ childNode.tagName }}
+              </th>
+            </ng-container>
           </tr>
         </thead>
-      
+
         <tbody>
           <tr *ngFor="let node of nodes; let i = index">
             <td class="p-1">
               {{ i }}
             </td>
             <td class="p-1" *ngIf="isTextNode(node)">
-              {{ getText(node) }}            
+              {{ getText(node) }}
             </td>
             <ng-container *ngIf="!isTextNode(node)">
               <ng-container *ngFor="let attr of node.attributes">
                   <td class="p-1 border-top"
                   (click)="onAttrClick($event, attr, node)">
                    {{ attr.value }}
-                 </td>             
+                 </td>
               </ng-container>
-              <td class="" *ngFor="let childNode of node.childNodes">
-                <app-node [node]="childNode" [arrayInParent]="true" [noTagName]="true"></app-node>
-              </td>      
+              <ng-container *ngFor="let childNode of node.childNodes">
+                <td class="" *ngIf="!isEmptyTextNode(childNode)">
+                  <app-node [node]="childNode" [arrayInParent]="true" [noTagName]="true"></app-node>
+                </td>
+              </ng-container>
             </ng-container>
           </tr>
         </tbody>
