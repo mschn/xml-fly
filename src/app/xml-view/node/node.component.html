@@ -1,4 +1,4 @@
-<div *ngIf="node.tagName"
+<div *ngIf="node.nodeName"
   [class.noTagName]="noTagName"
   [class.first-node]="!node.parentNode.parentNode"
   [class.text-node]="isTextNode()"
@@ -24,7 +24,7 @@
     <div *ngIf="!noTagName" class="p-1 tagname"
       [class.name]="isTextNode()">
       <span *ngIf="isTextNode()" class="type icon-tag">#</span>
-      {{ node.tagName }}
+      {{ node.nodeName }}
     </div>
     <div *ngIf="isTextNode()" class="value p-1"
         [class.border-left]="!noTagName">
