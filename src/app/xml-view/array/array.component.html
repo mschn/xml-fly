@@ -58,8 +58,7 @@
                  </td>
               </ng-container>
               <ng-container *ngFor="let childNode of getChildNodes(node)">
-                <td *ngIf="!childNode">
-                  -
+                <td *ngIf="!childNode" class="border-top">
                 </td>
                 <td class="" *ngIf="childNode && !isEmptyTextNode(childNode)">
                   <app-node [node]="childNode" [arrayInParent]="true" [noTagName]="true"></app-node>
