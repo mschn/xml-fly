@@ -29,14 +29,14 @@
           <tr>
             <th class="p-1"></th>
             <th class="p-1"
-              *ngFor="let attr of nodes[0].attributes">
+              *ngFor="let attr of nodes[0].attributesSet">
               <span class="type icon-attr">@</span>
-              {{ attr.name }}
+              {{ attr }}
             </th>
-            <ng-container *ngFor="let childNode of nodes[0].childNodes">
-              <th class="p-1" *ngIf="!isEmptyTextNode(childNode)">
+            <ng-container *ngFor="let childNode of nodes[0].childNodesSet">
+              <th class="p-1" >
                 <span class="type icon-tag">#</span>
-                {{ childNode.tagName }}
+                {{ childNode }}
               </th>
             </ng-container>
           </tr>
@@ -57,8 +57,11 @@
                    {{ attr.value }}
                  </td>
               </ng-container>
-              <ng-container *ngFor="let childNode of node.childNodes">
-                <td class="" *ngIf="!isEmptyTextNode(childNode)">
+              <ng-container *ngFor="let childNode of getChildNodes(node)">
+                <td *ngIf="!childNode">
+                  -
+                </td>
+                <td class="" *ngIf="childNode && !isEmptyTextNode(childNode)">
                   <app-node [node]="childNode" [arrayInParent]="true" [noTagName]="true"></app-node>
                 </td>
               </ng-container>

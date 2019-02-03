@@ -34,9 +34,11 @@ export class XmlViewComponent implements OnInit {
       this.groupArrays(node);
       nodes[node.tagName].push(node);
     }
+
     const nodeGroups = Object.values(nodes);
     this.removeEmptyTextNodes(nodeGroups);
     (parentNode as any).childNodesGroups = Object.values(nodeGroups);
+    this.computeArrayProperties(parentNode);
   }
 
   private removeEmptyTextNodes(nodesGroups: Element[][]) {
@@ -47,6 +49,36 @@ export class XmlViewComponent implements OnInit {
       })) {
         nodesGroups.splice(i, 1);
       }
+    }
+  }
+
+  private computeArrayProperties(node: Node) {
+    const elements: Element[][] = (node as any).childNodesGroups;
+    for (const arr of elements) {
+      const attributes = new Set();
+      const children = new Set();
+
+      for (const elt of arr) {
+        if (elt.attributes) {
+          for (let i = 0; i < elt.attributes.length; i++) {
+            attributes.add(elt.attributes[i].name);
+          }
+        }
+        if (elt.childNodes) {
+          for (let i = 0; i < elt.childNodes.length; i++) {
+            const childNode = elt.childNodes[i];
+            if (childNode instanceof Element) {
+              children.add(childNode.tagName);
+            } else if (childNode instanceof Text && childNode.textContent.trim() !== '') {
+              children.add('#text');
+            }
+            // this.computeArrayProperties(childNode);
+          }
+        }
+      }
+
+      (arr[0] as any).attributesSet = attributes;
+      (arr[0] as any).childNodesSet = children;
     }
   }
 
