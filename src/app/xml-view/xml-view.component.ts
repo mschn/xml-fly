@@ -30,6 +30,10 @@ export class XmlViewComponent implements OnInit {
       elt.parent = parentElt;
     }
 
+    if (this.isTextNode(parentNode)) {
+      return elt;
+    }
+
     if (parentNode instanceof Element) {
       elt.attributes = [];
       for (let i = 0; i < parentNode.attributes.length; i++) {
