@@ -50,7 +50,7 @@
             <td class="p-1" *ngIf="node.isText">
               {{ shortText }}
             </td>
-            <ng-container *ngIf="!isTextNode(node)">
+            <ng-container *ngIf="!node.isText">
               <ng-container *ngFor="let attr of node.attributes">
                   <td class="p-1 border-top"
                   (click)="onAttrClick($event, attr, node)">
@@ -60,7 +60,7 @@
               <ng-container *ngFor="let childNode of getChildNodes(node)">
                 <td *ngIf="!childNode" class="border-top">
                 </td>
-                <td class="" *ngIf="childNode && !isEmptyTextNode(childNode)">
+                <td class="" *ngIf="childNode">
                   <app-node [node]="childNode" [arrayInParent]="true" [noTagName]="true"></app-node>
                 </td>
               </ng-container>

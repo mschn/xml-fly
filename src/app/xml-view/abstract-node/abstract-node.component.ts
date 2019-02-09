@@ -17,24 +17,6 @@ export class AbstractNodeComponent implements OnInit {
   ngOnInit() {
   }
 
-  isTextNode(node: Node): boolean {
-    return (node.childNodes
-      && node.childNodes.length === 1
-      && node.childNodes[0] instanceof Text);
-  }
-
-  isEmptyTextNode(node: Node): boolean {
-    return (node instanceof Text && node.textContent.trim() === '');
-  }
-
-  getText(node: Node): string {
-    let ret: string = node.textContent;
-    if (ret.length > this.MAX_TEXT_LEN) {
-      ret = ret.substring(0, this.MAX_TEXT_LEN) + '…';
-    }
-    return ret;
-  }
-
   show(event: Event) {
     this.collapsed = false;
   }
