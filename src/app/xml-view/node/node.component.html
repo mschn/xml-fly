@@ -1,13 +1,13 @@
-<div *ngIf="node.nodeName"
+<div *ngIf="node.name"
   [class.noTagName]="noTagName"
-  [class.first-node]="!node.parentNode.parentNode"
-  [class.text-node]="isTextNode()"
+  [class.first-node]="!node.parent"
+  [class.text-node]="node.isText"
   (click)="onNodeClick($event, node)"
   class="node">
 
   <div class="header d-flex flex-row">
     <!-- expand / collapse button -->
-    <ng-container *ngIf="!isTextNode()">
+    <ng-container *ngIf="!node.isText">
       <button class="btn btn-sm" 
         [hidden]="!collapsed"
         (click)="show($event)">
@@ -22,13 +22,13 @@
 
     <!-- tag name -->
     <div *ngIf="!noTagName" class="p-1 tagname"
-      [class.name]="isTextNode()">
-      <span *ngIf="isTextNode()" class="type icon-tag">#</span>
-      {{ node.nodeName }}
+      [class.name]="node.isText">
+      <span *ngIf="node.isText" class="type icon-tag">#</span>
+      {{ node.name }}
     </div>
-    <div *ngIf="isTextNode()" class="value p-1"
+    <div *ngIf="node.isText" class="value p-1"
         [class.border-left]="!noTagName">
-      {{ getText(node) }}
+      {{ node.shortText }}
     </div>
   </div>
 
@@ -49,7 +49,7 @@
   </div>
 
   <!-- children nodes -->
-  <ng-container *ngFor="let childNodes of node.childNodesGroups">
+  <ng-container *ngFor="let childNodes of node.children">
     <!-- array -->
     <div class="pl-3"
          *ngIf="childNodes.length > 1"

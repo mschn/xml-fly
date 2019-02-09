@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { XmlFile, Selection } from './model';
+import { XmlFile, Selection, Elt } from './model';
 import { of, Observable } from 'rxjs';
 
 @Injectable({
@@ -65,23 +65,23 @@ export class DataService {
     this.selectedFile = file;
   }
 
-  selectNode(node: Node): void {
+  selectNode(node: Elt): void {
     this.selection.type = 'Node';
     this.selection.path = this.getNodePath(node);
-    this.selection.value = node.textContent;
+    this.selection.value = node.text;
   }
 
-  private getNodePath(node: Node): string[] {
+  private getNodePath(node: Elt): string[] {
     const paths = [];
     let curNode = node;
-    while (curNode.parentNode) {
-      paths.push((curNode as Element).tagName);
-      curNode = curNode.parentNode;
+    while (curNode.parent) {
+      paths.push(curNode.name);
+      curNode = curNode.parent;
     }
     return paths.reverse();
   }
 
-  selectAttr(attr: Attr, node: Node): void {
+  selectAttr(attr: Attr, node: Elt): void {
     this.selection.type = 'Attr';
     this.selection.path = this.getNodePath(node);
     this.selection.path.push(attr.name);

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/data.service';
+import { Elt } from 'src/app/model';
 
 @Component({
   selector: 'app-abstract-node',
@@ -42,7 +43,7 @@ export class AbstractNodeComponent implements OnInit {
     this.collapsed = true;
   }
 
-  onAttrClick(event: Event, attr: Attr, node: Node) {
+  onAttrClick(event: Event, attr: Attr, node: Elt) {
     event.stopPropagation();
     this.dataService.selectAttr(attr, node);
   }

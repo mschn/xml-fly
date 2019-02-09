@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractNodeComponent } from '../abstract-node/abstract-node.component';
 import { DataService } from 'src/app/data.service';
+import { Elt } from 'src/app/model';
 
 @Component({
   selector: 'app-node',
@@ -10,7 +11,7 @@ import { DataService } from 'src/app/data.service';
 })
 export class NodeComponent extends AbstractNodeComponent implements OnInit {
 
-  @Input() node: Node;
+  @Input() node: Elt;
 
   @Input() noTagName = false;
 
@@ -26,13 +27,9 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
     }
   }
 
-  isTextNode(): boolean {
-    return super.isTextNode(this.node);
-  }
-
   onNodeClick(event: Event) {
     event.stopPropagation();
-    if (this.isTextNode()) {
+    if (this.node.isText) {
       this.dataService.selectNode(this.node);
     }
   }

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Elt, Attr } from '../model';
 
 @Component({
   selector: 'app-xml-view',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class XmlViewComponent implements OnInit {
 
-  document: Document;
+  elt: Elt;
 
   parserError: string;
 
@@ -20,40 +21,60 @@ export class XmlViewComponent implements OnInit {
     } else {
       this.parserError =  null;
     }
-    this.groupArrays(document);
-    this.document = document;
+    this.elt = this.buildTree(document);
   }
 
-  private groupArrays (parentNode: Node) {
-    const nodes: {[s: string]: Array<Element> } = {};
+  private buildTree (parentNode: Node, parentElt: Elt = null): Elt {
+    const elt = this.getElt(parentNode);
+    if (parentElt) {
+      elt.parent = parentElt;
+    }
+
+    if (parentNode instanceof Element) {
+      elt.attributes = [];
+      for (let i = 0; i < parentNode.attributes.length; i++) {
+        const attr = new Attr();
+        attr.name = parentNode.attributes[i].name;
+        attr.value = parentNode.attributes[i].value;
+        elt.attributes.push(attr);
+      }
+    }
+
+    const nodes: { [s: string]: Elt[] } = {};
     for (let i = 0; i < parentNode.childNodes.length; i++) {
       const node = parentNode.childNodes[i] as Element;
+
+      if (this.isEmptyTextNode(node)) {
+        continue;
+      }
+
       if (!nodes.hasOwnProperty(node.tagName)) {
         nodes[node.tagName] = [];
       }
-      this.groupArrays(node);
-      nodes[node.tagName].push(node);
-    }
 
-    const nodeGroups = Object.values(nodes);
-    this.removeEmptyTextNodes(nodeGroups);
-    (parentNode as any).childNodesGroups = Object.values(nodeGroups);
-    this.computeArrayProperties(parentNode);
+      nodes[node.tagName].push(this.buildTree(node, elt));
+    }
+    elt.children = Object.values(nodes);
+    this.computeArrayProperties(elt);
+    return elt;
   }
 
-  private removeEmptyTextNodes(nodesGroups: Element[][]) {
-    for (let i = nodesGroups.length - 1; i >= 0; i--) {
-      const nodeGroup = nodesGroups[i];
-      if (nodeGroup.every(element => {
-        return element instanceof Text && element.textContent.trim() === '';
-      })) {
-        nodesGroups.splice(i, 1);
+  private getElt(n: Node): Elt {
+    const elt = new Elt();
+    elt.name = n.nodeName;
+    if (this.isTextNode(n)) {
+      elt.isText = true;
+      elt.text = n.textContent;
+      elt.shortText = elt.text;
+      if (elt.text.length > 200) {
+        elt.shortText = elt.text.substring(0, 200) + '…';
       }
     }
+    return elt;
   }
 
-  private computeArrayProperties(node: Node) {
-    const elements: Element[][] = (node as any).childNodesGroups;
+  private computeArrayProperties(parent: Elt) {
+    const elements: Elt[][] = parent.children;
     for (const arr of elements) {
       const attributes = new Set();
       const children = new Set();
@@ -64,22 +85,28 @@ export class XmlViewComponent implements OnInit {
             attributes.add(elt.attributes[i].name);
           }
         }
-        if (elt.childNodes) {
-          for (let i = 0; i < elt.childNodes.length; i++) {
-            const childNode = elt.childNodes[i];
-            if (childNode instanceof Element) {
-              children.add(childNode.tagName);
-            } else if (childNode instanceof Text && childNode.textContent.trim() !== '') {
-              children.add('#text');
+        if (elt.children) {
+          for (let i = 0; i < elt.children.length; i++) {
+            const childNode = elt.children[i];
+            if (childNode[0]) {
+              children.add(childNode[0].name);
             }
-            // this.computeArrayProperties(childNode);
           }
         }
       }
-
-      (arr[0] as any).attributesSet = attributes;
-      (arr[0] as any).childNodesSet = children;
+      arr[0].attributeNames = attributes;
+      arr[0].childrenNames = children;
     }
+  }
+
+  private isTextNode(node: Node): boolean {
+    return (node.childNodes
+      && node.childNodes.length === 1
+      && node.childNodes[0] instanceof Text);
+  }
+
+  private isEmptyTextNode(node: Node): boolean {
+    return (node instanceof Text && node.textContent.trim() === '');
   }
 
   constructor() { }

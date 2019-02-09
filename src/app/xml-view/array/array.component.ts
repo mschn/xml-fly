@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AbstractNodeComponent } from '../abstract-node/abstract-node.component';
 import { DataService } from 'src/app/data.service';
+import { Elt } from 'src/app/model';
 
 @Component({
   selector: 'app-array',
@@ -9,7 +10,7 @@ import { DataService } from 'src/app/data.service';
 })
 export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
 
-  @Input() nodes: Node[];
+  @Input() nodes: Elt[];
 
   constructor(dataService: DataService) {
     super(dataService);
@@ -19,8 +20,8 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
     super.ngOnInit();
   }
 
-  getChildNodes(node: Node): Node[] {
-    const tagNames = (this.nodes[0] as any).childNodesSet;
+  getChildNodes(node: Elt): Elt[] {
+    const tagNames = this.nodes[0].childrenNames;
     const ret = [];
     tagNames.forEach(tagName => {
       ret.push(this.getChildNodeByTagname(node, tagName));
@@ -28,14 +29,11 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
     return ret;
   }
 
-  getChildNodeByTagname(node: Node, tagName: string): Node {
-    for (let i = 0; i < node.childNodes.length; i++) {
-      const childNode = node.childNodes[i];
-      if (childNode instanceof Element && childNode.tagName === tagName) {
-        return childNode;
-      }
-      if (childNode instanceof Text && !this.isEmptyTextNode(childNode) && tagName === '#text') {
-        return childNode;
+  getChildNodeByTagname(node: Elt, tagName: string): Elt {
+    for (let i = 0; i < node.children.length; i++) {
+      const arr = node.children[i];
+      if (arr[0].name === tagName) {
+        return arr[0];
       }
     }
   }

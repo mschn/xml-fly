@@ -16,7 +16,7 @@
     </ng-container>
 
     <span class="tagname p-1">
-      {{ nodes[0].nodeName }}
+      {{ nodes[0].name }}
     </span>
     <span class="py-1">
       ({{ nodes.length }})
@@ -25,15 +25,15 @@
 
   <div class="ml-3">
     <table class="" [hidden]="collapsed">
-        <thead *ngIf="!isTextNode(nodes[0])">
+        <thead *ngIf="!nodes[0].isText">
           <tr>
             <th class="p-1"></th>
             <th class="p-1"
-              *ngFor="let attr of nodes[0].attributesSet">
+              *ngFor="let attr of nodes[0].attributeNames">
               <span class="type icon-attr">@</span>
               {{ attr }}
             </th>
-            <ng-container *ngFor="let childNode of nodes[0].childNodesSet">
+            <ng-container *ngFor="let childNode of nodes[0].childrenNames">
               <th class="p-1" >
                 <span class="type icon-tag">#</span>
                 {{ childNode }}
@@ -47,8 +47,8 @@
             <td class="p-1">
               {{ i }}
             </td>
-            <td class="p-1" *ngIf="isTextNode(node)">
-              {{ getText(node) }}
+            <td class="p-1" *ngIf="node.isText">
+              {{ shortText }}
             </td>
             <ng-container *ngIf="!isTextNode(node)">
               <ng-container *ngFor="let attr of node.attributes">
