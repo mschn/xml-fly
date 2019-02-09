@@ -30,6 +30,10 @@ export class XmlService {
 
     const nodes: { [s: string]: Elt[] } = {};
     for (let i = 0; i < parentNode.childNodes.length; i++) {
+      if (!(parentNode.childNodes[i] instanceof Element)) {
+        continue;
+      }
+
       const node = parentNode.childNodes[i] as Element;
 
       if (this.isEmptyTextNode(node)) {

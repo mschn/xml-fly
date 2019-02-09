@@ -47,8 +47,8 @@
             <td class="p-1">
               {{ i }}
             </td>
-            <td class="p-1" *ngIf="node.isText">
-              {{ shortText }}
+            <td class="p-1 border-top" *ngIf="node.isText">
+              {{ node.shortText }}
             </td>
             <ng-container *ngIf="!node.isText">
               <ng-container *ngFor="let attr of node.attributes">
