@@ -8,6 +8,7 @@ import { NodeComponent } from './xml-view/node/node.component';
 import { ArrayComponent } from './xml-view/array/array.component';
 import { AbstractNodeComponent } from './xml-view/abstract-node/abstract-node.component';
 import { SelectionComponent } from './selection/selection.component';
+import {HotkeyModule} from 'angular2-hotkeys';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SelectionComponent } from './selection/selection.component';
   ],
   imports: [
     BrowserModule,
-    NgbModule
+    NgbModule,
+    HotkeyModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

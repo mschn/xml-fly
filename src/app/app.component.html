@@ -31,7 +31,7 @@
         <form class="m-1 form-inline navbar-nav mr-auto">
     
             <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading">
-                Open <input type="file" (change)="openFile($event)">
+                Open <input type="file" id="open-file" (change)="openFile($event)">
             </label>
     
             <button *ngIf="loading"

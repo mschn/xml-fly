@@ -88,7 +88,11 @@ export class DataService {
     this.selection.value = attr.value;
   }
 
-  closeFile(file: XmlFile): void {
+  closeFile(file?: XmlFile): void {
+    if (!file) {
+      file = this.selectedFile;
+    }
+
     const idx = this.files.indexOf(file);
     if (idx > -1) {
       this.files.splice(idx, 1);
