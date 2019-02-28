@@ -86,7 +86,15 @@ export class DataService {
     this.selection.path = this.getNodePath(node);
     this.selection.path.push(attr.name);
     this.selection.value = attr.value;
-
   }
 
+  closeFile(file: XmlFile): void {
+    const idx = this.files.indexOf(file);
+    if (idx > -1) {
+      this.files.splice(idx, 1);
+    }
+    if (this.files.length > 0) {
+      this.selectFile(this.files[0]);
+    }
+  }
 }

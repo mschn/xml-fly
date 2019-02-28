@@ -50,4 +50,7 @@ export class AppComponent implements OnInit {
     this.dataService.selectFile(file);
   }
 
+  closeFile(file: XmlFile) {
+    this.dataService.closeFile(file);
+  }
 }

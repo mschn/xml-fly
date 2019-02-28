@@ -9,11 +9,23 @@
     
         <div class="nav-item m-1" 
             *ngFor="let file of files">
-            <button class="btn btn-sm btn-primary"
-                [class.active]="file.selected"
-                (click)="selectFile(file)">
-                {{ file.name }}
-            </button>
+
+            <div class="btn-group" role="group" aria-label="Basic example">
+
+                <button class="btn btn-sm btn-primary text-truncate filename"
+                    [class.active]="file.selected"
+                    placement="bottom" ngbTooltip="{{ file.name }}"
+                    (click)="selectFile(file)">
+                    {{ file.name }}
+                </button>
+
+                <button type="button"
+                    *ngIf="file.selected"
+                    (click)="closeFile(file)"
+                    [class.active]="file.selected"
+                    class="btn btn-sm btn-primary border-left-0">X</button>
+            </div>
+
         </div>
     
         <form class="m-1 form-inline navbar-nav mr-auto">

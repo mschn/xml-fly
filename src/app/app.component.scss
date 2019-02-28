@@ -6,6 +6,10 @@ nav {
   flex: 0 0 auto;
 
   .nav-item {
-    
+
+    .btn.filename {
+      max-width: 120px;
+    }
+
   }
 }

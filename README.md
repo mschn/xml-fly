@@ -7,7 +7,7 @@ You can use it to visualize complex XML documents in a graphical tree view.
 
 This project uses `npm`, here are the available commands:
 
-`ng server` starts the Angular dev server with hot reload.
+`ng serve` starts the Angular dev server with hot reload.
 Navigate to `http://localhost:4200/`.
 
 `npm run electron` runs the application inside Electron.
