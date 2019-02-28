@@ -27,7 +27,7 @@
     <table class="" [hidden]="collapsed">
         <thead *ngIf="!nodes[0].isText">
           <tr>
-            <th class="p-1"></th>
+            <th class="p-1 array-index"></th>
             <th class="p-1"
               *ngFor="let attr of nodes[0].attributeNames">
               <span class="type icon-attr">@</span>
@@ -44,7 +44,7 @@
 
         <tbody>
           <tr *ngFor="let node of nodes; let i = index">
-            <td class="p-1">
+            <td class="p-1 array-index">
               {{ i }}
             </td>
             <td class="p-1 border-top" *ngIf="node.isText">

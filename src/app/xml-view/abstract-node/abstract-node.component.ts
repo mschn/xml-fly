@@ -8,8 +8,6 @@ import { Elt } from 'src/app/model';
 })
 export class AbstractNodeComponent implements OnInit {
 
-  private readonly MAX_TEXT_LEN = 200;
-
   collapsed = false;
 
   constructor(protected dataService: DataService) { }
