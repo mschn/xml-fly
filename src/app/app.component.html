@@ -7,7 +7,13 @@
 
     <nav class="nav navbar-dark bg-primary px-2">
 
-        <div class="nav-item m-1"
+        <a class="navbar-brand" href="#">
+            <img src="assets/xmlfly-32.png"/>
+            XmlFly
+        </a>
+
+
+        <div class="nav-item mx-1 mt-2"
             *ngFor="let file of files">
 
             <div class="btn-group" role="group" aria-label="Basic example">
@@ -28,7 +34,7 @@
 
         </div>
 
-        <form class="m-1 form-inline navbar-nav mr-auto">
+        <form class="mx-1 mt-2 form-inline navbar-nav mr-auto">
 
             <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading">
                 Open <input type="file" id="open-file" (change)="openFile($event)">

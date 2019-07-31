@@ -1,5 +1,7 @@
 # XmlFly
 
+![XmlFly icon](https://raw.githubusercontent.com/mschn/xml-fly/master/src/assets/xmlfly-128.png)
+
 This is an Xml document viewer.
 You can use it to visualize complex XML documents in a graphical tree view.
 
