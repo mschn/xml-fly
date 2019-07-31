@@ -6,8 +6,8 @@
 >
 
     <nav class="nav navbar-dark bg-primary px-2">
-    
-        <div class="nav-item m-1" 
+
+        <div class="nav-item m-1"
             *ngFor="let file of files">
 
             <div class="btn-group" role="group" aria-label="Basic example">
@@ -27,25 +27,25 @@
             </div>
 
         </div>
-    
+
         <form class="m-1 form-inline navbar-nav mr-auto">
-    
+
             <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading">
                 Open <input type="file" id="open-file" (change)="openFile($event)">
             </label>
-    
+
             <button *ngIf="loading"
                 class="btn btn-sm btn-primary" type="button" disabled>
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 Loading...
             </button>
-    
+
         </form>
     </nav>
-        
 
 
-    <div class="border-bottom flex-fill overflow-auto">
+
+    <div class="border-bottom flex-fill overflow-auto main">
         <div *ngFor="let file of files" [hidden]="!file.selected">
             <app-xml-view [xmlString]="file.xmlFileContent"></app-xml-view>
         </div>

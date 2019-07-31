@@ -1,36 +1,9 @@
+@import '../../colors.scss';
+
 .node {
-    border-left: 1px solid #d8d8d8;
-    border-top: 1px solid #d8d8d8;
     font-size: .8rem;
     display: table;
     width: 100%;
-    background-color: white;
-    
-    &.noTagName {
-        border: 0;
-        border-top: 1px solid #d8d8d8;
-    }
-
-    &.text-node > .header {
-        .type, .name {
-            background-color: #f8f8f8;
-        }
-    }
-
-    .icon-attr, .icon-tag {
-        font-size: .9rem;
-        font-weight: bold;
-        width: 1rem;
-        display: inline-block;
-        text-align: right;
-    }
-    .icon-tag {
-        color: #0095ff;
-    }
-    .icon-attr {
-        color: #ea7d1f;
-    }
-
 
     .btn-sm {
         line-height: 1;
@@ -51,44 +24,44 @@
         .icon-collapse {
             background-image: url(../../../assets/icons/minus-square-regular.svg);
         }
-
     }
 
-    .value {
+    .tagname {
+      color: $tagname-col;
+
+      .tag {
+        color: $tag-col;
+      }
+    }
+
+    .equals {
+      color: $tag-col;
+    }
+
+    .attr-name {
+      color: $attr-col;
+    }
+
+    .attr-value {
         overflow: hidden;
         text-overflow: ellipsis;
         word-break: break-all;
         min-width: 120px;
+        color: $attr-val-col;
         cursor: pointer;
-    }
-
-    .tagname:not(.name) {
-        font-size: 1rem;
-        font-weight: bold;
-        line-height: 1;
-    }
-
-    .name {
-        min-width: 100px;
-        width: 100px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
     .inner {
         border-left: 4px solid transparent;
     }
 
-    .attr {
-        i, .name {
-            background-color: #f8f8f8;
-        }
-    }
 }
 
 .first-node {
     border: 0;
-    border-bottom: 1px solid #d8d8d8;
     margin: .5rem;
+}
+
+.indent-node {
+  margin-left: 1.75rem;
 }

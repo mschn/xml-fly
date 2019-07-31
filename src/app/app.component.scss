@@ -1,5 +1,10 @@
-.btn-file input {
-  display: none;
+@import 'colors.scss';
+
+.btn-file {
+  cursor: pointer;
+  input {
+    display: none;
+  }
 }
 
 nav {
@@ -12,4 +17,10 @@ nav {
     }
 
   }
+}
+
+.main {
+  background-color: $bg-col;
+  color: $text-col;
+  font-family: 'Roboto Mono', monospace;
 }

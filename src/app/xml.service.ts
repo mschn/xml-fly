@@ -68,8 +68,8 @@ export class XmlService {
   private computeArrayProperties(parent: Elt) {
     const elements: Elt[][] = parent.children;
     for (const arr of elements) {
-      const attributes = new Set();
-      const children = new Set();
+      const attributes = new Set<string>();
+      const children = new Set<string>();
 
       for (const elt of arr) {
         if (elt.attributes) {

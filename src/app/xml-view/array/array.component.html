@@ -16,27 +16,25 @@
     </ng-container>
 
     <span class="tagname p-1">
-      {{ nodes[0].name }}
+      <span class="tag">&lt;</span>{{ nodes[0].name }}<span class="tag">&gt;</span>
     </span>
-    <span class="py-1">
+    <span class="py-1 array-len">
       ({{ nodes.length }})
     </span>
   </div>
 
   <div class="ml-3">
-    <table class="" [hidden]="collapsed">
+    <table class="mr-1" [hidden]="collapsed">
         <thead *ngIf="!nodes[0].isText">
           <tr>
             <th class="p-1 array-index"></th>
-            <th class="p-1"
+            <th class="p-1 attr-name"
               *ngFor="let attr of nodes[0].attributeNames">
-              <span class="type icon-attr">@</span>
               {{ attr }}
             </th>
             <ng-container *ngFor="let childNode of nodes[0].childrenNames">
-              <th class="p-1" >
-                <span class="type icon-tag">#</span>
-                {{ childNode }}
+              <th class="p-1 tag-name" >
+                <span class="tag">&lt;</span>{{ childNode }}<span class="tag">&gt;</span>
               </th>
             </ng-container>
           </tr>
@@ -45,21 +43,19 @@
         <tbody>
           <tr *ngFor="let node of nodes; let i = index">
             <td class="p-1 array-index">
-              {{ i }}
+              {{ i }}.
             </td>
-            <td class="p-1 border-top" *ngIf="node.isText">
+            <td class="p-1 tag-val" *ngIf="node.isText">
               {{ node.shortText }}
             </td>
             <ng-container *ngIf="!node.isText">
               <ng-container *ngFor="let attr of node.attributes">
-                  <td class="p-1 border-top"
+                  <td class="p-1 attr-val"
                   (click)="onAttrClick($event, attr, node)">
                    {{ attr.value }}
                  </td>
               </ng-container>
               <ng-container *ngFor="let childNode of getChildNodes(node)">
-                <td *ngIf="!childNode" class="border-top">
-                </td>
                 <td class="" *ngIf="childNode">
                   <app-node [node]="childNode" [arrayInParent]="true" [noTagName]="true"></app-node>
                 </td>

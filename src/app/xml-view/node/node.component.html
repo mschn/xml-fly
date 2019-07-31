@@ -8,12 +8,12 @@
   <div class="header d-flex flex-row">
     <!-- expand / collapse button -->
     <ng-container *ngIf="!node.isText">
-      <button class="btn btn-sm" 
+      <button class="btn btn-sm"
         [hidden]="!collapsed"
         (click)="show($event)">
         <span class="icon-expand"></span>
       </button>
-      <button class="btn btn-sm" 
+      <button class="btn btn-sm"
         [hidden]="collapsed"
         (click)="hide($event)">
         <span class="icon-collapse"></span>
@@ -21,28 +21,25 @@
     </ng-container>
 
     <!-- tag name -->
-    <div *ngIf="!noTagName" class="p-1 tagname"
-      [class.name]="node.isText">
-      <span *ngIf="node.isText" class="type icon-tag">#</span>
-      {{ node.name }}
+    <div *ngIf="!noTagName" class="py-1 tagname"
+      [class.indent-node]="node.isText">
+      <span class="tag">&lt;</span>{{ node.name }}<span class="tag">&gt;</span>
     </div>
-    <div *ngIf="node.isText" class="value p-1"
-        [class.border-left]="!noTagName">
+    <div *ngIf="node.isText" class="value p-1">
       {{ node.shortText }}
     </div>
   </div>
 
   <!-- attributes -->
-  <div class="pl-3 attr" 
+  <div class="pl-3 attr"
       [hidden]="collapsed"
       *ngFor="let attr of node.attributes">
     <div class="node d-flex flex-row"
         (click)="onAttrClick($event, attr, node)">
-      <div class="name p-1">
-        <span class="icon-attr">@</span>
-        {{ attr.name }}
-      </div>        
-      <div class="value p-1 border-left">
+      <div class="attr-name p-1 indent-node">
+        {{ attr.name }} <span class="equals">=</span>
+      </div>
+      <div class="attr-value p-1 pl-0">
         {{ attr.value }}
       </div>
     </div>
