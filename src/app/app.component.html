@@ -6,13 +6,8 @@
 >
 
     <nav class="nav navbar-dark bg-primary px-2">
-      <a class="navbar-brand" href="#">
-          <img src="assets/xmlfly-32.png"/>
-          XmlFly
-      </a>
 
-
-      <form class="mx-1 mt-2 form-inline navbar-nav">
+      <form class="my-1 form-inline navbar-nav">
 
         <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading">
             Open <input type="file" id="open-file" (change)="openFile($event)">
@@ -26,12 +21,12 @@
 
       </form>
 
-      <div class="mt-2 mr-auto">
+      <div class="my-1 mr-auto">
         <button class="btn btn-sm btn-primary" (click)="expandAll()">Expand all</button>
         <button class="btn btn-sm btn-primary" (click)="collapseAll()">Collapse all</button>
       </div>
 
-      <div class="mx-1 mt-2">
+      <div class="my-1">
         <button class="btn btn-sm btn-primary" placement="auto"
           [ngbPopover]="aboutContent" popoverTitle="About XmlFly">About</button>
       </div>
@@ -39,7 +34,7 @@
 
       <ng-template #aboutContent>
         <p>
-          <img width=96 src="assets/xmlfly-128.png"/>
+          <img width=96 src="assets/icons/128x128.png"/>
         </p>
         <p>
           <a href="https://github.com/mschn/xml-fly" target="_blank">
