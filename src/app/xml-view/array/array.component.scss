@@ -28,6 +28,10 @@
 
     .attr-val {
       color: $attr-val-col;
+
+      &.selected > div {
+        background-color: $selected-bg-col;
+      }
     }
 
     .tag-val {

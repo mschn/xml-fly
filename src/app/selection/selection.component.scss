@@ -1,19 +1,17 @@
-.header {
-    .separator {
-        color: #888;
-    }
+@import '../colors.scss';
+
+.selection {
+  background-color: #2d2d2d;
+  color: $text-col;
+  border-bottom: 1px solid #424242;
+
+  .col-tagname {
+    color: $tagname-col;
+  }
+
+  .grey {
+    color: $tag-col
+  }
+
 }
 
-.textcontent {
-    max-height: 8rem;
-    overflow: auto;
-    word-break: break-all;
-    font-size: .8rem;
-}
-
-.icon-tag {
-    color: #0095ff;
-}
-.icon-attr {
-    color: #ea7d1f;
-}

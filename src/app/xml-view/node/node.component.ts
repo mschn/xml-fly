@@ -30,7 +30,7 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
   onNodeClick(event: Event) {
     event.stopPropagation();
     if (this.node.isText) {
-      this.dataService.selectNode(this.node);
+      this.dataService.selectNode(this.node, this);
     }
   }
 

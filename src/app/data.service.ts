@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { XmlFile, Selection, Elt } from './model';
 import { of, Observable } from 'rxjs';
+import { AbstractNodeComponent } from './xml-view/abstract-node/abstract-node.component';
 
 @Injectable({
   providedIn: 'root'
@@ -47,15 +48,6 @@ export class DataService {
     });
   }
 
-  private findFile(file: XmlFile): XmlFile {
-    for (const f of this.files) {
-      if (file.xmlFileContent === f.xmlFileContent) {
-        return f;
-      }
-    }
-    return null;
-  }
-
   selectFile(file: XmlFile): void {
     if (this.selectedFile) {
       this.selectedFile.selected = false;
@@ -65,27 +57,29 @@ export class DataService {
     this.selectedFile = file;
   }
 
-  selectNode(node: Elt): void {
+  selectNode(node: Elt, source: AbstractNodeComponent): void {
+    if (this.selection && this.selection.node) {
+      this.selection.node.selected = false;
+    }
     this.selection.type = 'Node';
     this.selection.path = this.getNodePath(node);
     this.selection.value = node.text;
+    this.selection.node = source;
+    this.selection.node.selected = true;
+    this.selection.node.selectedAttr = null;
   }
 
-  private getNodePath(node: Elt): string[] {
-    const paths = [];
-    let curNode = node;
-    while (curNode.parent) {
-      paths.push(curNode.name);
-      curNode = curNode.parent;
+  selectAttr(attr: Attr, node: Elt, source: AbstractNodeComponent): void {
+    if (this.selection && this.selection.node) {
+      this.selection.node.selected = false;
     }
-    return paths.reverse();
-  }
-
-  selectAttr(attr: Attr, node: Elt): void {
     this.selection.type = 'Attr';
     this.selection.path = this.getNodePath(node);
     this.selection.path.push(attr.name);
     this.selection.value = attr.value;
+    this.selection.node = source;
+    this.selection.node.selected = true;
+    this.selection.node.selectedAttr = attr;
   }
 
   closeFile(file?: XmlFile): void {
@@ -100,5 +94,24 @@ export class DataService {
     if (this.files.length > 0) {
       this.selectFile(this.files[0]);
     }
+  }
+
+  private getNodePath(node: Elt): string[] {
+    const paths = [];
+    let curNode = node;
+    while (curNode.parent) {
+      paths.push(curNode.name);
+      curNode = curNode.parent;
+    }
+    return paths.reverse();
+  }
+
+  private findFile(file: XmlFile): XmlFile {
+    for (const f of this.files) {
+      if (file.xmlFileContent === f.xmlFileContent) {
+        return f;
+      }
+    }
+    return null;
   }
 }

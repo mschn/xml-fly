@@ -55,6 +55,39 @@
         border-left: 4px solid transparent;
     }
 
+
+    .header.selected {
+
+      & > .tagname {
+        background: $selected-bg-col;
+        border-radius: 5px 0 0 5px;
+        border-right: 0;
+      }
+
+      & > .value {
+        background: $selected-bg-col;
+        border-radius: 0 5px 5px 0;
+      }
+
+    }
+
+    .attr {
+      .selected {
+        & > .attr-name {
+          background: $selected-bg-col;
+          border-radius: 5px 0 0 5px;
+          border-right: 0;
+        }
+
+        & > .attr-value {
+          background: $selected-bg-col;
+          border-radius: 0 5px 5px 0;
+        }
+      }
+    }
+
+
+
 }
 
 .first-node {

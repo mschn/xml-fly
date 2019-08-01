@@ -1,15 +1,26 @@
-<div *ngIf="selection?.type">
-  <div class="p-3 header bg-dark text-light">
-      <span *ngIf="selection.type === 'Attr'"
-          class="icon-attr">@</span>
-      <span *ngIf="selection.type === 'Node'"
-          class="icon-tag">#</span>
-        <span *ngFor="let node of selection.path; let lastNode = last">
-            {{ node }}
-            <span class="separator" *ngIf="!lastNode">/</span>
-        </span>
+<div *ngIf="selection?.type" class="selection p-3">
+
+  <div class="header">
+      <span *ngIf="selection.type === 'Attr'" class="col-tagname">
+        @
+        <span class="grey">Attribute</span>
+      </span>
+      <span *ngIf="selection.type === 'Node'" class="col-tagname">
+        #
+        <span class="grey">Node</span>
+      </span>
+
+      <span class="grey px-1">/</span>
+      <span *ngFor="let node of selection.path; let lastNode = last" class="col-tagname"
+        >{{ node }}<span class="grey px-1" *ngIf="!lastNode">/</span>
+      </span>
   </div>
-  <div class="p-3 textcontent">
+
+  <div>
+    <span class="grey">
+      Value =
+    </span>
     {{ selection.value }}
   </div>
+
 </div>

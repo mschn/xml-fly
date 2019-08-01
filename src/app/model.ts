@@ -1,3 +1,5 @@
+import { AbstractNodeComponent } from './xml-view/abstract-node/abstract-node.component';
+
 export class XmlFile {
     name: string;
     selected: boolean;
@@ -9,6 +11,7 @@ export class Selection {
     type: 'Node' | 'Attr';
     path: string[];
     value: string;
+    node: AbstractNodeComponent;
 }
 
 export class Elt {

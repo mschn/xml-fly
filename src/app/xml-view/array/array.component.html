@@ -50,9 +50,12 @@
             </td>
             <ng-container *ngIf="!node.isText">
               <ng-container *ngFor="let attr of node.attributes">
-                  <td class="p-1 attr-val"
+                  <td class="attr-val"
+                      [class.selected]="selected && selectedAttr === attr"
                   (click)="onAttrClick($event, attr, node)">
-                   {{ attr.value }}
+                  <div class="p1">
+                    {{ attr.value }}
+                  </div>
                  </td>
               </ng-container>
               <ng-container *ngFor="let childNode of getChildNodes(node)">

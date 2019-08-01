@@ -9,6 +9,8 @@ import { Elt } from 'src/app/model';
 export class AbstractNodeComponent implements OnInit {
 
   collapsed = false;
+  selected = false;
+  selectedAttr: Attr;
 
   constructor(protected dataService: DataService) { }
 
@@ -25,6 +27,6 @@ export class AbstractNodeComponent implements OnInit {
 
   onAttrClick(event: Event, attr: Attr, node: Elt) {
     event.stopPropagation();
-    this.dataService.selectAttr(attr, node);
+    this.dataService.selectAttr(attr, node, this);
   }
 }
