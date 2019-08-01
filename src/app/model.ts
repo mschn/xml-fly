@@ -12,6 +12,7 @@ export class Selection {
     type: 'Node' | 'Attr';
     path: string[];
     value: string;
+    element: Elt;
     node: AbstractNodeComponent;
 }
 

@@ -1,7 +1,6 @@
 <div class="array">
 
   <div class="header">
-    <!-- expand / collapse button -->
     <ng-container>
       <button class="btn btn-sm"
         [hidden]="!nodes[0].collapsed"
@@ -15,7 +14,9 @@
       </button>
     </ng-container>
 
-    <span class="tagname p-1">
+    <span class="tagname p-1" 
+        (click)="onNodeClick($event)"
+        [class.selected]="selected && !selectedAttr">
       <span class="tag">&lt;</span>{{ nodes[0].name }}<span class="tag">&gt;</span>
     </span>
     <span class="py-1 array-len">
@@ -29,7 +30,8 @@
           <tr>
             <th class="p-1 array-index"></th>
             <th class="p-1 attr-name"
-              *ngFor="let attr of nodes[0].attributeNames">
+              *ngFor="let attr of nodes[0].attributeNames"
+              (click)=onNodeClick($event)>
               {{ attr }}
             </th>
             <ng-container *ngFor="let childNode of nodes[0].childrenNames">

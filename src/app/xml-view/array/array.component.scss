@@ -5,10 +5,6 @@
         white-space: nowrap;
     }
 
-    .tagname {
-      color: $tagname-col;
-    }
-
     .tag {
       color: $tag-col;
     }
@@ -22,8 +18,12 @@
       white-space: nowrap;
     }
 
-    .tag-name {
+    .tagname {
       color: $tagname-col;
+
+      &.selected {
+        background-color: $selected-bg-col;
+      }
     }
 
     .attr-val {

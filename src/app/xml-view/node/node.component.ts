@@ -32,6 +32,7 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
 
 
   ngOnInit() {
+    (this.node as any).viewRef = this;
     if (this.arrayInParent) {
       (this.node as any).collapsed = true;
     }
@@ -39,9 +40,7 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
 
   onNodeClick(event: Event) {
     event.stopPropagation();
-    if (this.node.isText) {
-      this.dataService.selectNode(this.node, this);
-    }
+    this.dataService.selectNode(this.node, this);
   }
 
 }

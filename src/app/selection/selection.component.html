@@ -11,12 +11,13 @@
       </span>
 
       <span class="grey px-1">/</span>
-      <span *ngFor="let node of selection.path; let lastNode = last" class="col-tagname"
+      <span *ngFor="let node of selection.path; let lastNode = last; let i = index;"
+        class="col-tagname" (click)="selectNode(i)"
         >{{ node }}<span class="grey px-1" *ngIf="!lastNode">/</span>
       </span>
   </div>
 
-  <div>
+  <div *ngIf="selection.isText">
     <span class="grey">
       Value =
     </span>

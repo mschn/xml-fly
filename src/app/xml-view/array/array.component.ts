@@ -18,6 +18,14 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
 
   ngOnInit() {
     super.ngOnInit();
+    this.nodes.forEach((n: any) => {
+      n.viewRef = this;
+    });
+  }
+
+  onNodeClick(event: Event) {
+    event.stopPropagation();
+    this.dataService.selectNode(this.nodes[0], this);
   }
 
   show(event: Event) {

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { XmlFile, Selection } from '../model';
+import { Selection } from '../model';
 
 @Component({
   selector: 'app-selection',
@@ -17,5 +17,20 @@ export class SelectionComponent implements OnInit {
     this.dataService.getSelection().subscribe(selection => {
       this.selection = selection;
     });
+  }
+
+  selectNode(index: number) {
+    let n = this.selection.element;
+    let len = this.selection.path.length - 1 - index;
+    if (len === 0) {
+      return;
+    }
+    if (this.selection.type === 'Attr') {
+      len -= 1;
+    }
+    for (let i = 0; i < len; i++) {
+      n = n.parent;
+    }
+    this.dataService.selectNode(n, (n as any).viewRef);
   }
 }

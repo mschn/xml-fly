@@ -68,6 +68,7 @@ export class DataService {
     this.selection.type = 'Node';
     this.selection.path = this.getNodePath(node);
     this.selection.value = node.text;
+    this.selection.element = node;
     this.selection.node = source;
     this.selection.node.selected = true;
     this.selection.node.selectedAttr = null;
@@ -82,6 +83,7 @@ export class DataService {
     this.selection.path.push(attr.name);
     this.selection.value = attr.value;
     this.selection.node = source;
+    this.selection.element = node;
     this.selection.node.selected = true;
     this.selection.node.selectedAttr = attr;
   }
