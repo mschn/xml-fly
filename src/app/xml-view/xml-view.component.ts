@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Elt } from '../model';
-import { XmlFile } from 'out/xml-fly-win32-ia32/resources/app/src/app/model';
+import { Elt, XmlFile } from '../model';
 
 @Component({
   selector: 'app-xml-view',

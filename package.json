@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "ng build --base-href ./ && electron .",
+    "electron": "ng build && electron .",
     "package:win": "ng build --base-href ./ && electron-packager . --overwrite --platform=win32 --arch=ia32 --out=out"
   },
   "private": true,
@@ -41,7 +41,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~11.9.6",
     "codelyzer": "^5.0.1",
-    "electron": "^4.0.6",
+    "electron": "^6.0.0",
     "electron-packager": "^13.1.0",
     "jasmine-core": "~3.3.0",
     "jasmine-spec-reporter": "~4.2.1",
