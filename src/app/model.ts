@@ -5,6 +5,7 @@ export class XmlFile {
     selected: boolean;
     xmlFileContent: string;
     selectedNode: Elt;
+    tree: Elt;
 }
 
 export class Selection {

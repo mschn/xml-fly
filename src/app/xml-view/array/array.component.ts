@@ -20,6 +20,14 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
     super.ngOnInit();
   }
 
+  show(event: Event) {
+    (this.nodes[0] as any).collapsed = false;
+  }
+
+  hide(event: Event) {
+    (this.nodes[0] as any).collapsed = true;
+  }
+
   getChildNodes(node: Elt): Elt[] {
     const tagNames = this.nodes[0].childrenNames;
     const ret = [];

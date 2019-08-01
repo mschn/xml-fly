@@ -8,6 +8,12 @@ export class XmlService {
 
   constructor() { }
 
+  parseFile(value: string): Elt {
+    const parser = new DOMParser();
+    const document = parser.parseFromString(value, 'application/xml');
+    return this.buildTree(document);
+  }
+
   buildTree (parentNode: Node, parentElt: Elt = null): Elt {
     const elt = this.getElt(parentNode);
     if (parentElt) {

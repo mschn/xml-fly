@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Elt, Attr } from '../model';
-import { XmlService } from '../xml.service';
+import { Elt } from '../model';
+import { XmlFile } from 'out/xml-fly-win32-ia32/resources/app/src/app/model';
 
 @Component({
   selector: 'app-xml-view',
@@ -13,19 +13,9 @@ export class XmlViewComponent implements OnInit {
 
   parserError: string;
 
-  @Input() set xmlString (value: string) {
-    const parser = new DOMParser();
-    const document = parser.parseFromString(value, 'application/xml');
-    const parsererror = document.querySelector('html body parsererror div');
-    if (parsererror) {
-      this.parserError = parsererror.textContent;
-    } else {
-      this.parserError =  null;
-    }
-    this.elt = this.xmlService.buildTree(document);
-  }
+  @Input() file: XmlFile;
 
-  constructor(private xmlService: XmlService) { }
+  constructor() { }
 
   ngOnInit() {
   }

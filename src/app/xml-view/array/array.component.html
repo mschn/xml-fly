@@ -4,12 +4,12 @@
     <!-- expand / collapse button -->
     <ng-container>
       <button class="btn btn-sm"
-        [hidden]="!collapsed"
+        [hidden]="!nodes[0].collapsed"
         (click)="show($event)">
         <span class="icon-expand"></span>
       </button>
       <button class="btn btn-sm"
-        [hidden]="collapsed"
+        [hidden]="nodes[0].collapsed"
         (click)="hide($event)">
         <span class="icon-collapse"></span>
       </button>
@@ -24,7 +24,7 @@
   </div>
 
   <div class="ml-3">
-    <table class="mr-1" [hidden]="collapsed">
+    <table class="mr-1" [hidden]="nodes[0].collapsed">
         <thead *ngIf="!nodes[0].isText">
           <tr>
             <th class="p-1 array-index"></th>

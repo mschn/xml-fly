@@ -6,47 +6,69 @@
 >
 
     <nav class="nav navbar-dark bg-primary px-2">
+      <a class="navbar-brand" href="#">
+          <img src="assets/xmlfly-32.png"/>
+          XmlFly
+      </a>
 
-        <a class="navbar-brand" href="#">
-            <img src="assets/xmlfly-32.png"/>
-            XmlFly
-        </a>
+
+      <form class="mx-1 mt-2 form-inline navbar-nav">
+
+        <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading">
+            Open <input type="file" id="open-file" (change)="openFile($event)">
+        </label>
+
+        <button *ngIf="loading"
+            class="btn btn-sm btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>
+
+      </form>
+
+      <div class="mt-2 mr-auto">
+        <button class="btn btn-sm btn-primary" (click)="expandAll()">Expand all</button>
+        <button class="btn btn-sm btn-primary" (click)="collapseAll()">Collapse all</button>
+      </div>
+
+      <div class="mx-1 mt-2">
+        <button class="btn btn-sm btn-primary" placement="auto"
+          [ngbPopover]="aboutContent" popoverTitle="About XmlFly">About</button>
+      </div>
 
 
-        <div class="nav-item mx-1 mt-2"
-            *ngFor="let file of files">
+      <ng-template #aboutContent>
+        <p>
+          <img width=96 src="assets/xmlfly-128.png"/>
+        </p>
+        <p>
+          <a href="https://github.com/mschn/xml-fly" target="_blank">
+            https://github.com/mschn/xml-fly
+          </a>
+        </p>
+      </ng-template>
 
-            <div class="btn-group" role="group" aria-label="Basic example">
+    </nav>
 
-                <button class="btn btn-sm btn-primary text-truncate filename"
-                    [class.active]="file.selected"
-                    placement="bottom" ngbTooltip="{{ file.name }}"
-                    (click)="selectFile(file)">
-                    {{ file.name }}
-                </button>
+    <nav class="nav navbar-dark bg-primary px-2">
+      <div class="m-1"
+      *ngFor="let file of files">
+        <div class="btn-group" role="group" aria-label="Basic example">
 
-                <button type="button"
-                    *ngIf="file.selected"
-                    (click)="closeFile(file)"
-                    [class.active]="file.selected"
-                    class="btn btn-sm btn-primary border-left-0">X</button>
-            </div>
+          <button class="btn btn-sm btn-primary text-truncate filename"
+              [class.active]="file.selected"
+              placement="bottom" ngbTooltip="{{ file.name }}"
+              (click)="selectFile(file)">
+              {{ file.name }}
+          </button>
 
+          <button type="button"
+              *ngIf="file.selected"
+              (click)="closeFile(file)"
+              [class.active]="file.selected"
+              class="btn btn-sm btn-primary border-left-0">X</button>
         </div>
-
-        <form class="mx-1 mt-2 form-inline navbar-nav mr-auto">
-
-            <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading">
-                Open <input type="file" id="open-file" (change)="openFile($event)">
-            </label>
-
-            <button *ngIf="loading"
-                class="btn btn-sm btn-primary" type="button" disabled>
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                Loading...
-            </button>
-
-        </form>
+      </div>
     </nav>
 
     <div>
@@ -55,7 +77,7 @@
 
     <div class="border-bottom flex-fill overflow-auto main">
         <div *ngFor="let file of files" [hidden]="!file.selected">
-            <app-xml-view [xmlString]="file.xmlFileContent"></app-xml-view>
+            <app-xml-view [file]="file"></app-xml-view>
         </div>
     </div>
 

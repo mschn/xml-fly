@@ -21,9 +21,19 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
     super(dataService);
    }
 
+
+  show(event: Event) {
+    (this.node as any).collapsed = false;
+  }
+
+  hide(event: Event) {
+    (this.node as any).collapsed = true;
+  }
+
+
   ngOnInit() {
     if (this.arrayInParent) {
-      this.collapsed = true;
+      (this.node as any).collapsed = true;
     }
   }
 
@@ -33,6 +43,5 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
       this.dataService.selectNode(this.node, this);
     }
   }
-
 
 }

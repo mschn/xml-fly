@@ -67,4 +67,12 @@ export class AppComponent implements OnInit {
   closeFile(file?: XmlFile) {
     this.dataService.closeFile(file);
   }
+
+  expandAll() {
+    this.dataService.expandAll();
+  }
+
+  collapseAll() {
+    this.dataService.collapseAll();
+  }
 }

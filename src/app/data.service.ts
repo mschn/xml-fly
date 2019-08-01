@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { XmlFile, Selection, Elt } from './model';
 import { of, Observable } from 'rxjs';
 import { AbstractNodeComponent } from './xml-view/abstract-node/abstract-node.component';
+import { XmlService } from './xml.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,9 @@ export class DataService {
 
   selection: Selection;
 
-  constructor() {
+  constructor(
+    private readonly xmlService: XmlService
+  ) {
     this.files = new Array<XmlFile>();
     this.selection = new Selection();
   }
@@ -35,6 +38,7 @@ export class DataService {
         f.name = file.name;
         f.selected = true;
         f.xmlFileContent = reader.result.toString();
+        f.tree = this.xmlService.parseFile(f.xmlFileContent);
 
         const existingFile = this.findFile(f);
         if (existingFile) {
@@ -95,6 +99,30 @@ export class DataService {
       this.selectFile(this.files[0]);
     }
   }
+
+  expandAll () {
+    this.toggleAll(this.selectedFile.tree, false);
+  }
+
+  collapseAll () {
+    this.toggleAll(this.selectedFile.tree, true);
+  }
+
+  toggleAll(node: Elt, state: boolean) {
+    if (!node) {
+      return;
+    }
+    (node as any).collapsed = state;
+    if (!node.children) {
+      return;
+    }
+    for (let i = 0; i < node.children.length; i++) {
+      for (let j = 0; j < node.children[i].length; j++) {
+        this.toggleAll(node.children[i][j], state);
+      }
+    }
+  }
+
 
   private getNodePath(node: Elt): string[] {
     const paths = [];

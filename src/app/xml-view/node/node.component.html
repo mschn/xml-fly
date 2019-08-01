@@ -9,12 +9,12 @@
     <!-- expand / collapse button -->
     <ng-container *ngIf="!node.isText">
       <button class="btn btn-sm"
-        [hidden]="!collapsed"
+        [hidden]="!node.collapsed"
         (click)="show($event)">
         <span class="icon-expand"></span>
       </button>
       <button class="btn btn-sm"
-        [hidden]="collapsed"
+        [hidden]="node.collapsed"
         (click)="hide($event)">
         <span class="icon-collapse"></span>
       </button>
@@ -32,7 +32,7 @@
 
   <!-- attributes -->
   <div class="pl-3 attr"
-      [hidden]="collapsed"
+      [hidden]="node.collapsed"
       *ngFor="let attr of node.attributes">
     <div class="node d-flex flex-row"
         [class.selected]="selected && selectedAttr === attr"
@@ -51,13 +51,13 @@
     <!-- array -->
     <div class="pl-3"
          *ngIf="childNodes.length > 1"
-         [hidden]="collapsed">
+         [hidden]="node.collapsed">
       <app-array [nodes]="childNodes"></app-array>
     </div>
     <!-- single node -->
     <div class="pl-3"
         *ngIf="childNodes.length === 1"
-        [hidden]="collapsed">
+        [hidden]="node.collapsed">
       <app-node [node]="childNodes[0]" [arrayInParent]="arrayInParent"></app-node>
     </div>
   </ng-container>
