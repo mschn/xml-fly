@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/data.service';
 import { Elt } from 'src/app/model';
 
@@ -7,6 +7,8 @@ import { Elt } from 'src/app/model';
   template: ''
 })
 export class AbstractNodeComponent implements OnInit {
+
+  @ViewChild('anchor', { static: false }) nodeRef: ElementRef;
 
   selected = false;
   selectedAttr: Attr;

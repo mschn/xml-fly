@@ -29,11 +29,11 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
   }
 
   show(event: Event) {
-    (this.nodes[0] as any).collapsed = false;
+    this.nodes[0].collapsed = false;
   }
 
   hide(event: Event) {
-    (this.nodes[0] as any).collapsed = true;
+    this.nodes[0].collapsed = true;
   }
 
   getChildNodes(node: Elt): Elt[] {

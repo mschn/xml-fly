@@ -14,6 +14,9 @@ export class AppComponent implements OnInit {
 
   loading = false;
 
+  searchVisible = false;
+  searchText = '';
+
   constructor(
     private dataService: DataService,
     private hotkeysService: HotkeysService
@@ -68,11 +71,19 @@ export class AppComponent implements OnInit {
     this.dataService.closeFile(file);
   }
 
+  showSearch(enable: boolean) {
+    this.dataService.setSearchVisible(true);
+  }
+
   expandAll() {
     this.dataService.expandAll();
   }
 
   collapseAll() {
     this.dataService.collapseAll();
+  }
+
+  hasFile(): boolean {
+    return this.files && this.files.length > 0
   }
 }

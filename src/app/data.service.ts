@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { XmlFile, Selection, Elt } from './model';
-import { of, Observable } from 'rxjs';
+import { XmlFile, Selection, Elt, SearchResult } from './model';
+import { of, Observable, BehaviorSubject } from 'rxjs';
 import { AbstractNodeComponent } from './xml-view/abstract-node/abstract-node.component';
 import { XmlService } from './xml.service';
 
@@ -14,11 +14,29 @@ export class DataService {
 
   selection: Selection;
 
+  searchVisible: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  searchResults: BehaviorSubject<SearchResult[]> = new BehaviorSubject<SearchResult[]>(null);
+
   constructor(
     private readonly xmlService: XmlService
   ) {
     this.files = new Array<XmlFile>();
     this.selection = new Selection();
+  }
+
+  getSearchVisible(): Observable<boolean> {
+    return this.searchVisible.asObservable();
+  }
+  setSearchVisible(visible: boolean) {
+    this.searchVisible.next(visible);
+  }
+
+  getSearchResults(): Observable<SearchResult[]> {
+    return this.searchResults.asObservable();
+  }
+  setSearchResults(res: SearchResult[]) {
+    this.searchResults.next(res);
   }
 
   getFiles(): Observable<XmlFile[]> {
@@ -72,6 +90,8 @@ export class DataService {
     this.selection.node = source;
     this.selection.node.selected = true;
     this.selection.node.selectedAttr = null;
+
+    source.nodeRef.nativeElement.scrollIntoView();
   }
 
   selectAttr(attr: Attr, node: Elt, source: AbstractNodeComponent): void {
@@ -114,7 +134,7 @@ export class DataService {
     if (!node) {
       return;
     }
-    (node as any).collapsed = state;
+    node.collapsed = state;
     if (!node.children) {
       return;
     }

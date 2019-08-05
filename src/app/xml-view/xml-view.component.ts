@@ -18,4 +18,5 @@ export class XmlViewComponent implements OnInit {
 
   ngOnInit() {
   }
+
 }

@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "ng build && electron .",
+    "electron": "ng build --prod && electron .",
     "package:win": "ng build --base-href ./ && electron-packager . --overwrite --platform=win32 --arch=ia32 --out=out"
   },
   "private": true,

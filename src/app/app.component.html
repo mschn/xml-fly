@@ -21,7 +21,8 @@
 
       </form>
 
-      <div class="my-1 mr-auto">
+      <div class="my-1 mr-auto" *ngIf="hasFile()">
+        <button class="btn btn-sm btn-primary" (click)="showSearch(true)">Search</button>
         <button class="btn btn-sm btn-primary" (click)="expandAll()">Expand all</button>
         <button class="btn btn-sm btn-primary" (click)="collapseAll()">Collapse all</button>
       </div>
@@ -65,6 +66,10 @@
         </div>
       </div>
     </nav>
+
+    <div>
+      <app-search></app-search>
+    </div>
 
     <div>
       <app-selection></app-selection>

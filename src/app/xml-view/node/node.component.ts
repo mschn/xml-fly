@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { AbstractNodeComponent } from '../abstract-node/abstract-node.component';
 import { DataService } from 'src/app/data.service';
 import { Elt } from 'src/app/model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-node',
@@ -10,31 +11,31 @@ import { Elt } from 'src/app/model';
 
 })
 export class NodeComponent extends AbstractNodeComponent implements OnInit {
-
+  
   @Input() node: Elt;
 
   @Input() noTagName = false;
 
   @Input() arrayInParent = false;
 
+  subs: Subscription[] = [];
+
   constructor(dataService: DataService) {
     super(dataService);
-   }
-
+  }
 
   show(event: Event) {
-    (this.node as any).collapsed = false;
+    this.node.collapsed = false;
   }
 
   hide(event: Event) {
-    (this.node as any).collapsed = true;
+    this.node.collapsed = true;
   }
 
-
   ngOnInit() {
-    (this.node as any).viewRef = this;
+    this.node.viewRef = this;
     if (this.arrayInParent) {
-      (this.node as any).collapsed = true;
+      this.node.collapsed = true;
     }
   }
 

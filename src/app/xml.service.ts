@@ -66,6 +66,7 @@ export class XmlService {
     elt.name = n.nodeName;
     if (this.isTextNode(n)) {
       elt.isText = true;
+      elt.collapsed = false;
       elt.text = n.textContent;
       elt.shortText = elt.text;
       if (elt.text.length > 200) {

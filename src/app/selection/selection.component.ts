@@ -31,6 +31,6 @@ export class SelectionComponent implements OnInit {
     for (let i = 0; i < len; i++) {
       n = n.parent;
     }
-    this.dataService.selectNode(n, (n as any).viewRef);
+    this.dataService.selectNode(n, n.viewRef);
   }
 }
