@@ -1,7 +1,7 @@
 <div *ngIf="searchVisible" class="main form-row">
     <div class="col-auto">
-        <div class="input-group py-1 px-2">
-            <input type="text" class="form-control ml-1 search-input" 
+        <div class="input-group p-1">
+            <input type="text" class="form-control search-input" 
                 (keyup.enter)="doSearch()"
                 [(ngModel)]="searchText" placeholder="Search...">
             <div class="input-group-append">
@@ -14,8 +14,8 @@
                 Not found.
         </div>
         <div *ngIf="searchResults && searchResults.length > 0" class="my-1">
-            <button class="btn btn-small btn-secondary mr-1" type="button" (click)="prevResult()">Prev</button>
-            <button class="btn btn-small btn-secondary" type="button" (click)="nextResult()">Next</button>
+            <button class="btn btn-small btn-outline-secondary mr-1" type="button" (click)="prevResult()">Prev</button>
+            <button class="btn btn-small btn-outline-secondary" type="button" (click)="nextResult()">Next</button>
             <span class="ml-1">
                 {{ currentResult + 1 }} of {{ searchResults.length }}
             </span>    

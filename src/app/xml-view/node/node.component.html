@@ -23,7 +23,7 @@
     <!-- tag name -->
     <div *ngIf="!noTagName" class="py-1 tagname"
       [class.indent-node]="node.isText">
-      <span class="tag">&lt;</span>{{ node.name }}<span class="tag">&gt;</span>
+      <span class="tag">&lt;</span><span [innerHTML]="getValue(node.name)"></span><span class="tag">&gt;</span>
     </div>
     <div *ngIf="node.isText" class="value p-1">
       {{ node.shortText }}

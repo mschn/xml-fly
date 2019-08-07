@@ -44,4 +44,9 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
     this.dataService.selectNode(this.node, this);
   }
 
+  getValue(value: string) {
+    const search = this.dataService.getSearchTextValue();
+    return value.replace(search, `<span class="search-result">${search}</span>`);
+  }
+
 }

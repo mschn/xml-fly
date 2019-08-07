@@ -15,7 +15,7 @@ export class DataService {
   selection: Selection;
 
   searchVisible: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
+  searchText: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   searchResults: BehaviorSubject<SearchResult[]> = new BehaviorSubject<SearchResult[]>(null);
 
   constructor(
@@ -30,6 +30,13 @@ export class DataService {
   }
   setSearchVisible(visible: boolean) {
     this.searchVisible.next(visible);
+  }
+
+  setSearchText(text: string) {
+    this.searchText.next(text);
+  }
+  getSearchTextValue(): string {
+    return this.searchText.value;
   }
 
   getSearchResults(): Observable<SearchResult[]> {

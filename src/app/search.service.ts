@@ -16,6 +16,7 @@ export class SearchService {
     const tree = this.data.selectedFile.tree;
     this.doSearchRec(search, tree, searchResults);
     this.data.setSearchResults(searchResults);
+    this.data.setSearchText(search);
   }
 
   private doSearchRec(search: string, elt: Elt, results: SearchResult[]) {
