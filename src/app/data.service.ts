@@ -91,7 +91,8 @@ export class DataService {
     this.selection.node.selected = true;
     this.selection.node.selectedAttr = null;
 
-    source.nodeRef.nativeElement.scrollIntoView();
+    this.expandParent(node);
+    this.scrollIfNeeded(source);
   }
 
   selectAttr(attr: Attr, node: Elt, source: AbstractNodeComponent): void {
@@ -145,6 +146,12 @@ export class DataService {
     }
   }
 
+  private expandParent(node: Elt) {
+    if (node.parent) {
+      node.parent.collapsed = false;
+      this.expandParent(node.parent);
+    }
+  }
 
   private getNodePath(node: Elt): string[] {
     const paths = [];
@@ -163,5 +170,17 @@ export class DataService {
       }
     }
     return null;
+  }
+
+  private scrollIfNeeded(node: AbstractNodeComponent) {
+    const elt = node.nodeRef.nativeElement;
+
+    var rect = elt.getBoundingClientRect();
+    if (rect.bottom > window.innerHeight) {
+      elt.scrollIntoView();
+    }
+    if (rect.top < 0) {
+      elt.scrollIntoView();
+    } 
   }
 }

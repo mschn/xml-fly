@@ -1,15 +1,24 @@
-<div *ngIf="searchVisible" class="main">
-    <div class="input-group py-1 px-2">
-        <input type="text" class="form-control ml-1" 
-            [(ngModel)]="searchText" placeholder="Search...">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" (click)="doSearch()">Search</button>
+<div *ngIf="searchVisible" class="main form-row">
+    <div class="col-auto">
+        <div class="input-group py-1 px-2">
+            <input type="text" class="form-control ml-1 search-input" 
+                (keyup.enter)="doSearch()"
+                [(ngModel)]="searchText" placeholder="Search...">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" (click)="doSearch()">Search</button>
+            </div>
         </div>
     </div>
-    <div class="px-2 pb-1" *ngIf="searchResults">
-        <span class="ml-1">
-            {{ currentResult + 1 }}/{{ searchResults.length }} results
-        </span>
-        <button class="btn btn-small btn-secondary" type="button" (click)="nextResult()">Next</button>
+    <div class="col-auto">
+        <div *ngIf="searchResults && searchResults.length === 0">
+                Not found.
+        </div>
+        <div *ngIf="searchResults && searchResults.length > 0" class="my-1">
+            <button class="btn btn-small btn-secondary mr-1" type="button" (click)="prevResult()">Prev</button>
+            <button class="btn btn-small btn-secondary" type="button" (click)="nextResult()">Next</button>
+            <span class="ml-1">
+                {{ currentResult + 1 }} of {{ searchResults.length }}
+            </span>    
+        </div>
     </div>
 </div>

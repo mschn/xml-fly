@@ -57,6 +57,16 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
   }
 
+  prevResult() {
+    if (this.searchResults && this.searchResults.length > 0) {
+      this.currentResult--;
+      if (this.currentResult < 0) {
+        this.currentResult = this.searchResults.length - 1;
+      }
+      this.gotoResult();
+    }
+  }
+
   gotoResult() {
     const elt = this.searchResults[this.currentResult].elt;
     this.data.selectNode(elt, elt.viewRef);
