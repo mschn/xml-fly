@@ -46,6 +46,9 @@
         }
 
         tr {
+            &.selected {
+              background-color: $selected-bg-col;
+            }
 
             th {
                 border: 1px solid $array-col;

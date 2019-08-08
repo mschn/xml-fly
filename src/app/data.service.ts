@@ -128,6 +128,9 @@ export class DataService {
     if (this.files.length > 0) {
       this.selectFile(this.files[0]);
     }
+
+    this.selection.node = null;
+    this.selection.type = null;
   }
 
   expandAll () {

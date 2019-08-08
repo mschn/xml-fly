@@ -11,14 +11,12 @@ import { Subscription } from 'rxjs';
 
 })
 export class NodeComponent extends AbstractNodeComponent implements OnInit {
-  
+
   @Input() node: Elt;
 
   @Input() noTagName = false;
 
   @Input() arrayInParent = false;
-
-  subs: Subscription[] = [];
 
   constructor(dataService: DataService) {
     super(dataService);

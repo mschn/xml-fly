@@ -28,6 +28,11 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
     this.dataService.selectNode(this.nodes[0], this);
   }
 
+  onSubNodeClick(event: Event, node: Elt) {
+    event.stopPropagation();
+    this.dataService.selectNode(node, this);
+  }
+
   show(event: Event) {
     this.nodes[0].collapsed = false;
   }
