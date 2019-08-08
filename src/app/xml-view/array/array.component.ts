@@ -41,20 +41,20 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
     this.nodes[0].collapsed = true;
   }
 
-  getChildNodes(node: Elt): Elt[] {
+  getChildNodes(node: Elt): Elt[][] {
     const tagNames = this.nodes[0].childrenNames;
-    const ret = [];
+    let ret: Elt[][] = [];
     tagNames.forEach(tagName => {
-      ret.push(this.getChildNodeByTagname(node, tagName));
+      ret = ret.concat([this.getChildNodesByTagname(node, tagName)]);
     });
     return ret;
   }
 
-  getChildNodeByTagname(node: Elt, tagName: string): Elt {
+  getChildNodesByTagname(node: Elt, tagName: string): Elt[] {
     for (let i = 0; i < node.children.length; i++) {
       const arr = node.children[i];
       if (arr[0].name === tagName) {
-        return arr[0];
+        return arr;
       }
     }
   }

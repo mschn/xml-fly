@@ -62,11 +62,21 @@
                   </div>
                  </td>
               </ng-container>
-              <ng-container *ngFor="let childNode of getChildNodes(node)">
-                <td class="" *ngIf="childNode">
-                  <app-node [node]="childNode" [arrayInParent]="true" [noTagName]="true"></app-node>
+
+              <ng-container *ngFor="let childNodes of getChildNodes(node)">
+
+                <td *ngIf="childNodes">
+                  <ng-container *ngIf="childNodes.length === 1">
+                    <app-node [node]="childNodes[0]" [arrayInParent]="true" [noTagName]="childNodes[0].isText"></app-node>
+                  </ng-container>
+                  <ng-container *ngIf="childNodes.length > 1">
+                    <app-array [nodes]="childNodes"></app-array>
+                  </ng-container>
                 </td>
+
               </ng-container>
+
+
             </ng-container>
           </tr>
         </tbody>

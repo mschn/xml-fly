@@ -84,6 +84,6 @@ export class AppComponent implements OnInit {
   }
 
   hasFile(): boolean {
-    return this.files && this.files.length > 0
+    return this.files && this.files.length > 0;
   }
 }
