@@ -9,10 +9,10 @@ import { XmlService } from './xml.service';
 })
 export class DataService {
 
-  files: Array<XmlFile>;
+  files: Array<XmlFile> = new Array<XmlFile>();
   selectedFile: XmlFile;
 
-  selection: Selection;
+  selection: Selection = new Selection();
 
   searchVisible: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   searchText: BehaviorSubject<string> = new BehaviorSubject<string>(null);
@@ -20,10 +20,7 @@ export class DataService {
 
   constructor(
     private readonly xmlService: XmlService
-  ) {
-    this.files = new Array<XmlFile>();
-    this.selection = new Selection();
-  }
+  ) {}
 
   getSearchVisible(): Observable<boolean> {
     return this.searchVisible.asObservable();
@@ -114,6 +111,17 @@ export class DataService {
     this.selection.element = node;
     this.selection.node.selected = true;
     this.selection.node.selectedAttr = attr;
+  }
+
+  clearSelection() {
+    if (this.selection && this.selection.node) {
+      this.selection.node.selected = false;
+    }
+    this.selection.type = null;
+    this.selection.path = null;
+    this.selection.value = null;
+    this.selection.element = null;
+    this.selection.node = null;
   }
 
   closeFile(file?: XmlFile): void {

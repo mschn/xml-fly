@@ -33,4 +33,8 @@ export class SelectionComponent implements OnInit {
     }
     this.dataService.selectNode(n, n.viewRef);
   }
+
+  close() {
+    this.dataService.clearSelection();
+  }
 }

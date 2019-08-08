@@ -81,4 +81,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.searchBox.nativeElement.focus();
   }
 
+  close() {
+    this.data.setSearchVisible(false);
+  }
+
 }
