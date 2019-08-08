@@ -34,6 +34,10 @@ export class AppComponent implements OnInit {
       btn.click();
       return false;
     }));
+    this.hotkeysService.add(new Hotkey('ctrl+f', (event: KeyboardEvent): boolean => {
+      this.showSearch(true);
+      return false;
+    }));
   }
 
   dragFalse() {

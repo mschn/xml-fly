@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { DataService } from '../data.service';
 import { Subscription } from 'rxjs';
 import { SearchResult } from '../model';
@@ -10,6 +10,8 @@ import { SearchService } from '../search.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit, OnDestroy {
+
+  @ViewChild('searchBox', { static: false }) searchBox: ElementRef;
 
   searchVisible: boolean;
   searchText = '';
@@ -26,7 +28,10 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subs.push(this.data.searchVisible.subscribe(searchVisible => {
-      this.searchVisible = searchVisible
+      this.searchVisible = searchVisible;
+      if (searchVisible) {
+        setTimeout(_ => this.focusSearch());
+      }
     }));
     this.subs.push(this.data.getSearchResults().subscribe(res => {
       this.currentResult = 0;
@@ -70,6 +75,10 @@ export class SearchComponent implements OnInit, OnDestroy {
   gotoResult() {
     const elt = this.searchResults[this.currentResult].elt;
     this.data.selectNode(elt, elt.viewRef);
+  }
+
+  focusSearch() {
+    this.searchBox.nativeElement.focus();
   }
 
 }
