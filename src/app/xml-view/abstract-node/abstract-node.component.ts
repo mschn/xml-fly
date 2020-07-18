@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class AbstractNodeComponent implements OnInit, OnDestroy {
 
-  @ViewChild('anchor', { static: false }) nodeRef: ElementRef;
+  @ViewChild('anchor') nodeRef: ElementRef;
 
   selected = false;
   selectedAttr: Attr;

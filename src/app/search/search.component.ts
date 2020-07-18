@@ -11,7 +11,7 @@ import { SearchService } from '../search.service';
 })
 export class SearchComponent implements OnInit, OnDestroy {
 
-  @ViewChild('searchBox', { static: false }) searchBox: ElementRef;
+  @ViewChild('searchBox') searchBox: ElementRef;
 
   searchVisible: boolean;
   searchText = '';
