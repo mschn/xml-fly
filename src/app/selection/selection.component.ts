@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from '../data.service';
-import { Selection } from '../model';
+import { Selection, XmlFile } from '../model';
 
 @Component({
   selector: 'app-selection',
@@ -9,14 +9,14 @@ import { Selection } from '../model';
 })
 export class SelectionComponent implements OnInit {
 
+  @Input() node: XmlFile;
+
   selection: Selection;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.getSelection().subscribe(selection => {
-      this.selection = selection;
-    });
+    this.selection = this.node.selection;
   }
 
   selectNode(index: number) {

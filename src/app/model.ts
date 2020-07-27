@@ -4,7 +4,7 @@ export class XmlFile {
     name: string;
     selected: boolean;
     xmlFileContent: string;
-    selectedNode: Elt;
+    selection: Selection;
     tree: Elt;
 }
 

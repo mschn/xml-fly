@@ -3,13 +3,10 @@ import { DataService } from './data.service';
 import { SearchResult, Elt } from './model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SearchService {
-
-  constructor(
-    private readonly data: DataService
-  ) { }
+  constructor(private readonly data: DataService) {}
 
   doSearch(search: string) {
     const searchResults: SearchResult[] = [];
@@ -22,13 +19,15 @@ export class SearchService {
   private doSearchRec(search: string, elt: Elt, results: SearchResult[]) {
     if (elt.name.includes(search)) {
       results.push({
-        elt: elt
+        elt: elt,
       });
     }
     if (elt.children) {
-      elt.children.forEach(children => children.forEach(child => {
-        this.doSearchRec(search, child, results);
-      }));  
+      elt.children.forEach((children) =>
+        children.forEach((child) => {
+          this.doSearchRec(search, child, results);
+        })
+      );
     }
   }
 }

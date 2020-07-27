@@ -61,13 +61,9 @@
     <app-search></app-search>
   </div>
 
-  <div>
-    <app-selection></app-selection>
-  </div>
-
-  <div class="border-bottom flex-fill overflow-auto main">
-      <div *ngFor="let file of files" [hidden]="!file.selected">
-          <app-xml-view [file]="file"></app-xml-view>
+  <div class="border-bottom flex-fill overflow-hidden main">
+      <div *ngFor="let file of files" [hidden]="!file.selected" class="h-100">
+          <app-xml-view [file]="file" class="h-100"></app-xml-view>
       </div>
   </div>
 

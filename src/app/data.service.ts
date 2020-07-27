@@ -12,8 +12,6 @@ export class DataService {
   files: Array<XmlFile> = new Array<XmlFile>();
   selectedFile: XmlFile;
 
-  selection: Selection = new Selection();
-
   searchVisible: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   searchText: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   searchResults: BehaviorSubject<SearchResult[]> = new BehaviorSubject<SearchResult[]>(null);
@@ -47,9 +45,10 @@ export class DataService {
     return of(this.files);
   }
 
-  getSelection(): Observable<Selection> {
-    return of(this.selection);
+  getSelectedFile(): Observable<XmlFile> {
+    return of (this.selectedFile);
   }
+
 
   openFile(file: File): Promise<{}> {
     return new Promise((resolve, reject) => {
@@ -78,50 +77,52 @@ export class DataService {
     if (this.selectedFile) {
       this.selectedFile.selected = false;
     }
+    if (!file.selection) {
+      file.selection = new Selection();
+    }
     file.selected = true;
-    this.selection.type = null;
     this.selectedFile = file;
   }
 
   selectNode(node: Elt, source: AbstractNodeComponent): void {
-    if (this.selection && this.selection.node) {
-      this.selection.node.selected = false;
+    if (this.selectedFile.selection && this.selectedFile.selection.node) {
+      this.selectedFile.selection.node.selected = false;
     }
-    this.selection.type = 'Node';
-    this.selection.path = this.getNodePath(node);
-    this.selection.value = node.text;
-    this.selection.element = node;
-    this.selection.node = source;
-    this.selection.node.selected = true;
-    this.selection.node.selectedAttr = null;
+    this.selectedFile.selection.type = 'Node';
+    this.selectedFile.selection.path = this.getNodePath(node);
+    this.selectedFile.selection.value = node.text;
+    this.selectedFile.selection.element = node;
+    this.selectedFile.selection.node = source;
+    this.selectedFile.selection.node.selected = true;
+    this.selectedFile.selection.node.selectedAttr = null;
 
     this.expandParent(node);
     this.scrollIfNeeded(source);
   }
 
   selectAttr(attr: Attr, node: Elt, source: AbstractNodeComponent): void {
-    if (this.selection && this.selection.node) {
-      this.selection.node.selected = false;
+    if (this.selectedFile.selection && this.selectedFile.selection.node) {
+      this.selectedFile.selection.node.selected = false;
     }
-    this.selection.type = 'Attr';
-    this.selection.path = this.getNodePath(node);
-    this.selection.path.push(attr.name);
-    this.selection.value = attr.value;
-    this.selection.node = source;
-    this.selection.element = node;
-    this.selection.node.selected = true;
-    this.selection.node.selectedAttr = attr;
+    this.selectedFile.selection.type = 'Attr';
+    this.selectedFile.selection.path = this.getNodePath(node);
+    this.selectedFile.selection.path.push(attr.name);
+    this.selectedFile.selection.value = attr.value;
+    this.selectedFile.selection.node = source;
+    this.selectedFile.selection.element = node;
+    this.selectedFile.selection.node.selected = true;
+    this.selectedFile.selection.node.selectedAttr = attr;
   }
 
   clearSelection() {
-    if (this.selection && this.selection.node) {
-      this.selection.node.selected = false;
+    if (this.selectedFile.selection && this.selectedFile.selection.node) {
+      this.selectedFile.selection.node.selected = false;
     }
-    this.selection.type = null;
-    this.selection.path = null;
-    this.selection.value = null;
-    this.selection.element = null;
-    this.selection.node = null;
+    this.selectedFile.selection.type = null;
+    this.selectedFile.selection.path = null;
+    this.selectedFile.selection.value = null;
+    this.selectedFile.selection.element = null;
+    this.selectedFile.selection.node = null;
   }
 
   closeFile(file?: XmlFile): void {
@@ -137,8 +138,8 @@ export class DataService {
       this.selectFile(this.files[0]);
     }
 
-    this.selection.node = null;
-    this.selection.type = null;
+    this.selectedFile.selection.node = null;
+    this.selectedFile.selection.type = null;
   }
 
   expandAll () {
@@ -193,12 +194,12 @@ export class DataService {
   private scrollIfNeeded(node: AbstractNodeComponent) {
     const elt = node.nodeRef.nativeElement;
 
-    var rect = elt.getBoundingClientRect();
+    const rect = elt.getBoundingClientRect();
     if (rect.bottom > window.innerHeight) {
       elt.scrollIntoView();
     }
     if (rect.top < 0) {
       elt.scrollIntoView();
-    } 
+    }
   }
 }

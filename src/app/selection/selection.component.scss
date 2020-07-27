@@ -3,8 +3,12 @@
 .selection {
   background-color: #2d2d2d;
   color: $text-col;
+
   border-bottom: 1px solid #424242;
   border-top: 1px solid #424242;
+
+  // max-height: 20%;
+  overflow-y: auto;
 
   .col-tagname {
     color: $tagname-col;
@@ -15,4 +19,3 @@
   }
 
 }
-
