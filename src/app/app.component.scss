@@ -1,21 +1,15 @@
 @import 'colors.scss';
 
-.btn-file {
-  cursor: pointer;
-  input {
-    display: none;
-  }
-}
-
 nav {
   flex: 0 0 auto;
 
-  .nav-item {
+  .btn.filename {
+    max-width: 15rem;
+  }
 
-    .btn.filename {
-      max-width: 120px;
-    }
-
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }
 
@@ -23,4 +17,8 @@ nav {
   background-color: $bg-col;
   color: $text-col;
   font-family: 'Roboto Mono', monospace;
+
+  .left-bar {
+    background-color: $left-bar-bg-col;
+  }
 }

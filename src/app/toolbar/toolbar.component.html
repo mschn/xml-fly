@@ -1,0 +1,25 @@
+<div class="d-flex flex-column h-100 toolbar p-2">
+
+  <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading" ngbTooltip="Open file">
+    <svg class="bi" width="32" height="32" fill="currentColor">
+      <use xlink:href="assets/icons/bootstrap-icons.svg#file-earmark-plus" />
+    </svg>
+    <input type="file" id="open-file" (change)="openFile($event)" />
+  </label>
+
+  <button class="btn btn-sm btn-secondary mb-2" (click)="showSearch(true)" ngbTooltip="Search">
+    <svg class="bi" fill="currentColor">
+      <use xlink:href="assets/icons/bootstrap-icons.svg#search" />
+    </svg>
+  </button>
+  <button class="btn btn-sm btn-secondary mb-2" (click)="expandAll()" ngbTooltip="Expand all">
+    <svg class="bi" fill="currentColor">
+      <use xlink:href="assets/icons/bootstrap-icons.svg#plus-square" />
+    </svg>
+  </button>
+  <button class="btn btn-sm btn-secondary mb-2" (click)="collapseAll()" ngbTooltip="Collapse all">
+    <svg class="bi" fill="currentColor">
+      <use xlink:href="assets/icons/bootstrap-icons.svg#dash-square" />
+    </svg>
+  </button>
+</div>

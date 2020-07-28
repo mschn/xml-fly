@@ -12,9 +12,10 @@ export class DataService {
   files: Array<XmlFile> = new Array<XmlFile>();
   selectedFile: XmlFile;
 
-  searchVisible: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  searchVisible = new BehaviorSubject<boolean>(false);
   searchText: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   searchResults: BehaviorSubject<SearchResult[]> = new BehaviorSubject<SearchResult[]>(null);
+  isLoading = new BehaviorSubject<boolean>(false);
 
   constructor(
     private readonly xmlService: XmlService

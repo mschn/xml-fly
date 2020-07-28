@@ -1,0 +1,18 @@
+@import '../colors.scss';
+
+.toolbar {
+  background-color: $left-bar-bg-col;
+  border-right: 1px solid $left-bar-border-col;
+
+  .btn-file {
+    cursor: pointer;
+    input {
+      display: none;
+    }
+  }
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}

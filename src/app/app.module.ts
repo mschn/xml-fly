@@ -10,6 +10,7 @@ import { SelectionComponent } from './selection/selection.component';
 import { HotkeyModule } from 'angular2-hotkeys';
 import { FormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SearchComponent } from './search/search.component';
     ArrayComponent,
     AbstractNodeComponent,
     SelectionComponent,
-    SearchComponent
+    SearchComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
