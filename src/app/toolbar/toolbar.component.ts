@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/app/data.service';
-import { HotkeysService, Hotkey } from 'angular2-hotkeys';
+import { DataService } from '../services/data.service';
+import { FileService } from '../services/file.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -8,37 +8,24 @@ import { HotkeysService, Hotkey } from 'angular2-hotkeys';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
-
   loading = false;
 
-  constructor(private dataService: DataService, private hotkeysService: HotkeysService) {}
+  constructor(private readonly dataService: DataService, private readonly fileService: FileService) {}
 
   ngOnInit(): void {
-    this.hotkeysService.add(
-      new Hotkey('ctrl+f', (event: KeyboardEvent): boolean => {
-        this.showSearch(true);
-        return false;
-      })
-    );
-    this.dataService.isLoading.subscribe(loading => this.loading = loading);
+    this.dataService.isLoading.subscribe((loading) => (this.loading = loading));
   }
 
   openFile(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files.length) {
-      this.dataService.isLoading.next(true);
-
-      const file = target.files[0];
-      setTimeout(() => {
-        this.dataService.openFile(file).then(() => {
-          this.dataService.isLoading.next(false);
-        });
-      });
-    }
+    this.fileService.openFileInput(event);
   }
 
   showSearch(enable: boolean) {
     this.dataService.setSearchVisible(enable);
+  }
+
+  goHome() {
+    this.dataService.deselectFile();
   }
 
   expandAll() {

@@ -36,7 +36,7 @@
       <tbody>
         <tr
           *ngFor="let node of nodes; let i = index"
-          [class.selected]="selection.element === node && selection.type === 'Node'"
+          [class.selected]="selection && selection.element === node && selection.type === 'Node'"
           (click)="onSubNodeClick($event, node)"
         >
           <td class="p-1 array-index">{{ i }}.</td>

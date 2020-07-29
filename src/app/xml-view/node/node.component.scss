@@ -1,100 +1,96 @@
 @import '../../colors.scss';
 
 .node {
-    font-size: .8rem;
-    display: table;
-    width: 100%;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.8rem;
+  display: table;
+  width: 100%;
 
-    .btn-sm {
-        line-height: 1;
-        padding: 0;
+  .btn-sm {
+    line-height: 1;
+    padding: 0;
 
-        svg {
-          color: white;
-          width: .9rem;
-          height: .9rem;
-          margin: .3rem;
-        }
+    svg {
+      color: white;
+      width: 0.9rem;
+      height: 0.9rem;
+      margin: 0.3rem;
     }
+  }
 
-    .tagname {
-      color: $tagname-col;
-      cursor: pointer;
+  .tagname {
+    color: $tagname-col;
+    cursor: pointer;
 
-      .tag {
-        color: $tag-col;
-      }
-    }
-
-    &.text-node > .header > .tagname {
-      margin-left: 1.75rem;
-    }
-
-    .equals {
+    .tag {
       color: $tag-col;
     }
+  }
 
-    .attr-name {
-      color: $attr-col;
-      white-space: nowrap;
-      cursor: pointer;
+  &.text-node > .header > .tagname {
+    margin-left: 1.75rem;
+  }
+
+  .equals {
+    color: $tag-col;
+  }
+
+  .attr-name {
+    color: $attr-col;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .attr-value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    min-width: 120px;
+    color: $attr-val-col;
+    cursor: pointer;
+  }
+
+  .inner {
+    border-left: 4px solid transparent;
+  }
+
+  .header.selected {
+    & > .tagname {
+      background: $selected-bg-col;
+      border-radius: 5px;
+      border-right: 0;
     }
+  }
 
-    .attr-value {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        word-break: break-all;
-        min-width: 120px;
-        color: $attr-val-col;
-        cursor: pointer;
+  &.text-node > .header.selected {
+    & > .tagname {
+      border-radius: 5px 0 0 5px;
     }
-
-    .inner {
-        border-left: 4px solid transparent;
+    & > .value {
+      background: $selected-bg-col;
+      border-radius: 0 5px 5px 0;
     }
+  }
 
-
-    .header.selected {
-
-      & > .tagname {
+  .attr {
+    .selected {
+      & > .attr-name {
         background: $selected-bg-col;
-        border-radius: 5px;
+        border-radius: 5px 0 0 5px;
         border-right: 0;
       }
 
-    }
-
-    &.text-node > .header.selected {
-      & > .tagname {
-        border-radius: 5px 0 0 5px;
-      }
-      & > .value {
+      & > .attr-value {
         background: $selected-bg-col;
         border-radius: 0 5px 5px 0;
-
       }
     }
-
-
-    .attr {
-      .selected {
-        & > .attr-name {
-          background: $selected-bg-col;
-          border-radius: 5px 0 0 5px;
-          border-right: 0;
-        }
-
-        & > .attr-value {
-          background: $selected-bg-col;
-          border-radius: 0 5px 5px 0;
-        }
-      }
-    }
+  }
 }
 
 .first-node {
-    border: 0;
-    margin: .5rem;
+  border: 0;
+  margin: 0.5rem;
 }
 
 .value {

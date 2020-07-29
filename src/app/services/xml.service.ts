@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Elt, Attr } from './model';
+import { Elt } from '../data/elt';
+import { Attr } from '../data/attr';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class XmlService {
-
-  constructor() { }
+  constructor() {}
 
   parseFile(value: string): Elt {
     const parser = new DOMParser();
@@ -18,7 +18,7 @@ export class XmlService {
     return tree;
   }
 
-  buildTree (parentNode: Node, parentElt: Elt = null): Elt {
+  buildTree(parentNode: Node, parentElt: Elt = null): Elt {
     const elt = this.getElt(parentNode);
     if (parentElt) {
       elt.parent = parentElt;
@@ -103,13 +103,10 @@ export class XmlService {
   }
 
   private isTextNode(node: Node): boolean {
-    return (node.childNodes
-      && node.childNodes.length === 1
-      && node.childNodes[0] instanceof Text);
+    return node.childNodes && node.childNodes.length === 1 && node.childNodes[0] instanceof Text;
   }
 
   private isEmptyTextNode(node: Node): boolean {
-    return (node instanceof Text && node.textContent.trim() === '');
+    return node instanceof Text && node.textContent.trim() === '';
   }
-
 }

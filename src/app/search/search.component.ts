@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { DataService } from '../data.service';
 import { Subscription } from 'rxjs';
-import { SearchResult } from '../model';
-import { SearchService } from '../search.service';
+import { DataService } from '../services/data.service';
+import { SearchService } from '../services/search.service';
+import { SearchResult } from '../data/search-result';
 
 @Component({
   selector: 'app-search',

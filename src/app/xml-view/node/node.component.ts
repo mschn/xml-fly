@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AbstractNodeComponent } from '../abstract-node/abstract-node.component';
-import { DataService } from 'src/app/data.service';
-import { Elt } from 'src/app/model';
-import { Subscription } from 'rxjs';
+import { DataService } from '../../services/data.service';
+import { Elt } from '../../data/elt';
 
 @Component({
   selector: 'app-node',

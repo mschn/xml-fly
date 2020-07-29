@@ -1,7 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
-import { DataService } from 'src/app/data.service';
-import { Elt, Selection } from 'src/app/model';
 import { Subscription } from 'rxjs';
+import { DataService } from '../../services/data.service';
+import { Selection } from '../../data/selection';
+import { Elt } from '../../data/elt';
 
 @Component({
   selector: 'app-abstract-node',
@@ -21,7 +22,9 @@ export class AbstractNodeComponent implements OnInit, OnDestroy {
   constructor(protected dataService: DataService) { }
 
   ngOnInit() {
-    this.subs.push(this.dataService.getSelectedFile().subscribe(file => this.selection = file.selection));
+    this.subs.push(this.dataService.getSelectedFile().subscribe(file => {
+      this.selection = file?.selection;
+    }));
   }
 
   ngOnDestroy(): void {

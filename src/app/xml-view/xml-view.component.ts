@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Elt, XmlFile } from '../model';
+import { Elt } from '../data/elt';
+import { XmlFile } from '../data/xml-file';
 
 @Component({
   selector: 'app-xml-view',

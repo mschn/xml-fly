@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
-import { SearchResult, Elt } from './model';
+import { SearchResult } from '../data/search-result';
+import { Elt } from '../data/elt';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class SearchService {
 
   doSearch(search: string) {
     const searchResults: SearchResult[] = [];
-    const tree = this.data.selectedFile.tree;
+    const tree = this.data.selectedFile.value.tree;
     this.doSearchRec(search, tree, searchResults);
     this.data.setSearchResults(searchResults);
     this.data.setSearchText(search);

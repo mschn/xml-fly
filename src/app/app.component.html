@@ -40,6 +40,10 @@
       </button>
     </nav>
 
+    <div *ngIf="!selectedFile">
+      <app-start></app-start>
+    </div>
+
     <div *ngFor="let file of files" [hidden]="!file.selected" class="flex-fill overflow-hidden">
       <app-xml-view [file]="file" class="h-100"></app-xml-view>
     </div>

@@ -11,6 +11,7 @@ import { HotkeyModule } from 'angular2-hotkeys';
 import { FormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { StartComponent } from './start/start.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     AbstractNodeComponent,
     SelectionComponent,
     SearchComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    StartComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { XmlFile } from './model';
-import { DataService } from './data.service';
-import { HotkeysService, Hotkey } from 'angular2-hotkeys';
+import { DataService } from './services/data.service';
+import { FileService } from './services/file.service';
+import { XmlFile } from './data/xml-file';
 
 @Component({
   selector: 'app-root',
@@ -12,29 +12,19 @@ export class AppComponent implements OnInit {
   files: Array<XmlFile>;
 
   loading = false;
-
+  selectedFile: XmlFile;
   searchVisible = false;
   searchText = '';
 
-  constructor(private dataService: DataService, private hotkeysService: HotkeysService) {}
+  constructor(
+    private dataService: DataService,
+    private readonly fileService: FileService
+  ) {}
 
   ngOnInit() {
-    this.dataService.getFiles().subscribe((files) => (this.files = files));
-
-    this.hotkeysService.add(
-      new Hotkey('ctrl+w', (event: KeyboardEvent): boolean => {
-        this.closeFile();
-        return false;
-      })
-    );
-    this.hotkeysService.add(
-      new Hotkey('ctrl+o', (event: KeyboardEvent): boolean => {
-        const btn = document.querySelector('#open-file') as HTMLElement;
-        btn.click();
-        return false;
-      })
-    );
-    this.dataService.isLoading.subscribe(loading => this.loading = loading);
+    this.dataService.getFiles().subscribe((files) => this.files = files);
+    this.dataService.isLoading.subscribe((loading) => this.loading = loading);
+    this.dataService.getSelectedFile().subscribe((selectedFile) => this.selectedFile = selectedFile);
   }
 
   dragFalse() {
@@ -42,17 +32,7 @@ export class AppComponent implements OnInit {
   }
 
   onDrop(event: DragEvent) {
-    event.preventDefault();
-    if (event.dataTransfer && event.dataTransfer.files) {
-      this.dataService.isLoading.next(true);
-      const file = event.dataTransfer.files[0];
-      setTimeout(() => {
-        this.dataService.openFile(file).then(() => {
-          this.dataService.isLoading.next(false);
-        });
-      });
-    }
-    return false;
+    this.fileService.openFileDrop(event);
   }
 
   selectFile(file: XmlFile) {

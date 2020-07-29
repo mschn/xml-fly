@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AbstractNodeComponent } from '../abstract-node/abstract-node.component';
-import { DataService } from 'src/app/data.service';
-import { Elt } from 'src/app/model';
+import { DataService } from '../../services/data.service';
+import { Elt } from '../../data/elt';
 
 @Component({
   selector: 'app-array',
