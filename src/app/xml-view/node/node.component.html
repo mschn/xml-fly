@@ -1,28 +1,29 @@
-<div *ngIf="node.name" #anchor
+<div
+  *ngIf="node.name"
+  #anchor
   [class.noTagName]="noTagName"
   [class.first-node]="!node.parent"
   [class.text-node]="node.isText"
   (click)="onNodeClick($event, node)"
-  class="node">
-
+  class="node"
+>
   <div class="header d-flex flex-row" [class.selected]="selected && !selectedAttr">
     <!-- expand / collapse button -->
     <ng-container *ngIf="!node.isText">
-      <button class="btn btn-sm"
-        [hidden]="!node.collapsed"
-        (click)="show($event)">
-        <span class="icon-expand"></span>
+      <button class="btn btn-sm" [hidden]="!node.collapsed" (click)="show($event)">
+        <svg class="bi" fill="currentColor">
+          <use xlink:href="assets/icons/bootstrap-icons.svg#plus-square" />
+        </svg>
       </button>
-      <button class="btn btn-sm"
-        [hidden]="node.collapsed"
-        (click)="hide($event)">
-        <span class="icon-collapse"></span>
+      <button class="btn btn-sm" [hidden]="node.collapsed" (click)="hide($event)">
+        <svg class="bi" fill="currentColor">
+          <use xlink:href="assets/icons/bootstrap-icons.svg#dash-square" />
+        </svg>
       </button>
     </ng-container>
 
     <!-- tag name -->
-    <div *ngIf="!noTagName" class="py-1 tagname"
-      [class.indent-node]="node.isText">
+    <div *ngIf="!noTagName" class="py-1 tagname">
       <span class="tag">&lt;</span><span [innerHTML]="getValue(node.name)"></span><span class="tag">&gt;</span>
     </div>
     <div *ngIf="node.isText" class="value p-1">
@@ -31,15 +32,13 @@
   </div>
 
   <!-- attributes -->
-  <div class="pl-3 attr"
-      [hidden]="node.collapsed"
-      *ngFor="let attr of node.attributes">
-    <div class="node d-flex flex-row"
-        [class.selected]="selected && selectedAttr === attr"
-        (click)="onAttrClick($event, attr, node)">
-      <div class="attr-name p-1 indent-node">
-        {{ attr.name }} <span class="equals">=</span>
-      </div>
+  <div class="pl-4 attr" [hidden]="node.collapsed" *ngFor="let attr of node.attributes">
+    <div
+      class="node d-flex flex-row"
+      [class.selected]="selected && selectedAttr === attr"
+      (click)="onAttrClick($event, attr, node)"
+    >
+      <div class="attr-name p-1 indent-node">{{ attr.name }} <span class="equals">=</span></div>
       <div class="attr-value p-1 pl-0">
         {{ attr.value }}
       </div>
@@ -49,17 +48,12 @@
   <!-- children nodes -->
   <ng-container *ngFor="let childNodes of node.children">
     <!-- array -->
-    <div class="pl-3"
-         *ngIf="childNodes.length > 1"
-         [hidden]="node.collapsed">
+    <div class="pl-3" *ngIf="childNodes.length > 1" [hidden]="node.collapsed">
       <app-array [nodes]="childNodes"></app-array>
     </div>
     <!-- single node -->
-    <div class="pl-3"
-        *ngIf="childNodes.length === 1"
-        [hidden]="node.collapsed">
+    <div class="pl-3" *ngIf="childNodes.length === 1" [hidden]="node.collapsed">
       <app-node [node]="childNodes[0]" [arrayInParent]="arrayInParent"></app-node>
     </div>
   </ng-container>
-
 </div>

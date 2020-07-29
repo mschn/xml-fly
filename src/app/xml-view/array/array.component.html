@@ -1,87 +1,74 @@
-<div class="array" #anchor>
-
+<div class="array" #anchor (click)="onNodeClick($event)">
   <div class="header">
     <ng-container>
-      <button class="btn btn-sm"
-        [hidden]="!nodes[0].collapsed"
-        (click)="show($event)">
-        <span class="icon-expand"></span>
+      <button class="btn btn-sm" [hidden]="!nodes[0].collapsed" (click)="show($event)">
+        <svg class="bi" fill="currentColor">
+          <use xlink:href="assets/icons/bootstrap-icons.svg#plus-square" />
+        </svg>
       </button>
-      <button class="btn btn-sm"
-        [hidden]="nodes[0].collapsed"
-        (click)="hide($event)">
-        <span class="icon-collapse"></span>
+      <button class="btn btn-sm" [hidden]="nodes[0].collapsed" (click)="hide($event)">
+        <svg class="bi" fill="currentColor">
+          <use xlink:href="assets/icons/bootstrap-icons.svg#dash-square" />
+        </svg>
       </button>
     </ng-container>
 
-    <span class="tagname p-1"
-        (click)="onNodeClick($event)"
-        >
+    <span class="tagname p-1">
       <span class="tag">&lt;</span>{{ nodes[0].name }}<span class="tag">&gt;</span>
     </span>
-    <span class="py-1 array-len">
-      ({{ nodes.length }})
-    </span>
+    <span class="py-1 array-len"> ({{ nodes.length }}) </span>
   </div>
 
-  <div class="ml-3">
+  <div class="ml-4">
     <table class="mr-1" [hidden]="nodes[0].collapsed">
-        <thead *ngIf="!nodes[0].isText">
-          <tr>
-            <th class="p-1 array-index"></th>
-            <th class="p-1 attr-name"
-              *ngFor="let attr of nodes[0].attributeNames"
-              (click)="onNodeClick($event)">
-              {{ attr }}
-            </th>
-            <ng-container *ngFor="let childNode of nodes[0].childrenNames">
-              <th class="p-1 tag-name" >
-                <span class="tag">&lt;</span>{{ childNode }}<span class="tag">&gt;</span>
-              </th>
+      <thead *ngIf="!nodes[0].isText">
+        <tr>
+          <th class="p-1 array-index"></th>
+          <th class="p-1 attr-name" *ngFor="let attr of nodes[0].attributeNames" (click)="onNodeClick($event)">
+            {{ attr }}
+          </th>
+          <ng-container *ngFor="let childNode of nodes[0].childrenNames">
+            <th class="p-1 tag-name"><span class="tag">&lt;</span>{{ childNode }}<span class="tag">&gt;</span></th>
+          </ng-container>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr
+          *ngFor="let node of nodes; let i = index"
+          [class.selected]="selection.element === node && selection.type === 'Node'"
+          (click)="onSubNodeClick($event, node)"
+        >
+          <td class="p-1 array-index">{{ i }}.</td>
+          <td class="p-1 tag-val" *ngIf="node.isText">
+            {{ node.shortText }}
+          </td>
+          <ng-container *ngIf="!node.isText">
+            <ng-container *ngFor="let attr of node.attributes">
+              <td
+                class="attr-val"
+                [class.selected]="selected && selectedAttr === attr"
+                (click)="onAttrClick($event, attr, node)"
+              >
+                <div class="p-1">
+                  {{ attr.value }}
+                </div>
+              </td>
             </ng-container>
-          </tr>
-        </thead>
 
-        <tbody>
-          <tr *ngFor="let node of nodes; let i = index"
-            [class.selected]="selection.element === node"
-            (click)="onSubNodeClick($event, node)">
-            <td class="p-1 array-index">
-              {{ i }}.
-            </td>
-            <td class="p-1 tag-val" *ngIf="node.isText">
-              {{ node.shortText }}
-            </td>
-            <ng-container *ngIf="!node.isText">
-              <ng-container *ngFor="let attr of node.attributes">
-                  <td class="attr-val"
-                      [class.selected]="selected && selectedAttr === attr"
-                  (click)="onAttrClick($event, attr, node)">
-                  <div class="p1">
-                    {{ attr.value }}
-                  </div>
-                 </td>
-              </ng-container>
-
-              <ng-container *ngFor="let childNodes of getChildNodes(node)">
-
-                <td *ngIf="childNodes">
-                  <ng-container *ngIf="childNodes.length === 1">
-                    <app-node [node]="childNodes[0]" [arrayInParent]="true" [noTagName]="childNodes[0].isText"></app-node>
-                  </ng-container>
-                  <ng-container *ngIf="childNodes.length > 1">
-                    <app-array [nodes]="childNodes"></app-array>
-                  </ng-container>
-                </td>
-
-              </ng-container>
-
-
+            <ng-container *ngFor="let childNodes of getChildNodes(node)">
+              <td *ngIf="childNodes">
+                <ng-container *ngIf="childNodes.length === 1">
+                  <app-node [node]="childNodes[0]" [arrayInParent]="true" [noTagName]="childNodes[0].isText"></app-node>
+                </ng-container>
+                <ng-container *ngIf="childNodes.length > 1">
+                  <app-array [nodes]="childNodes"></app-array>
+                </ng-container>
+              </td>
             </ng-container>
-          </tr>
-        </tbody>
-      </table>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
   </div>
-
 </div>
-

@@ -7,11 +7,9 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-node',
   templateUrl: './node.component.html',
-  styleUrls: ['./node.component.scss']
-
+  styleUrls: ['./node.component.scss'],
 })
 export class NodeComponent extends AbstractNodeComponent implements OnInit {
-
   @Input() node: Elt;
 
   @Input() noTagName = false;
@@ -46,5 +44,4 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
     const search = this.dataService.getSearchTextValue();
     return value.replace(search, `<span class="search-result">${search}</span>`);
   }
-
 }

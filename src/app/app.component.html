@@ -19,22 +19,18 @@
             (click)="selectFile(file)"
           >
             {{ file.name }}
-
-
-
           </button>
 
           <button
-          type="button"
-          (click)="closeFile(file)"
-          [class.active]="file.selected"
-          class="btn btn-sm btn-primary border-left-0"
-        >
-          <svg class="bi" width="32" height="32" fill="currentColor">
-            <use xlink:href="assets/icons/bootstrap-icons.svg#x-square" />
-          </svg>
-        </button>
-
+            type="button"
+            (click)="closeFile(file)"
+            [class.active]="file.selected"
+            class="btn btn-sm btn-primary border-left-0"
+          >
+            <svg class="bi" fill="currentColor">
+              <use xlink:href="assets/icons/bootstrap-icons.svg#x-square" />
+            </svg>
+          </button>
         </div>
       </div>
 

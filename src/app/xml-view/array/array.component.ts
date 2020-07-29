@@ -25,7 +25,7 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
 
   onNodeClick(event: Event) {
     event.stopPropagation();
-    this.dataService.selectNode(this.nodes[0], this);
+    return false;
   }
 
   onSubNodeClick(event: Event, node: Elt) {

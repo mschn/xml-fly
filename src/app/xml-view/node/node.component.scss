@@ -9,29 +9,25 @@
         line-height: 1;
         padding: 0;
 
-        .icon-expand, .icon-collapse {
-            background-repeat: no-repeat;
-            width: 1rem;
-            height: 1rem;
-            display: inline-block;
-            margin: .3rem;
-        }
-
-        .icon-expand {
-            background-image: url(../../../assets/plus-square-regular.svg);
-        }
-
-        .icon-collapse {
-            background-image: url(../../../assets/minus-square-regular.svg);
+        svg {
+          color: white;
+          width: .9rem;
+          height: .9rem;
+          margin: .3rem;
         }
     }
 
     .tagname {
       color: $tagname-col;
+      cursor: pointer;
 
       .tag {
         color: $tag-col;
       }
+    }
+
+    &.text-node > .header > .tagname {
+      margin-left: 1.75rem;
     }
 
     .equals {
@@ -41,6 +37,7 @@
     .attr-name {
       color: $attr-col;
       white-space: nowrap;
+      cursor: pointer;
     }
 
     .attr-value {
@@ -61,16 +58,23 @@
 
       & > .tagname {
         background: $selected-bg-col;
-        border-radius: 5px 0 0 5px;
+        border-radius: 5px;
         border-right: 0;
       }
 
+    }
+
+    &.text-node > .header.selected {
+      & > .tagname {
+        border-radius: 5px 0 0 5px;
+      }
       & > .value {
         background: $selected-bg-col;
         border-radius: 0 5px 5px 0;
-      }
 
+      }
     }
+
 
     .attr {
       .selected {
@@ -93,6 +97,6 @@
     margin: .5rem;
 }
 
-.indent-node {
-  margin-left: 1.75rem;
+.value {
+  cursor: pointer;
 }

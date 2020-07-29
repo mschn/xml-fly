@@ -28,7 +28,7 @@
 
     .attr-val {
       color: $attr-val-col;
-
+      cursor: pointer;
       &.selected > div {
         background-color: $selected-bg-col;
       }
@@ -43,6 +43,7 @@
         .array-index {
             width: 3em;
             min-width: 3em;
+            cursor: pointer;
         }
 
         tr {
@@ -72,20 +73,11 @@
         line-height: 1;
         padding: 0;
 
-        .icon-expand, .icon-collapse {
-            background-repeat: no-repeat;
-            width: 1rem;
-            height: 1rem;
-            display: inline-block;
-            margin: .3rem;
-        }
-
-        .icon-expand {
-            background-image: url(../../../assets/plus-square-regular.svg);
-        }
-
-        .icon-collapse {
-            background-image: url(../../../assets/minus-square-regular.svg);
+        svg {
+          color: white;
+          width: 1rem;
+          height: 1rem;
+          margin: .3rem;
         }
 
     }
