@@ -1,7 +1,9 @@
 <div class="d-flex flex-column h-100 toolbar p-2">
 
+  <img class="logo" src="assets/icons/48x48.png" />
+
   <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading" ngbTooltip="Open file">
-    <svg class="bi" width="32" height="32" fill="currentColor">
+    <svg class="bi" fill="currentColor">
       <use xlink:href="assets/icons/bootstrap-icons.svg#file-earmark-plus" />
     </svg>
     <input type="file" id="open-file" (change)="openFile($event)" />
