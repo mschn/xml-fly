@@ -35,14 +35,14 @@ export class FileService {
   openFileInput(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length) {
-      this.dataService.isLoading.next(true);
+      this.dataService.setIsLoading(true);
 
       const file = target.files[0];
       setTimeout(() => {
         this.doOpenFile(file)
           .then(() => {})
           .catch((err) => console.log('failed to open file ', err))
-          .finally(() => this.dataService.isLoading.next(false));
+          .finally(() => this.dataService.setIsLoading(false));
       });
     }
   }
@@ -50,13 +50,13 @@ export class FileService {
   openFileDrop(event: DragEvent) {
     event.preventDefault();
     if (event.dataTransfer && event.dataTransfer.files) {
-      this.dataService.isLoading.next(true);
+      this.dataService.setIsLoading(true);
       const file = event.dataTransfer.files[0];
       setTimeout(() => {
         this.doOpenFile(file)
           .then(() => {})
           .catch((err) => console.log('failed to open file ', err))
-          .finally(() => this.dataService.isLoading.next(false));
+          .finally(() => this.dataService.setIsLoading(false));
       });
     }
     return false;
@@ -80,24 +80,15 @@ export class FileService {
         f.xmlFileContent = reader.result.toString();
         f.tree = this.xmlService.parseFile(f.xmlFileContent);
 
-        const existingFile = this.findFile(f);
+        const existingFile = this.dataService.findFile(f);
         if (existingFile) {
           this.selectionService.selectFile(existingFile);
         } else {
           this.selectionService.selectFile(f);
-          this.dataService.files.push(f);
+          this.dataService.addFile(f);
         }
         resolve();
       };
     });
-  }
-
-  private findFile(file: XmlFile): XmlFile {
-    for (const f of this.dataService.files) {
-      if (file.xmlFileContent === f.xmlFileContent) {
-        return f;
-      }
-    }
-    return null;
   }
 }

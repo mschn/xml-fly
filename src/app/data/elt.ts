@@ -40,4 +40,16 @@ export class Elt {
       this.parent.expandParent();
     }
   }
+
+  toggleAll(state: boolean) {
+    this.collapsed = state;
+    if (!this.children) {
+      return;
+    }
+    this.children.forEach((childArr) => {
+      childArr.forEach((child) => {
+        child.toggleAll(state);
+      });
+    });
+  }
 }

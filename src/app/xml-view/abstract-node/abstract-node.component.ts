@@ -23,7 +23,7 @@ export class AbstractNodeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subs.push(
-      this.dataService.getSelectedFile().subscribe((file) => {
+      this.dataService.selectedFile.subscribe((file) => {
         this.selection = file?.selection;
       })
     );

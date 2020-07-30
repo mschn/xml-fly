@@ -12,8 +12,8 @@ export class SelectionService {
   files: XmlFile[];
 
   constructor(private readonly dataService: DataService) {
-    this.dataService.getSelectedFile().subscribe((selectedFile) => (this.selectedFile = selectedFile));
-    this.dataService.getFiles().subscribe((files) => (this.files = files));
+    this.dataService.selectedFile.subscribe((selectedFile) => (this.selectedFile = selectedFile));
+    this.dataService.files.subscribe((files) => (this.files = files));
   }
 
   selectFile(file: XmlFile): void {

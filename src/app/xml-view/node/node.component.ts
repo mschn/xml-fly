@@ -16,8 +16,12 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
 
   @Input() arrayInParent = false;
 
+  searchText: string;
+
   constructor(readonly dataService: DataService, readonly selectionService: SelectionService) {
     super(dataService, selectionService);
+
+    this.dataService.searchText.subscribe((searchText) => (this.searchText = searchText));
   }
 
   show(event: Event) {
@@ -41,7 +45,6 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
   }
 
   getValue(value: string) {
-    const search = this.dataService.getSearchTextValue();
-    return value.replace(search, `<span class="search-result">${search}</span>`);
+    return value.replace(this.searchText, `<span class="search-result">${this.searchText}</span>`);
   }
 }

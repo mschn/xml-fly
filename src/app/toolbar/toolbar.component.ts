@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { FileService } from '../services/file.service';
 import { SelectionService } from '../services/selection.service';
+import { XmlFile } from '../data/xml-file';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,6 +11,7 @@ import { SelectionService } from '../services/selection.service';
 })
 export class ToolbarComponent implements OnInit {
   loading = false;
+  selectedFile: XmlFile;
 
   constructor(
     private readonly dataService: DataService,
@@ -19,6 +21,7 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.isLoading.subscribe((loading) => (this.loading = loading));
+    this.dataService.selectedFile.subscribe((selectedFile) => (this.selectedFile = selectedFile));
   }
 
   openFile(event: Event) {
@@ -34,10 +37,10 @@ export class ToolbarComponent implements OnInit {
   }
 
   expandAll() {
-    this.dataService.expandAll();
+    this.selectedFile.tree.toggleAll(false);
   }
 
   collapseAll() {
-    this.dataService.collapseAll();
+    this.selectedFile.tree.toggleAll(true);
   }
 }

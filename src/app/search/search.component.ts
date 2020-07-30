@@ -37,7 +37,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       })
     );
     this.subs.push(
-      this.data.getSearchResults().subscribe((res) => {
+      this.data.searchResults.subscribe((res) => {
         this.currentResult = 0;
         this.searchResults = res;
         if (res && res.length > 0) {

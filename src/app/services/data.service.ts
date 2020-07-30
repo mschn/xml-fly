@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of, Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { XmlFile } from '../data/xml-file';
 import { SearchResult } from '../data/search-result';
 import { Elt } from '../data/elt';
@@ -8,75 +8,58 @@ import { Elt } from '../data/elt';
   providedIn: 'root',
 })
 export class DataService {
-  files: Array<XmlFile> = new Array<XmlFile>();
-  selectedFile = new BehaviorSubject<XmlFile>(null);
+  private _files = new BehaviorSubject<XmlFile[]>([]);
+  private _selectedFile = new BehaviorSubject<XmlFile>(null);
+  private _searchVisible = new BehaviorSubject<boolean>(false);
+  private _searchText: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  private _searchResults: BehaviorSubject<SearchResult[]> = new BehaviorSubject<SearchResult[]>(null);
+  private _isLoading = new BehaviorSubject<boolean>(false);
 
-  searchVisible = new BehaviorSubject<boolean>(false);
-  searchText: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  searchResults: BehaviorSubject<SearchResult[]> = new BehaviorSubject<SearchResult[]>(null);
-  isLoading = new BehaviorSubject<boolean>(false);
+  readonly files = this._files.asObservable();
+  readonly selectedFile = this._selectedFile.asObservable();
+  readonly searchVisible = this._searchVisible.asObservable();
+  readonly searchText = this._searchText.asObservable();
+  readonly searchResults = this._searchResults.asObservable();
+  readonly isLoading = this._isLoading.asObservable();
 
   constructor() {}
 
-  getSearchVisible(): Observable<boolean> {
-    return this.searchVisible.asObservable();
-  }
   setSearchVisible(visible: boolean) {
-    this.searchVisible.next(visible);
+    this._searchVisible.next(visible);
   }
 
   setSearchText(text: string) {
-    this.searchText.next(text);
-  }
-  getSearchTextValue(): string {
-    return this.searchText.value;
+    this._searchText.next(text);
   }
 
-  getSearchResults(): Observable<SearchResult[]> {
-    return this.searchResults.asObservable();
-  }
   setSearchResults(res: SearchResult[]) {
-    this.searchResults.next(res);
+    this._searchResults.next(res);
   }
 
-  getFiles(): Observable<XmlFile[]> {
-    return of(this.files);
+  setIsLoading(loading: boolean) {
+    this._isLoading.next(loading);
   }
+
+  addFile(file: XmlFile) {
+    const arr = this._files.value;
+    arr.push(file);
+    this._files.next(arr);
+  }
+
   removeFile(file: XmlFile) {
-    const idx = this.files.indexOf(file);
+    const arr = this._files.value;
+    const idx = arr.indexOf(file);
     if (idx > -1) {
-      this.files.splice(idx, 1);
+      arr.splice(idx, 1);
     }
+    this._files.next(arr);
   }
 
-  getSelectedFile(): Observable<XmlFile> {
-    return this.selectedFile.asObservable();
+  findFile(file: XmlFile): XmlFile {
+    return this._files.value.find((f) => f.xmlFileContent === file.xmlFileContent);
   }
 
   setSelectedFile(file: XmlFile) {
-    this.selectedFile.next(file);
-  }
-
-  expandAll() {
-    this.toggleAll(this.selectedFile.value.tree, false);
-  }
-
-  collapseAll() {
-    this.toggleAll(this.selectedFile.value.tree, true);
-  }
-
-  toggleAll(node: Elt, state: boolean) {
-    if (!node) {
-      return;
-    }
-    node.collapsed = state;
-    if (!node.children) {
-      return;
-    }
-    for (let i = 0; i < node.children.length; i++) {
-      for (let j = 0; j < node.children[i].length; j++) {
-        this.toggleAll(node.children[i][j], state);
-      }
-    }
+    this._selectedFile.next(file);
   }
 }

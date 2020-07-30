@@ -24,9 +24,9 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dataService.getFiles().subscribe((files) => this.files = files);
-    this.dataService.isLoading.subscribe((loading) => this.loading = loading);
-    this.dataService.getSelectedFile().subscribe((selectedFile) => this.selectedFile = selectedFile);
+    this.dataService.files.subscribe((files) => (this.files = files));
+    this.dataService.isLoading.subscribe((loading) => (this.loading = loading));
+    this.dataService.selectedFile.subscribe((selectedFile) => (this.selectedFile = selectedFile));
   }
 
   dragFalse() {
