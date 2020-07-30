@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from './services/data.service';
 import { FileService } from './services/file.service';
 import { XmlFile } from './data/xml-file';
+import { SelectionService } from './services/selection.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent implements OnInit {
   searchText = '';
 
   constructor(
-    private dataService: DataService,
+    private readonly dataService: DataService,
+    private readonly selectionService: SelectionService,
     private readonly fileService: FileService
   ) {}
 
@@ -36,11 +38,11 @@ export class AppComponent implements OnInit {
   }
 
   selectFile(file: XmlFile) {
-    this.dataService.selectFile(file);
+    this.selectionService.selectFile(file);
   }
 
   closeFile(file?: XmlFile) {
-    this.dataService.closeFile(file);
+    this.selectionService.closeFile(file);
   }
 
   hasFile(): boolean {

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { SearchService } from '../services/search.service';
 import { SearchResult } from '../data/search-result';
+import { SelectionService } from '../services/selection.service';
 
 @Component({
   selector: 'app-search',
@@ -20,7 +21,11 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   subs: Subscription[] = [];
 
-  constructor(private readonly data: DataService, private readonly searchService: SearchService) {}
+  constructor(
+    private readonly data: DataService,
+    private readonly selectionService: SelectionService,
+    private readonly searchService: SearchService
+  ) {}
 
   ngOnInit() {
     this.subs.push(
@@ -74,7 +79,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   gotoResult() {
     const elt = this.searchResults[this.currentResult].elt;
-    this.data.selectNode(elt, elt.viewRef);
+    this.selectionService.selectNode(elt, elt.viewRef);
   }
 
   focusSearch() {

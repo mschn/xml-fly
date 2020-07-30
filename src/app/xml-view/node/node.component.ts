@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AbstractNodeComponent } from '../abstract-node/abstract-node.component';
 import { DataService } from '../../services/data.service';
 import { Elt } from '../../data/elt';
+import { SelectionService } from '../../services/selection.service';
 
 @Component({
   selector: 'app-node',
@@ -15,8 +16,8 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
 
   @Input() arrayInParent = false;
 
-  constructor(dataService: DataService) {
-    super(dataService);
+  constructor(readonly dataService: DataService, readonly selectionService: SelectionService) {
+    super(dataService, selectionService);
   }
 
   show(event: Event) {
@@ -36,7 +37,7 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
 
   onNodeClick(event: Event) {
     event.stopPropagation();
-    this.dataService.selectNode(this.node, this);
+    this.selectionService.selectNode(this.node, this);
   }
 
   getValue(value: string) {

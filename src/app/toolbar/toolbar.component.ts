@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { FileService } from '../services/file.service';
+import { SelectionService } from '../services/selection.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,7 +11,11 @@ import { FileService } from '../services/file.service';
 export class ToolbarComponent implements OnInit {
   loading = false;
 
-  constructor(private readonly dataService: DataService, private readonly fileService: FileService) {}
+  constructor(
+    private readonly dataService: DataService,
+    private readonly selectionService: SelectionService,
+    private readonly fileService: FileService
+  ) {}
 
   ngOnInit(): void {
     this.dataService.isLoading.subscribe((loading) => (this.loading = loading));
@@ -25,7 +30,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   goHome() {
-    this.dataService.deselectFile();
+    this.selectionService.deselectFile();
   }
 
   expandAll() {

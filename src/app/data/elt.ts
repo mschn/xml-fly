@@ -23,4 +23,21 @@ export class Elt {
   collapsed: boolean;
   /** Reference to the view component displaying this node */
   viewRef: any;
+
+  getPath(): string[] {
+    const paths = [];
+    let curNode: Elt = this;
+    while (curNode.parent) {
+      paths.push(curNode.name);
+      curNode = curNode.parent;
+    }
+    return paths.reverse();
+  }
+
+  expandParent() {
+    if (this.parent) {
+      this.parent.collapsed = false;
+      this.parent.expandParent();
+    }
+  }
 }

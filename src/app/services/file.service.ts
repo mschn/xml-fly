@@ -3,6 +3,7 @@ import { DataService } from './data.service';
 import { XmlService } from './xml.service';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { XmlFile } from '../data/xml-file';
+import { SelectionService } from './selection.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ import { XmlFile } from '../data/xml-file';
 export class FileService {
   constructor(
     private readonly dataService: DataService,
+    private readonly selectionService: SelectionService,
     private readonly hotkeysService: HotkeysService,
     private readonly xmlService: XmlService
   ) {
@@ -80,9 +82,9 @@ export class FileService {
 
         const existingFile = this.findFile(f);
         if (existingFile) {
-          this.dataService.selectFile(existingFile);
+          this.selectionService.selectFile(existingFile);
         } else {
-          this.dataService.selectFile(f);
+          this.selectionService.selectFile(f);
           this.dataService.files.push(f);
         }
         resolve();

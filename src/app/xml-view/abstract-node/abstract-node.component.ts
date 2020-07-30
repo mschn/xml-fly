@@ -3,13 +3,13 @@ import { Subscription } from 'rxjs';
 import { DataService } from '../../services/data.service';
 import { Selection } from '../../data/selection';
 import { Elt } from '../../data/elt';
+import { SelectionService } from '../../services/selection.service';
 
 @Component({
   selector: 'app-abstract-node',
-  template: ''
+  template: '',
 })
 export class AbstractNodeComponent implements OnInit, OnDestroy {
-
   @ViewChild('anchor') nodeRef: ElementRef;
 
   selected = false;
@@ -19,20 +19,33 @@ export class AbstractNodeComponent implements OnInit, OnDestroy {
 
   subs: Subscription[] = [];
 
-  constructor(protected dataService: DataService) { }
+  constructor(protected dataService: DataService, protected selectionService: SelectionService) {}
 
   ngOnInit() {
-    this.subs.push(this.dataService.getSelectedFile().subscribe(file => {
-      this.selection = file?.selection;
-    }));
+    this.subs.push(
+      this.dataService.getSelectedFile().subscribe((file) => {
+        this.selection = file?.selection;
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach(sub => sub.unsubscribe());
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 
   onAttrClick(event: Event, attr: Attr, node: Elt) {
     event.stopPropagation();
-    this.dataService.selectAttr(attr, node, this);
+    this.selectionService.selectAttr(attr, node, this);
+  }
+
+  scrollIfNeeded() {
+    const elt = this.nodeRef.nativeElement;
+    const rect = elt.getBoundingClientRect();
+    if (rect.bottom > window.innerHeight) {
+      elt.scrollIntoView();
+    }
+    if (rect.top < 0) {
+      elt.scrollIntoView();
+    }
   }
 }

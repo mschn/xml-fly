@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { XmlFile } from '../data/xml-file';
 import { Selection } from '../data/selection';
+import { SelectionService } from '../services/selection.service';
 
 @Component({
   selector: 'app-selection',
@@ -13,7 +14,8 @@ export class SelectionComponent implements OnInit {
 
   selection: Selection;
 
-  constructor(private dataService: DataService) {}
+  constructor(private readonly dataService: DataService,
+    private readonly selectionService: SelectionService) {}
 
   ngOnInit() {
     this.selection = this.node.selection;
@@ -31,10 +33,10 @@ export class SelectionComponent implements OnInit {
     for (let i = 0; i < len; i++) {
       n = n.parent;
     }
-    this.dataService.selectNode(n, n.viewRef);
+    this.selectionService.selectNode(n, n.viewRef);
   }
 
   close() {
-    this.dataService.clearSelection();
+    this.selectionService.clearSelection();
   }
 }
