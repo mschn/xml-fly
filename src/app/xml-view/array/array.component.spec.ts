@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArrayComponent } from './array.component';
+import { Elt } from 'src/app/data/elt';
 
 describe('ArrayComponent', () => {
   let component: ArrayComponent;
@@ -8,14 +9,16 @@ describe('ArrayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ArrayComponent ]
+      declarations: [ArrayComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ArrayComponent);
     component = fixture.componentInstance;
+    component.nodes = [new Elt()];
+    component.nodes[0].childrenNames = new Set();
     fixture.detectChanges();
   });
 

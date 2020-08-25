@@ -10,7 +10,7 @@ export class XmlService {
 
   parseFile(value: string): Elt {
     const parser = new DOMParser();
-    const document = parser.parseFromString(value, 'application/xml');
+    const document = parser.parseFromString(value.trim(), 'application/xml');
     const tree = this.buildTree(document);
     if (tree && tree.children.length === 1 && tree.children[0].length === 1) {
       return tree.children[0][0];

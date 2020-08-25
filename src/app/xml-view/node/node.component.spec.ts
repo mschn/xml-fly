@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NodeComponent } from './node.component';
+import { Elt } from 'src/app/data/elt';
 
 describe('NodeComponent', () => {
   let component: NodeComponent;
@@ -16,6 +17,7 @@ describe('NodeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NodeComponent);
     component = fixture.componentInstance;
+    component.node = new Elt();
     fixture.detectChanges();
   });
 
