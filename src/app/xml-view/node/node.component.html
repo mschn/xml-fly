@@ -6,6 +6,7 @@
   [class.text-node]="node.isText"
   (click)="onNodeClick($event, node)"
   class="node"
+  [attr.data-node]="node.name"
 >
   <div class="header d-flex flex-row" [class.selected]="selected && !selectedAttr">
     <!-- expand / collapse button -->

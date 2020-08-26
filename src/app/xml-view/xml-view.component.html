@@ -1,8 +1,4 @@
 <div class="d-flex flex-column h-100">
-  <div *ngIf="parserError" class="alert alert-warning" role="alert">
-    {{parserError}}
-  </div>
-
   <app-node class="flex-grow-1 overflow-auto" [node]="file.tree"></app-node>
   <app-selection [node]="file"></app-selection>
 </div>

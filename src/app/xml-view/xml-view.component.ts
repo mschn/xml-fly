@@ -9,10 +9,6 @@ import { XmlFile } from '../data/xml-file';
 })
 export class XmlViewComponent implements OnInit {
 
-  elt: Elt;
-
-  parserError: string;
-
   @Input() file: XmlFile;
 
   constructor() { }

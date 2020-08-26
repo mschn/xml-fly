@@ -3,19 +3,19 @@ import { AbstractNodeComponent } from '../abstract-node/abstract-node.component'
 import { DataService } from '../../services/data.service';
 import { Elt } from '../../data/elt';
 import { SelectionService } from '../../services/selection.service';
+import { Attr } from '../../data/attr';
 
 @Component({
   selector: 'app-array',
   templateUrl: './array.component.html',
-  styleUrls: ['./array.component.scss']
+  styleUrls: ['./array.component.scss'],
 })
-export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
-
+export class ArrayComponent extends AbstractNodeComponent implements OnInit {
   @Input() nodes: Elt[];
 
   constructor(dataService: DataService, selectionService: SelectionService) {
     super(dataService, selectionService);
-   }
+  }
 
   ngOnInit() {
     super.ngOnInit();
@@ -42,10 +42,20 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
     this.nodes[0].collapsed = true;
   }
 
+  getAttrList(node: Elt): Attr[] {
+    const attrNames = this.nodes[0].attributeNames;
+    if (!attrNames) {
+      return [];
+    }
+    return Array.from(attrNames).map((attrName) => {
+      return node.attributes.find((attr) => attr.name === attrName);
+    });
+  }
+
   getChildNodes(node: Elt): Elt[][] {
     const tagNames = this.nodes[0].childrenNames;
     let ret: Elt[][] = [];
-    tagNames.forEach(tagName => {
+    tagNames.forEach((tagName) => {
       ret = ret.concat([this.getChildNodesByTagname(node, tagName)]);
     });
     return ret;
@@ -59,5 +69,4 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit  {
       }
     }
   }
-
 }

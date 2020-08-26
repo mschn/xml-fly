@@ -16,6 +16,6 @@ describe('XmlService', () => {
     expect(elt.children[0].length).toEqual(4);
     expect(elt.childrenNames).toEqual(new Set(['entry']));
 
-    expect(elt.children[0][0].childrenNames).toEqual(new Set(['aaa','bbb','ccc']));
+    expect(elt.children[0][0].childrenNames).toEqual(new Set(['aaa', 'bbb', 'ccc']));
   });
 });

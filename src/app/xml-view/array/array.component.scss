@@ -61,6 +61,14 @@
                 vertical-align: top;
                 border: 1px solid $array-col;
                 padding: 0;
+
+                &.empty-cell {
+                  // text-align: center;
+
+                  svg {
+                    color: grey;
+                  }
+                }
             }
             td:first-child {
               color: $tag-col;
@@ -75,10 +83,12 @@
 
         svg {
           color: white;
-          width: 1rem;
-          height: 1rem;
-          margin: .3rem;
         }
-
     }
+}
+
+svg {
+  width: 1rem;
+  height: 1rem;
+  margin: .3rem;
 }

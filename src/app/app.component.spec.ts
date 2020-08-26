@@ -1,6 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { HotkeyModule } from 'angular2-hotkeys';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -9,7 +10,7 @@ describe('AppComponent', () => {
         HotkeyModule.forRoot()
       ],
       declarations: [
-        AppComponent
+        AppComponent, ToolbarComponent
       ],
       providers: []
     }).compileComponents();

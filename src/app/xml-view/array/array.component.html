@@ -1,4 +1,4 @@
-<div class="array" #anchor (click)="onNodeClick($event)">
+<div class="array" #anchor (click)="onNodeClick($event)" [attr.data-array]="nodes[0].name">
   <div class="header">
     <ng-container>
       <button class="btn btn-sm" [hidden]="!nodes[0].collapsed" (click)="show($event)">
@@ -13,9 +13,7 @@
       </button>
     </ng-container>
 
-    <span class="tagname p-1">
-      <span class="tag">&lt;</span>{{ nodes[0].name }}<span class="tag">&gt;</span>
-    </span>
+    <span class="tagname p-1"> <span class="tag">&lt;</span>{{ nodes[0].name }}<span class="tag">&gt;</span> </span>
     <span class="py-1 array-len"> ({{ nodes.length }}) </span>
   </div>
 
@@ -44,8 +42,9 @@
             {{ node.shortText }}
           </td>
           <ng-container *ngIf="!node.isText">
-            <ng-container *ngFor="let attr of node.attributes">
+            <ng-container *ngFor="let attr of getAttrList(node)">
               <td
+                *ngIf="attr"
                 class="attr-val"
                 [class.selected]="selected && selectedAttr === attr"
                 (click)="onAttrClick($event, attr, node)"
@@ -53,6 +52,11 @@
                 <div class="p-1">
                   {{ attr.value }}
                 </div>
+              </td>
+              <td *ngIf="!attr" class="empty-cell">
+                <svg class="bi" fill="currentColor">
+                  <use xlink:href="assets/icons/bootstrap-icons.svg#x-circle" />
+                </svg>
               </td>
             </ng-container>
 
@@ -64,6 +68,11 @@
                 <ng-container *ngIf="childNodes.length > 1">
                   <app-array [nodes]="childNodes"></app-array>
                 </ng-container>
+              </td>
+              <td *ngIf="!childNodes" class="empty-cell">
+                <svg class="bi" fill="currentColor">
+                  <use xlink:href="assets/icons/bootstrap-icons.svg#x-circle" />
+                </svg>
               </td>
             </ng-container>
           </ng-container>
