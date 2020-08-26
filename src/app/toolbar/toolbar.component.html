@@ -1,5 +1,4 @@
 <div class="d-flex flex-column h-100 toolbar p-2">
-
   <img class="logo" src="assets/icons/48x48.png" (click)="goHome()" />
 
   <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading" ngbTooltip="Open file">
@@ -9,17 +8,43 @@
     <input type="file" id="open-file" (change)="openFile($event)" />
   </label>
 
-  <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="showSearch(true)" ngbTooltip="Search">
+  <button
+    class="btn btn-sm btn-outline-secondary border-0 mb-2"
+    (click)="share()"
+    ngbTooltip="Share"
+    [disabled]="!selectedFile"
+  >
+    <svg class="bi" fill="currentColor">
+      <use xlink:href="assets/icons/bootstrap-icons.svg#share" />
+    </svg>
+  </button>
+
+  <button
+    class="btn btn-sm btn-outline-secondary border-0 mb-2"
+    (click)="showSearch(true)"
+    ngbTooltip="Search"
+    [disabled]="!selectedFile"
+  >
     <svg class="bi" fill="currentColor">
       <use xlink:href="assets/icons/bootstrap-icons.svg#search" />
     </svg>
   </button>
-  <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="expandAll()" ngbTooltip="Expand all">
+  <button
+    class="btn btn-sm btn-outline-secondary border-0 mb-2"
+    (click)="expandAll()"
+    ngbTooltip="Expand all"
+    [disabled]="!selectedFile"
+  >
     <svg class="bi" fill="currentColor">
       <use xlink:href="assets/icons/bootstrap-icons.svg#plus-square" />
     </svg>
   </button>
-  <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="collapseAll()" ngbTooltip="Collapse all">
+  <button
+    class="btn btn-sm btn-outline-secondary border-0 mb-2"
+    (click)="collapseAll()"
+    ngbTooltip="Collapse all"
+    [disabled]="!selectedFile"
+  >
     <svg class="bi" fill="currentColor">
       <use xlink:href="assets/icons/bootstrap-icons.svg#dash-square" />
     </svg>

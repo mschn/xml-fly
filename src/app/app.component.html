@@ -40,6 +40,10 @@
       </button>
     </nav>
 
+    <div *ngIf="error">
+      <ngb-alert type="danger" class="rounded-0 mb-0" (close)="dismissError()"> {{ error }}</ngb-alert>
+    </div>
+
     <div *ngIf="!selectedFile">
       <app-start></app-start>
     </div>

@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { StartComponent } from './start/start.component';
+import { ShareComponent } from './share/share.component';
 
 @NgModule({
   declarations: [
@@ -23,18 +24,13 @@ import { StartComponent } from './start/start.component';
     SelectionComponent,
     SearchComponent,
     ToolbarComponent,
-    StartComponent
+    StartComponent,
+    ShareComponent,
   ],
-  imports: [
-    BrowserModule,
-    NgbModule,
-    FormsModule,
-    HotkeyModule.forRoot()
-  ],
+  imports: [BrowserModule, NgbModule, FormsModule, HotkeyModule.forRoot()],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor() {}
-
 }

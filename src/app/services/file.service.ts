@@ -62,7 +62,7 @@ export class FileService {
     return false;
   }
 
-  private doOpenFile(file: File): Promise<{}> {
+  doOpenFile(file: File): Promise<{}> {
     return new Promise((resolve, reject) => {
       if (!file) {
         reject();
@@ -74,21 +74,25 @@ export class FileService {
         reject(e);
       }
       reader.onload = () => {
-        const f = new XmlFile();
-        f.name = file.name;
-        f.selected = true;
-        f.xmlFileContent = reader.result.toString();
-        f.tree = this.xmlService.parseFile(f.xmlFileContent);
-
-        const existingFile = this.dataService.findFile(f);
-        if (existingFile) {
-          this.selectionService.selectFile(existingFile);
-        } else {
-          this.selectionService.selectFile(f);
-          this.dataService.addFile(f);
-        }
+        const xmlFile = new XmlFile();
+        xmlFile.name = file.name;
+        xmlFile.xmlFileContent = reader.result.toString();
+        this.doOpen(xmlFile);
         resolve();
       };
     });
+  }
+
+  doOpen(f: XmlFile) {
+    f.selected = true;
+    f.tree = this.xmlService.parseFile(f.xmlFileContent);
+
+    const existingFile = this.dataService.findFile(f);
+    if (existingFile) {
+      this.selectionService.selectFile(existingFile);
+    } else {
+      this.selectionService.selectFile(f);
+      this.dataService.addFile(f);
+    }
   }
 }
