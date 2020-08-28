@@ -1,18 +1,78 @@
-<div class="modal-header">
+<div class="modal-header bg-primary text-white">
   <h4 class="modal-title" id="modal-basic-title">Share the URL to this file</h4>
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<div class="modal-body">
-  <div *ngIf="encodedUrl">
-    <p>The encoded URL is {{ formatBytes(encodedUrl.length) }}</p>
 
-    <p class="text-truncate p-2 border">
-      <a [href]="encodedUrl" target="_blank">
-        {{ encodedUrl.substring(0, 100) }}
-      </a>
-    </p>
+<div class="modal-body bg-dark text-white">
+
+  <div *ngIf="!encodedUrl">
+
+    <div class="w-100 text-center mb-3">
+      <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="radioModel">
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" value="all"> Entire document
+        </label>
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" value="selection" [disabled]="!hasSelection()"> Selected node only
+        </label>
+      </div>
+    </div>
+
+    <div>
+      <ngb-alert [dismissible]="false" *ngIf="radioModel === 'all'">
+        Share the entire document ({{ getDocLen() }} characters).<br>
+        <strong>Warning: </strong> Sharing the entire document can create a very large URL.
+        It is recommended to share only a subset of the document by selecting a node first.
+      </ngb-alert>
+      <ngb-alert type="info" [dismissible]="false" *ngIf="radioModel === 'selection'">
+        Share the selected node ({{getSelectionLen()}} characters)<br>
+        Path: <code>{{ getSelectionPath() }}</code>
+      </ngb-alert>
+    </div>
+
+    <div class="form-group">
+      <label for="fileName" class="mr-2">File name</label>
+      <input type="text" class="form-control" id="fileName" aria-describedby="File Name" [(value)]="fileName" />
+    </div>
+
   </div>
-  <div *ngIf="!encodedUrl">Encoding URL...</div>
+
+  <div *ngIf="loading">Encoding URL...</div>
+
+  <div *ngIf="encodedUrl">
+
+    <div class="d-flex">
+      <span class="text-truncate p-2 border rounded-left bg-light text-primary">
+        <a [href]="encodedUrl" target="_blank">
+          <fa-icon [icon]="faExternalLinkAlt"></fa-icon>
+          {{ encodedUrl.substring(0, 100) }}
+        </a>
+      </span>
+      <button class="btn btn-primary text-nowrap copy-btn" (click)="copyUrl()">
+        <fa-icon [icon]="faCopy"></fa-icon>
+        Copy
+      </button>
+    </div>
+    <p class="mt-2">The encoded URL is {{ formatBytes(encodedUrl.length) }}</p>
+  </div>
+</div>
+
+
+<div class="modal-footer bg-dark text-white">
+
+  <div *ngIf="!encodedUrl">
+    <button class="btn btn-primary mr-2" (click)="createLink()">
+      <fa-icon [icon]="faShareAlt"></fa-icon>
+      Create link
+    </button>
+    <button class="btn btn-secondary" (click)="activeModal.close()">Close</button>
+  </div>
+
+  <div *ngIf="encodedUrl">
+    <button class="btn btn-secondary mr-2" (click)="encodedUrl = null">Back</button>
+    <button class="btn btn-secondary" (click)="activeModal.close()">Close</button>
+  </div>
+
 </div>

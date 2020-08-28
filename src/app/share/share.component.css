@@ -1,0 +1,8 @@
+.modal-header, .modal-footer {
+    border-color: #505050;
+}
+
+.copy-btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

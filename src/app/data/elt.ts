@@ -52,4 +52,22 @@ export class Elt {
       });
     });
   }
+
+  toXmlString(): string {
+    const str: string[] = [];
+    str.push(`<${this.name}`);
+    if (this.attributes) {
+      this.attributes.forEach(attr => str.push(`${attr.name}="${attr.value}" `));
+    }
+    str.push(`>`)
+
+    if (this.children) {
+      this.children.forEach(chArr => {
+        chArr.forEach(child => str.push(child.toXmlString()));
+      });
+    }
+
+    str.push(`</${this.name}>`)
+    return str.join('');
+  }
 }
