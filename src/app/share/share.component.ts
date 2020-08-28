@@ -1,26 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EncodeService } from '../services/encode.service';
 import { XmlFile } from '../data/xml-file';
 import { DataService } from '../services/data.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { faShareAlt, faExternalLinkAlt, faCopy } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-share',
   templateUrl: './share.component.html',
   styleUrls: ['./share.component.css'],
 })
-export class ShareComponent implements OnInit {
+export class ShareComponent implements OnInit, OnDestroy {
+
   selectedFile: XmlFile;
   selectionXml: string;
   radioModel: 'all' | 'selection' = 'all';
   fileName: string;
   encodedUrl: string;
   loading = false;
+  icons = { faShareAlt, faExternalLinkAlt, faCopy }
 
-  faShareAlt = faShareAlt;
-  faExternalLinkAlt = faExternalLinkAlt;
-  faCopy = faCopy;
+  private subs = new Subscription();
 
   constructor(
     private readonly encodeService: EncodeService,
@@ -29,13 +30,17 @@ export class ShareComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.dataService.selectedFile.subscribe((selectedFile) => {
+    this.subs.add(this.dataService.selectedFile.subscribe((selectedFile) => {
       this.selectedFile = selectedFile;
       this.fileName = selectedFile.name;
       if (this.hasSelection()) {
         this.selectionXml = selectedFile.selection.element.toXmlString();
       }
-    });
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   hasSelection(): boolean {

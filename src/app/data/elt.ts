@@ -57,7 +57,10 @@ export class Elt {
     const str: string[] = [];
     str.push(`<${this.name}`);
     if (this.attributes) {
-      this.attributes.forEach(attr => str.push(`${attr.name}="${attr.value}" `));
+      this.attributes.forEach(attr => {
+        const val = this.encodeXml(attr.value);
+        str.push(` ${attr.name}="${val}"`);
+      });
     }
     str.push(`>`)
 
@@ -66,8 +69,19 @@ export class Elt {
         chArr.forEach(child => str.push(child.toXmlString()));
       });
     }
+    if (this.text) {
+      str.push(this.encodeXml(this.text));
+    }
 
     str.push(`</${this.name}>`)
     return str.join('');
+  }
+
+  private encodeXml(str: string): string {
+    return str.replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
   }
 }

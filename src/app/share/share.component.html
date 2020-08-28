@@ -46,12 +46,12 @@
     <div class="d-flex">
       <span class="text-truncate p-2 border rounded-left bg-light text-primary">
         <a [href]="encodedUrl" target="_blank">
-          <fa-icon [icon]="faExternalLinkAlt"></fa-icon>
+          <fa-icon [icon]="icons.faExternalLinkAlt"></fa-icon>
           {{ encodedUrl.substring(0, 100) }}
         </a>
       </span>
       <button class="btn btn-primary text-nowrap copy-btn" (click)="copyUrl()">
-        <fa-icon [icon]="faCopy"></fa-icon>
+        <fa-icon [icon]="icons.faCopy"></fa-icon>
         Copy
       </button>
     </div>
@@ -64,7 +64,7 @@
 
   <div *ngIf="!encodedUrl">
     <button class="btn btn-primary mr-2" (click)="createLink()">
-      <fa-icon [icon]="faShareAlt"></fa-icon>
+      <fa-icon [icon]="icons.faShareAlt"></fa-icon>
       Create link
     </button>
     <button class="btn btn-secondary" (click)="activeModal.close()">Close</button>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { FileService } from '../services/file.service';
 import { SelectionService } from '../services/selection.service';
@@ -12,9 +12,9 @@ import { faFolderPlus, faShareAlt, faSearch, faPlusSquare, faMinusSquare } from 
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent implements OnInit {
-  loading = false;
-  selectedFile: XmlFile;
+export class ToolbarComponent {
+  @Input() loading = false;
+  @Input() selectedFile: XmlFile;
 
   icons = { faFolderPlus, faShareAlt, faSearch, faPlusSquare, faMinusSquare };
 
@@ -24,11 +24,6 @@ export class ToolbarComponent implements OnInit {
     private readonly fileService: FileService,
     private readonly modalService: NgbModal
   ) { }
-
-  ngOnInit(): void {
-    this.dataService.isLoading.subscribe((loading) => (this.loading = loading));
-    this.dataService.selectedFile.subscribe((selectedFile) => (this.selectedFile = selectedFile));
-  }
 
   openFile(event: Event) {
     this.fileService.openFileInput(event);

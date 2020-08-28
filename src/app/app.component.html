@@ -1,6 +1,6 @@
 <div class="h-100 d-flex flex-row overflow-hidden main" (dragover)="dragFalse()" (dragleave)="dragFalse()"
   (dragend)="dragFalse()" (drop)="onDrop($event)">
-  <app-toolbar></app-toolbar>
+  <app-toolbar [selectedFile]="selectedFile" [loading]="loading"></app-toolbar>
 
   <div class="flex-fill h-100 overflow-hidden d-flex flex-column">
     <nav class="nav navbar-dark bg-primary">
