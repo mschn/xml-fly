@@ -2,14 +2,10 @@
   <div class="header">
     <ng-container>
       <button class="btn btn-sm" [hidden]="!nodes[0].collapsed" (click)="show($event)">
-        <svg class="bi" fill="currentColor">
-          <use xlink:href="assets/icons/bootstrap-icons.svg#plus-square" />
-        </svg>
+        <fa-icon [icon]="icons.faPlusSquare"></fa-icon>
       </button>
       <button class="btn btn-sm" [hidden]="nodes[0].collapsed" (click)="hide($event)">
-        <svg class="bi" fill="currentColor">
-          <use xlink:href="assets/icons/bootstrap-icons.svg#dash-square" />
-        </svg>
+        <fa-icon [icon]="icons.faMinusSquare"></fa-icon>
       </button>
     </ng-container>
 
@@ -32,31 +28,23 @@
       </thead>
 
       <tbody>
-        <tr
-          *ngFor="let node of nodes; let i = index"
+        <tr *ngFor="let node of nodes; let i = index"
           [class.selected]="selection && selection.element === node && selection.type === 'Node'"
-          (click)="onSubNodeClick($event, node)"
-        >
+          (click)="onSubNodeClick($event, node)">
           <td class="p-1 array-index">{{ i }}.</td>
           <td class="p-1 tag-val" *ngIf="node.isText">
             {{ node.shortText }}
           </td>
           <ng-container *ngIf="!node.isText">
             <ng-container *ngFor="let attr of getAttrList(node)">
-              <td
-                *ngIf="attr"
-                class="attr-val"
-                [class.selected]="selected && selectedAttr === attr"
-                (click)="onAttrClick($event, attr, node)"
-              >
+              <td *ngIf="attr" class="attr-val" [class.selected]="selected && selectedAttr === attr"
+                (click)="onAttrClick($event, attr, node)">
                 <div class="p-1">
                   {{ attr.value }}
                 </div>
               </td>
               <td *ngIf="!attr" class="empty-cell">
-                <svg class="bi" fill="currentColor">
-                  <use xlink:href="assets/icons/bootstrap-icons.svg#x-circle" />
-                </svg>
+                <fa-icon [icon]="icons.faEllipsisH"></fa-icon>
               </td>
             </ng-container>
 
@@ -70,9 +58,7 @@
                 </ng-container>
               </td>
               <td *ngIf="!childNodes" class="empty-cell">
-                <svg class="bi" fill="currentColor">
-                  <use xlink:href="assets/icons/bootstrap-icons.svg#x-circle" />
-                </svg>
+                <fa-icon [icon]="icons.faEllipsisH"></fa-icon>
               </td>
             </ng-container>
           </ng-container>

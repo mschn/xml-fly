@@ -1,35 +1,19 @@
-<div
-  class="h-100 d-flex flex-row overflow-hidden main"
-  (dragover)="dragFalse()"
-  (dragleave)="dragFalse()"
-  (dragend)="dragFalse()"
-  (drop)="onDrop($event)"
->
+<div class="h-100 d-flex flex-row overflow-hidden main" (dragover)="dragFalse()" (dragleave)="dragFalse()"
+  (dragend)="dragFalse()" (drop)="onDrop($event)">
   <app-toolbar></app-toolbar>
 
   <div class="flex-fill h-100 overflow-hidden d-flex flex-column">
     <nav class="nav navbar-dark bg-primary">
       <div class="my-2 ml-2" *ngFor="let file of files">
         <div class="btn-group" role="group">
-          <button
-            class="btn btn-sm btn-primary text-truncate filename"
-            [class.active]="file.selected"
-            placement="bottom"
-            ngbTooltip="{{ file.name }}"
-            (click)="selectFile(file)"
-          >
+          <button class="btn btn-sm btn-primary text-truncate filename" [class.active]="file.selected"
+            placement="bottom" ngbTooltip="{{ file.name }}" (click)="selectFile(file)">
             {{ file.name }}
           </button>
 
-          <button
-            type="button"
-            (click)="closeFile(file)"
-            [class.active]="file.selected"
-            class="btn btn-sm btn-primary border-left-0"
-          >
-            <svg class="bi" fill="currentColor">
-              <use xlink:href="assets/icons/bootstrap-icons.svg#x-square" />
-            </svg>
+          <button type="button" (click)="closeFile(file)" [class.active]="file.selected"
+            class="btn btn-sm btn-primary border-left-0">
+            <fa-icon [icon]="icons.faWindowClose"></fa-icon>
           </button>
         </div>
       </div>

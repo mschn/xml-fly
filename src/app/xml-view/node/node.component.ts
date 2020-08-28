@@ -3,6 +3,7 @@ import { AbstractNodeComponent } from '../abstract-node/abstract-node.component'
 import { DataService } from '../../services/data.service';
 import { Elt } from '../../data/elt';
 import { SelectionService } from '../../services/selection.service';
+import { faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-node',
@@ -17,6 +18,7 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
   @Input() arrayInParent = false;
 
   searchText: string;
+  icons = { faPlusSquare, faMinusSquare };
 
   constructor(readonly dataService: DataService, readonly selectionService: SelectionService) {
     super(dataService, selectionService);

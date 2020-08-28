@@ -2,51 +2,25 @@
   <img class="logo" src="assets/icons/48x48.png" (click)="goHome()" />
 
   <label class="btn btn-sm btn-primary btn-file" *ngIf="!loading" ngbTooltip="Open file">
-    <svg class="bi" fill="currentColor">
-      <use xlink:href="assets/icons/bootstrap-icons.svg#file-earmark-plus" />
-    </svg>
+    <fa-icon [icon]="icons.faFolderPlus" size="2x"></fa-icon>
     <input type="file" id="open-file" (change)="openFile($event)" />
   </label>
 
-  <button
-    class="btn btn-sm btn-outline-secondary border-0 mb-2"
-    (click)="share()"
-    ngbTooltip="Share"
-    [disabled]="!selectedFile"
-  >
-    <svg class="bi" fill="currentColor">
-      <use xlink:href="assets/icons/bootstrap-icons.svg#share" />
-    </svg>
+  <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="share()" ngbTooltip="Share"
+    [disabled]="!selectedFile">
+    <fa-icon [icon]="icons.faShareAlt" size="2x"></fa-icon>
   </button>
 
-  <button
-    class="btn btn-sm btn-outline-secondary border-0 mb-2"
-    (click)="showSearch(true)"
-    ngbTooltip="Search"
-    [disabled]="!selectedFile"
-  >
-    <svg class="bi" fill="currentColor">
-      <use xlink:href="assets/icons/bootstrap-icons.svg#search" />
-    </svg>
+  <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="showSearch(true)" ngbTooltip="Search"
+    [disabled]="!selectedFile">
+    <fa-icon [icon]="icons.faSearch" size="2x"></fa-icon>
   </button>
-  <button
-    class="btn btn-sm btn-outline-secondary border-0 mb-2"
-    (click)="expandAll()"
-    ngbTooltip="Expand all"
-    [disabled]="!selectedFile"
-  >
-    <svg class="bi" fill="currentColor">
-      <use xlink:href="assets/icons/bootstrap-icons.svg#plus-square" />
-    </svg>
+  <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="expandAll()" ngbTooltip="Expand all"
+    [disabled]="!selectedFile">
+    <fa-icon [icon]="icons.faPlusSquare" size="2x"></fa-icon>
   </button>
-  <button
-    class="btn btn-sm btn-outline-secondary border-0 mb-2"
-    (click)="collapseAll()"
-    ngbTooltip="Collapse all"
-    [disabled]="!selectedFile"
-  >
-    <svg class="bi" fill="currentColor">
-      <use xlink:href="assets/icons/bootstrap-icons.svg#dash-square" />
-    </svg>
+  <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="collapseAll()" ngbTooltip="Collapse all"
+    [disabled]="!selectedFile">
+    <fa-icon [icon]="icons.faMinusSquare" size="2x"></fa-icon>
   </button>
 </div>

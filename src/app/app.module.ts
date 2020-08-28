@@ -13,6 +13,7 @@ import { SearchComponent } from './search/search.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { StartComponent } from './start/start.component';
 import { ShareComponent } from './share/share.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -27,10 +28,10 @@ import { ShareComponent } from './share/share.component';
     StartComponent,
     ShareComponent,
   ],
-  imports: [BrowserModule, NgbModule, FormsModule, HotkeyModule.forRoot()],
+  imports: [BrowserModule, NgbModule, FormsModule, HotkeyModule.forRoot(), FontAwesomeModule],
   providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor() {}
+  constructor() { }
 }

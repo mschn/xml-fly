@@ -4,6 +4,7 @@ import { DataService } from '../../services/data.service';
 import { Elt } from '../../data/elt';
 import { SelectionService } from '../../services/selection.service';
 import { Attr } from '../../data/attr';
+import { faPlusSquare, faMinusSquare, faSlash, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-array',
@@ -12,6 +13,8 @@ import { Attr } from '../../data/attr';
 })
 export class ArrayComponent extends AbstractNodeComponent implements OnInit {
   @Input() nodes: Elt[];
+
+  icons = { faPlusSquare, faMinusSquare, faSlash, faEllipsisH };
 
   constructor(dataService: DataService, selectionService: SelectionService) {
     super(dataService, selectionService);

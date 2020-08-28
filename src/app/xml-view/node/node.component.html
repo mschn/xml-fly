@@ -12,14 +12,10 @@
     <!-- expand / collapse button -->
     <ng-container *ngIf="!node.isText">
       <button class="btn btn-sm" [hidden]="!node.collapsed" (click)="show($event)">
-        <svg class="bi" fill="currentColor">
-          <use xlink:href="assets/icons/bootstrap-icons.svg#plus-square" />
-        </svg>
+        <fa-icon [icon]="icons.faPlusSquare"></fa-icon>
       </button>
       <button class="btn btn-sm" [hidden]="node.collapsed" (click)="hide($event)">
-        <svg class="bi" fill="currentColor">
-          <use xlink:href="assets/icons/bootstrap-icons.svg#dash-square" />
-        </svg>
+        <fa-icon [icon]="icons.faMinusSquare"></fa-icon>
       </button>
     </ng-container>
 

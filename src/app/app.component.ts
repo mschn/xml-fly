@@ -4,7 +4,7 @@ import { FileService } from './services/file.service';
 import { XmlFile } from './data/xml-file';
 import { SelectionService } from './services/selection.service';
 import { EncodeService } from './services/encode.service';
-
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,12 +19,14 @@ export class AppComponent implements OnInit {
   searchText = '';
   error: string;
 
+  icons = { faWindowClose };
+
   constructor(
     private readonly dataService: DataService,
     private readonly selectionService: SelectionService,
     private readonly fileService: FileService,
     private readonly encodeService: EncodeService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.dataService.files.subscribe((files) => (this.files = files));
