@@ -12,14 +12,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./share.component.css'],
 })
 export class ShareComponent implements OnInit, OnDestroy {
-
   selectedFile: XmlFile;
   selectionXml: string;
   radioModel: 'all' | 'selection' = 'all';
   fileName: string;
   encodedUrl: string;
   loading = false;
-  icons = { faShareAlt, faExternalLinkAlt, faCopy }
+  icons = { faShareAlt, faExternalLinkAlt, faCopy };
 
   private subs = new Subscription();
 
@@ -27,16 +26,20 @@ export class ShareComponent implements OnInit, OnDestroy {
     private readonly encodeService: EncodeService,
     private readonly dataService: DataService,
     public activeModal: NgbActiveModal
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.subs.add(this.dataService.selectedFile.subscribe((selectedFile) => {
-      this.selectedFile = selectedFile;
-      this.fileName = selectedFile.name;
-      if (this.hasSelection()) {
-        this.selectionXml = selectedFile.selection.element.toXmlString();
-      }
-    }));
+    this.subs.add(
+      this.dataService.selectedFile.subscribe((selectedFile) => {
+        this.selectedFile = selectedFile;
+        if (selectedFile) {
+          this.fileName = selectedFile.name;
+          if (this.hasSelection()) {
+            this.selectionXml = selectedFile.selection.element.toXmlString();
+          }
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -44,6 +47,9 @@ export class ShareComponent implements OnInit, OnDestroy {
   }
 
   hasSelection(): boolean {
+    if (!this.selectedFile) {
+      return false;
+    }
     if (this.selectedFile.selection.element === this.selectedFile.tree) {
       return false;
     }
@@ -51,15 +57,15 @@ export class ShareComponent implements OnInit, OnDestroy {
   }
 
   getDocLen(): number {
-    return this.selectedFile.xmlFileContent.length;
+    return this.selectedFile?.xmlFileContent?.length;
   }
 
   getSelectionPath(): string {
-    return this.selectedFile.selection.path.join('/');
+    return this.selectedFile?.selection?.path?.join('/');
   }
 
   getSelectionLen(): number {
-    return this.selectionXml.length;
+    return this.selectionXml?.length;
   }
 
   formatBytes(bytes: number, decimals = 2) {
@@ -86,6 +92,6 @@ export class ShareComponent implements OnInit, OnDestroy {
   }
 
   copyUrl() {
-    navigator.clipboard.writeText(this.encodedUrl).then(_ => { });
+    navigator.clipboard.writeText(this.encodedUrl).then((_) => {});
   }
 }

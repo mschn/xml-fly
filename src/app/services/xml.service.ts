@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Elt } from '../data/elt';
 import { Attr } from '../data/attr';
+import xml2js from 'xml2js';
 
 @Injectable({
   providedIn: 'root',
@@ -8,18 +9,25 @@ import { Attr } from '../data/attr';
 export class XmlService {
   constructor() {}
 
-  parseFile(value: string): Elt {
-    const parser = new DOMParser();
-    const document = parser.parseFromString(value.trim(), 'application/xml');
-    const tree = this.buildTree(document);
-    if (tree && tree.children.length === 1 && tree.children[0].length === 1) {
-      return tree.children[0][0];
-    }
-    return tree;
+  parseFile(value: string): Promise<Elt> {
+    return new Promise<Elt>((resolve, reject) => {
+      xml2js.parseString(value, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          const tree = this.buildTree(result, '#ROOT');
+          const children = Object.values(tree.children);
+          if (tree && children.length === 1 && children[0].length === 1) {
+            resolve(children[0][0]);
+          }
+          resolve(tree);
+        }
+      });
+    });
   }
 
-  buildTree(parentNode: Node, parentElt: Elt = null): Elt {
-    const elt = this.getElt(parentNode);
+  buildTree(parentNode: any, nodeName: string, parentElt: Elt = null): Elt {
+    const elt = this.getElt(parentNode, nodeName);
     if (parentElt) {
       elt.parent = parentElt;
     }
@@ -28,46 +36,60 @@ export class XmlService {
       return elt;
     }
 
-    if (parentNode instanceof Element) {
-      elt.attributes = [];
-      for (let i = 0; i < parentNode.attributes.length; i++) {
+    if (parentNode.hasOwnProperty('$')) {
+      elt.attributes = {};
+      const attrs: any[] = Object.keys(parentNode['$']);
+      for (let i = 0; i < attrs.length; i++) {
         const attr = new Attr();
-        attr.name = parentNode.attributes[i].name;
-        attr.value = parentNode.attributes[i].value;
-        elt.attributes.push(attr);
+        attr.name = attrs[i];
+        attr.value = parentNode['$'][attrs[i]];
+        elt.attributes[attr.name] = attr;
       }
     }
 
     const nodes: { [s: string]: Elt[] } = {};
-    for (let i = 0; i < parentNode.childNodes.length; i++) {
-      if (!(parentNode.childNodes[i] instanceof Element)) {
-        continue;
-      }
+    Object.keys(parentNode)
+      .filter((key) => key !== '$')
+      .forEach((childNodeName) => {
+        const obj: any = parentNode[childNodeName];
 
-      const node = parentNode.childNodes[i] as Element;
+        if (!nodes.hasOwnProperty(childNodeName)) {
+          nodes[childNodeName] = [];
+        }
 
-      if (this.isEmptyTextNode(node)) {
-        continue;
-      }
+        if (typeof obj !== 'string' && Array.isArray(obj)) {
+          Object.values(obj).forEach((node) => {
+            nodes[childNodeName].push(this.buildTree(node, childNodeName, elt));
+          });
+        } else {
+          nodes[childNodeName].push(this.buildTree(obj, childNodeName, elt));
 
-      if (!nodes.hasOwnProperty(node.tagName)) {
-        nodes[node.tagName] = [];
-      }
+        }
 
-      nodes[node.tagName].push(this.buildTree(node, elt));
-    }
-    elt.children = Object.values(nodes);
+        // if (typeof obj === 'string') {
+        // } else if (Array.isArray(obj)) {
+          // Object.values(obj).forEach((node) => {
+            // nodes[childNodeName].push(this.buildTree(node, childNodeName, elt));
+          // });
+        // } else {
+          // Object.keys(obj).forEach((node) => {
+            // nodes[childNodeName].push(this.buildTree(obj[node], childNodeName, elt));
+          // });
+        // }
+      });
+
+    elt.children = nodes;
     this.computeArrayProperties(elt);
     return elt;
   }
 
-  private getElt(n: Node): Elt {
+  private getElt(n: any, name: string): Elt {
     const elt = new Elt();
-    elt.name = n.nodeName;
-    if (this.isTextNode(n)) {
+    elt.name = name;
+    if (typeof n === 'string') {
       elt.isText = true;
       elt.collapsed = false;
-      elt.text = n.textContent;
+      elt.text = n;
       elt.shortText = elt.text;
       if (elt.text.length > 200) {
         elt.shortText = elt.text.substring(0, 200) + '…';
@@ -77,24 +99,17 @@ export class XmlService {
   }
 
   private computeArrayProperties(parent: Elt) {
-    const elements: Elt[][] = parent.children;
-    for (const arr of elements) {
+    const elements = parent.children;
+    for (const arr of Object.values(elements)) {
       const attributes = new Set<string>();
       const children = new Set<string>();
 
       for (const elt of arr) {
         if (elt.attributes) {
-          for (let i = 0; i < elt.attributes.length; i++) {
-            attributes.add(elt.attributes[i].name);
-          }
+          Object.keys(elt.attributes).forEach((attr) => attributes.add(attr));
         }
         if (elt.children) {
-          for (let i = 0; i < elt.children.length; i++) {
-            const childNode = elt.children[i];
-            if (childNode[0]) {
-              children.add(childNode[0].name);
-            }
-          }
+          Object.keys(elt.children).forEach((child) => children.add(child));
         }
       }
       arr[0].attributeNames = attributes;
@@ -102,11 +117,11 @@ export class XmlService {
     }
   }
 
-  private isTextNode(node: Node): boolean {
-    return node.childNodes && node.childNodes.length === 1 && node.childNodes[0] instanceof Text;
+  private isTextNode(node: any): boolean {
+    return typeof node === 'string';
   }
 
-  private isEmptyTextNode(node: Node): boolean {
-    return node instanceof Text && node.textContent.trim() === '';
+  private isEmptyTextNode(node: any): boolean {
+    return node === '';
   }
 }

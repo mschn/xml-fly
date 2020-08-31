@@ -29,7 +29,7 @@
   </div>
 
   <!-- attributes -->
-  <div class="pl-4 attr" [hidden]="node.collapsed" *ngFor="let attr of node.attributes">
+  <div class="pl-4 attr" [hidden]="node.collapsed" *ngFor="let attr of getAttributes()">
     <div
       class="node d-flex flex-row"
       [class.selected]="selected && selectedAttr === attr"
@@ -43,7 +43,7 @@
   </div>
 
   <!-- children nodes -->
-  <ng-container *ngFor="let childNodes of node.children">
+  <ng-container *ngFor="let childNodes of getChildren()">
     <!-- array -->
     <div class="pl-3" *ngIf="childNodes.length > 1" [hidden]="node.collapsed">
       <app-array [nodes]="childNodes"></app-array>

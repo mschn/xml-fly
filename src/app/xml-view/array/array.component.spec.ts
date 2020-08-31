@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 
 import { ArrayComponent } from './array.component';
 import { Elt } from 'src/app/data/elt';
@@ -24,10 +24,12 @@ describe('ArrayComponent', () => {
     fixture.detectChanges();
   });
 
-  it('displays uneven xml array', () => {
+  it('displays uneven xml array', async () => {
     const service: XmlService = TestBed.inject(XmlService);
-    const elt = service.parseFile(uneven_xml);
-    component.nodes = elt.children[0];
+    await service.parseFile(uneven_xml).then((elt) => {
+      component.nodes = Object.values(elt.children)[0];
+    });
+
     fixture.detectChanges();
 
     const arr = document.querySelectorAll('[data-array=entry]');
@@ -74,10 +76,11 @@ describe('ArrayComponent', () => {
     expect(td3[3].textContent.trim()).toEqual('<ccc>');
   });
 
-  it('displays uneven xml attributes', () => {
+  it('displays uneven xml attributes', async () => {
     const service: XmlService = TestBed.inject(XmlService);
-    const elt = service.parseFile(uneven_xml2);
-    component.nodes = elt.children[0];
+    await service.parseFile(uneven_xml2).then((elt) => {
+      component.nodes = Object.values(elt.children)[0];
+    });
     fixture.detectChanges();
 
     const arr = document.querySelectorAll('[data-array=Actor]');

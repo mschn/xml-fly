@@ -6,13 +6,11 @@ export class Elt {
   /** XML tag name */
   name: string;
   /** XML attributes */
-  attributes: Attr[];
-  /** Children in XML tree, grouped by tag name */
-  children: Elt[][];
-  /** Unique tag names of children in XML tree */
-  childrenNames: Set<string>;
-  /** Unique attribute names */
+  attributes: { [key: string]: Attr };
   attributeNames: Set<string>;
+  /** Children in XML tree, grouped by tag name */
+  children: { [key: string]: Elt[] };
+  childrenNames: Set<string>;
   /** Full text content if text node */
   text: string;
   /** Shortened text content if text node */
@@ -46,7 +44,7 @@ export class Elt {
     if (!this.children) {
       return;
     }
-    this.children.forEach((childArr) => {
+    Object.values(this.children).forEach((childArr) => {
       childArr.forEach((child) => {
         child.toggleAll(state);
       });
@@ -57,7 +55,7 @@ export class Elt {
     const str: string[] = [];
     str.push(`<${this.name}`);
     if (this.attributes) {
-      this.attributes.forEach(attr => {
+      Object.values(this.attributes).forEach(attr => {
         const val = this.encodeXml(attr.value);
         str.push(` ${attr.name}="${val}"`);
       });
@@ -65,7 +63,7 @@ export class Elt {
     str.push(`>`)
 
     if (this.children) {
-      this.children.forEach(chArr => {
+      Object.values(this.children).forEach(chArr => {
         chArr.forEach(child => str.push(child.toXmlString()));
       });
     }

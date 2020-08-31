@@ -27,6 +27,48 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit {
     });
   }
 
+  getNodeName(): string {
+    if (!this.nodes) {
+      return null;
+    }
+    return this.nodes[0].name;
+  }
+
+  getNodeLen(): number {
+    if (!this.nodes) {
+      return 0;
+    }
+    return this.nodes.length;
+  }
+
+  isCollapsed(): boolean {
+    if (!this.nodes) {
+      return false;
+    }
+    return this.nodes[0].collapsed;
+  }
+
+  isText(): boolean {
+    if (!this.nodes) {
+      return false;
+    }
+    return this.nodes[0].isText;
+  }
+
+  getAttributeNames(): Set<String> {
+    if (!this.nodes) {
+      return new Set();
+    }
+    return this.nodes[0].attributeNames;
+  }
+
+  getChildrenNames(): Set<String> {
+    if (!this.nodes) {
+      return new Set();
+    }
+    return this.nodes[0].childrenNames;
+  }
+
   onNodeClick(event: Event) {
     event.stopPropagation();
     return false;
@@ -51,7 +93,7 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit {
       return [];
     }
     return Array.from(attrNames).map((attrName) => {
-      return node.attributes.find((attr) => attr.name === attrName);
+      return Object.values(node.attributes).find((attr) => attr.name === attrName);
     });
   }
 
@@ -65,8 +107,9 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit {
   }
 
   getChildNodesByTagname(node: Elt, tagName: string): Elt[] {
-    for (let i = 0; i < node.children.length; i++) {
-      const arr = node.children[i];
+    const children = Object.values(node.children);
+    for (let i = 0; i < children.length; i++) {
+      const arr = children[i];
       if (arr[0].name === tagName) {
         return arr;
       }

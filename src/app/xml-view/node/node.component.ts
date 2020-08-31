@@ -4,6 +4,7 @@ import { DataService } from '../../services/data.service';
 import { Elt } from '../../data/elt';
 import { SelectionService } from '../../services/selection.service';
 import { faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons';
+import { Attr } from '../../data/attr';
 
 @Component({
   selector: 'app-node',
@@ -22,8 +23,21 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit {
 
   constructor(readonly dataService: DataService, readonly selectionService: SelectionService) {
     super(dataService, selectionService);
-
     this.dataService.searchText.subscribe((searchText) => (this.searchText = searchText));
+  }
+
+  getAttributes(): Attr[] {
+    if (!this.node.attributes) {
+      return [];
+    }
+    return Object.values(this.node.attributes);
+  }
+
+  getChildren(): Elt[][] {
+    if (!this.node.children) {
+      return [];
+    }
+    return Object.values(this.node.children);
   }
 
   show(event: Event) {

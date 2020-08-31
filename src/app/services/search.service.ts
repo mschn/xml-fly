@@ -8,11 +8,10 @@ import { XmlFile } from '../data/xml-file';
   providedIn: 'root',
 })
 export class SearchService {
-
   selectedFile: XmlFile;
 
   constructor(private readonly data: DataService) {
-    this.data.selectedFile.subscribe(selectedFile => this.selectedFile = selectedFile);
+    this.data.selectedFile.subscribe((selectedFile) => (this.selectedFile = selectedFile));
   }
 
   doSearch(search: string) {
@@ -30,7 +29,7 @@ export class SearchService {
       });
     }
     if (elt.children) {
-      elt.children.forEach((children) =>
+      Object.values(elt.children).forEach((children) =>
         children.forEach((child) => {
           this.doSearchRec(search, child, results);
         })

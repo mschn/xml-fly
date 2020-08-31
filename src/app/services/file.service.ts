@@ -85,14 +85,15 @@ export class FileService {
 
   doOpen(f: XmlFile) {
     f.selected = true;
-    f.tree = this.xmlService.parseFile(f.xmlFileContent);
-
-    const existingFile = this.dataService.findFile(f);
-    if (existingFile) {
-      this.selectionService.selectFile(existingFile);
-    } else {
-      this.selectionService.selectFile(f);
-      this.dataService.addFile(f);
-    }
+    this.xmlService.parseFile(f.xmlFileContent).then((ft) => {
+      f.tree = ft;
+      const existingFile = this.dataService.findFile(f);
+      if (existingFile) {
+        this.selectionService.selectFile(existingFile);
+      } else {
+        this.selectionService.selectFile(f);
+        this.dataService.addFile(f);
+      }
+    });
   }
 }
