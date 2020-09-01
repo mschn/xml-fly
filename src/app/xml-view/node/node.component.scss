@@ -70,6 +70,10 @@
     }
   }
 
+  &.text-node.noTagName > .header.selected > .value {
+    border-radius: 5px;
+  }
+
   .attr {
     .selected {
       & > .attr-name {

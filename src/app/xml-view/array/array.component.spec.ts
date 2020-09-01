@@ -50,7 +50,7 @@ describe('ArrayComponent', () => {
     const td0 = trs[1].querySelectorAll('td');
     expect(td0.length).toEqual(4);
     expect(td0[0].textContent.trim()).toEqual('0.');
-    expect(td0[1].textContent.trim()).toEqual('<aaa>');
+    expect(td0[1].textContent.trim()).toEqual('aaaContent');
     expect(td0[2].textContent.trim()).toEqual('');
     expect(td0[3].textContent.trim()).toEqual('');
 
@@ -58,14 +58,14 @@ describe('ArrayComponent', () => {
     expect(td1.length).toEqual(4);
     expect(td1[0].textContent.trim()).toEqual('1.');
     expect(td1[1].textContent.trim()).toEqual('');
-    expect(td1[2].textContent.trim()).toEqual('<bbb>');
+    expect(td1[2].textContent.trim()).toEqual('bbbContent');
     expect(td1[3].textContent.trim()).toEqual('');
 
     const td2 = trs[3].querySelectorAll('td');
     expect(td2.length).toEqual(4);
     expect(td2[0].textContent.trim()).toEqual('2.');
-    expect(td2[1].textContent.trim()).toEqual('<aaa>');
-    expect(td2[2].textContent.trim()).toEqual('<bbb>');
+    expect(td2[1].textContent.trim()).toEqual('aaa2Content');
+    expect(td2[2].textContent.trim()).toEqual('bbb2Content');
     expect(td2[3].textContent.trim()).toEqual('');
 
     const td3 = trs[4].querySelectorAll('td');
@@ -73,7 +73,7 @@ describe('ArrayComponent', () => {
     expect(td3[0].textContent.trim()).toEqual('3.');
     expect(td3[1].textContent.trim()).toEqual('');
     expect(td3[2].textContent.trim()).toEqual('');
-    expect(td3[3].textContent.trim()).toEqual('<ccc>');
+    expect(td3[3].textContent.trim()).toEqual('cccContent');
   });
 
   it('displays uneven xml attributes', async () => {

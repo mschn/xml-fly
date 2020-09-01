@@ -11,19 +11,31 @@ export class XmlService {
 
   parseFile(value: string): Promise<Elt> {
     return new Promise<Elt>((resolve, reject) => {
-      xml2js.parseString(value, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          const tree = this.buildTree(result, '#ROOT');
-          const children = Object.values(tree.children);
-          if (tree && children.length === 1 && children[0].length === 1) {
-            resolve(children[0][0]);
-          }
-          resolve(tree);
-        }
-      });
+      if (typeof Worker !== 'undefined') {
+        const worker = new Worker('../xml.worker', { type: 'module' });
+        worker.onmessage = ({ data }) => {
+          this.parserCb(data, resolve, reject);
+        };
+        worker.postMessage(value);
+      } else {
+        xml2js.parseString(value, (err, result) => {
+          this.parserCb(result, resolve, reject);
+        });
+      }
     });
+  }
+
+  parserCb(data, resolve, reject) {
+    if (data.err) {
+      reject(data);
+    } else {
+      const tree = this.buildTree(data, '#ROOT');
+      const children = Object.values(tree.children);
+      if (tree && children.length === 1 && children[0].length === 1) {
+        resolve(children[0][0]);
+      }
+      resolve(tree);
+    }
   }
 
   buildTree(parentNode: any, nodeName: string, parentElt: Elt = null): Elt {
@@ -36,8 +48,8 @@ export class XmlService {
       return elt;
     }
 
+    elt.attributes = {};
     if (parentNode.hasOwnProperty('$')) {
-      elt.attributes = {};
       const attrs: any[] = Object.keys(parentNode['$']);
       for (let i = 0; i < attrs.length; i++) {
         const attr = new Attr();
@@ -63,19 +75,7 @@ export class XmlService {
           });
         } else {
           nodes[childNodeName].push(this.buildTree(obj, childNodeName, elt));
-
         }
-
-        // if (typeof obj === 'string') {
-        // } else if (Array.isArray(obj)) {
-          // Object.values(obj).forEach((node) => {
-            // nodes[childNodeName].push(this.buildTree(node, childNodeName, elt));
-          // });
-        // } else {
-          // Object.keys(obj).forEach((node) => {
-            // nodes[childNodeName].push(this.buildTree(obj[node], childNodeName, elt));
-          // });
-        // }
       });
 
     elt.children = nodes;
@@ -119,9 +119,5 @@ export class XmlService {
 
   private isTextNode(node: any): boolean {
     return typeof node === 'string';
-  }
-
-  private isEmptyTextNode(node: any): boolean {
-    return node === '';
   }
 }

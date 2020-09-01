@@ -77,23 +77,25 @@ export class FileService {
         const xmlFile = new XmlFile();
         xmlFile.name = file.name;
         xmlFile.xmlFileContent = reader.result.toString();
-        this.doOpen(xmlFile);
-        resolve();
+        this.doOpen(xmlFile).then(_ => resolve());
       };
     });
   }
 
-  doOpen(f: XmlFile) {
+  doOpen(f: XmlFile): Promise<{}> {
     f.selected = true;
-    this.xmlService.parseFile(f.xmlFileContent).then((ft) => {
-      f.tree = ft;
-      const existingFile = this.dataService.findFile(f);
-      if (existingFile) {
-        this.selectionService.selectFile(existingFile);
-      } else {
-        this.selectionService.selectFile(f);
-        this.dataService.addFile(f);
-      }
+    return new Promise((resolve, reject) => {
+      this.xmlService.parseFile(f.xmlFileContent).then((ft) => {
+        f.tree = ft;
+        const existingFile = this.dataService.findFile(f);
+        if (existingFile) {
+          this.selectionService.selectFile(existingFile);
+        } else {
+          this.selectionService.selectFile(f);
+          this.dataService.addFile(f);
+        }
+        resolve();
+      });
     });
   }
 }

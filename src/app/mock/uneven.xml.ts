@@ -1,17 +1,17 @@
 export const uneven_xml = `
 <array>
   <entry>
-    <aaa></aaa>
+    <aaa>aaaContent</aaa>
   </entry>
   <entry>
-    <bbb></bbb>
+    <bbb>bbbContent</bbb>
   </entry>
   <entry>
-    <bbb></bbb>
-    <aaa></aaa>
+    <bbb>bbb2Content</bbb>
+    <aaa>aaa2Content</aaa>
   </entry>
   <entry>
-    <ccc></ccc>
+    <ccc>cccContent</ccc>
   </entry>
 </array>
 `;
