@@ -82,7 +82,11 @@ export class ShareComponent implements OnInit, OnDestroy {
   createLink() {
     this.loading = true;
     const file = new XmlFile();
-    file.xmlFileContent = this.radioModel == 'all' ? this.selectedFile.xmlFileContent : this.selectionXml;
+    if (this.radioModel === 'all') {
+      file.xmlFileContent = this.selectedFile.tree.toXmlString();
+    } else {
+      file.xmlFileContent = this.selectionXml;
+    }
     file.name = this.fileName;
 
     this.encodeService.encode(file).then((encoded) => {

@@ -44,19 +44,28 @@ export class XmlService {
       elt.parent = parentElt;
     }
 
-    if (this.isTextNode(parentNode)) {
-      return elt;
-    }
-
     elt.attributes = {};
     if (parentNode.hasOwnProperty('$')) {
       const attrs: any[] = Object.keys(parentNode['$']);
       for (let i = 0; i < attrs.length; i++) {
-        const attr = new Attr();
-        attr.name = attrs[i];
-        attr.value = parentNode['$'][attrs[i]];
-        elt.attributes[attr.name] = attr;
+        const attrVal = parentNode['$'][attrs[i]];
+
+        if (attrs[i].startsWith('__HL_')) {
+          const hlAttrName = attrs[i].substring(5);
+          elt.highlights.attrs[hlAttrName] = attrVal;
+        } else if (attrs[i].startsWith('__HL')) {
+          elt.highlights.node = attrVal;
+        } else {
+          const attr = new Attr();
+          attr.name = attrs[i];
+          attr.value = attrVal;
+          elt.attributes[attr.name] = attr;
+        }
       }
+    }
+
+    if (elt.isText) {
+      return elt;
     }
 
     const nodes: { [s: string]: Elt[] } = {};
@@ -88,8 +97,14 @@ export class XmlService {
     elt.name = name;
     if (typeof n === 'string') {
       elt.isText = true;
-      elt.collapsed = false;
       elt.text = n;
+    }
+    if (n.hasOwnProperty('_')) {
+      elt.isText = true;
+      elt.text = n['_'];
+    }
+    if (elt.isText) {
+      elt.collapsed = false;
       elt.shortText = elt.text;
       if (elt.text.length > 200) {
         elt.shortText = elt.text.substring(0, 200) + '…';
@@ -115,9 +130,5 @@ export class XmlService {
       arr[0].attributeNames = attributes;
       arr[0].childrenNames = children;
     }
-  }
-
-  private isTextNode(node: any): boolean {
-    return typeof node === 'string';
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { XmlFile } from '../data/xml-file';
 import { SearchResult } from '../data/search-result';
-import { Elt } from '../data/elt';
+import { Highlights } from '../data/highlights';
 
 @Injectable({
   providedIn: 'root',

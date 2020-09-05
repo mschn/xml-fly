@@ -1,7 +1,5 @@
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { Selection } from '../../data/selection';
 import { Elt } from '../../data/elt';
 import { SelectionService } from '../../services/selection.service';
 
@@ -9,36 +7,25 @@ import { SelectionService } from '../../services/selection.service';
   selector: 'app-abstract-node',
   template: '',
 })
-export class AbstractNodeComponent implements OnInit, OnDestroy {
+export class AbstractNodeComponent {
   @ViewChild('anchor') nodeRef: ElementRef;
 
-  selected = false;
-  selectedAttr: Attr;
-
-  selection: Selection;
-
-  subs: Subscription[] = [];
-
-  constructor(protected dataService: DataService, protected selectionService: SelectionService) {}
-
-  ngOnInit() {
-    this.subs.push(
-      this.dataService.selectedFile.subscribe((file) => {
-        this.selection = file?.selection;
-      })
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subs.forEach((sub) => sub.unsubscribe());
-  }
+  constructor(
+    protected dataService: DataService,
+    protected selectionService: SelectionService,
+    readonly cdr: ChangeDetectorRef
+  ) {}
 
   onAttrClick(event: Event, attr: Attr, node: Elt) {
     event.stopPropagation();
+    this.selectionService?.selectedFile?.selection?.element?.viewRef?.cdr?.markForCheck();
     this.selectionService.selectAttr(attr, node, this);
+    this.cdr.markForCheck();
   }
 
   scrollIfNeeded() {
+    // TODO dont scroll when already in view
+
     const elt = this.nodeRef.nativeElement;
     const rect = elt.getBoundingClientRect();
     if (rect.bottom > window.innerHeight) {
@@ -47,5 +34,21 @@ export class AbstractNodeComponent implements OnInit, OnDestroy {
     if (rect.top < 0) {
       elt.scrollIntoView();
     }
+  }
+
+  hasNodeHighlight(node: Elt): boolean {
+    return node.highlights && node.highlights.node != null;
+  }
+
+  hasAttrHighlight(node: Elt, attr: Attr): boolean {
+    return node.highlights && node.highlights.attrs[attr.name] != null;
+  }
+
+  highlightFocusOut(event, node: Elt) {
+    node.highlights.node = event.target.innerText;
+  }
+
+  highlightFocusAttrOut(event, node: Elt, attr: Attr) {
+    node.highlights.attrs[attr.name] = event.target.innerText;
   }
 }

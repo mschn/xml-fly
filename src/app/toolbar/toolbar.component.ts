@@ -5,7 +5,7 @@ import { SelectionService } from '../services/selection.service';
 import { XmlFile } from '../data/xml-file';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShareComponent } from '../share/share.component';
-import { faFolderPlus, faShareAlt, faSearch, faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faFolderPlus, faShareAlt, faSearch, faPlusSquare, faMinusSquare, faHighlighter } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-toolbar',
@@ -16,7 +16,7 @@ export class ToolbarComponent {
   @Input() loading = false;
   @Input() selectedFile: XmlFile;
 
-  icons = { faFolderPlus, faShareAlt, faSearch, faPlusSquare, faMinusSquare };
+  icons = { faFolderPlus, faShareAlt, faSearch, faPlusSquare, faMinusSquare, faHighlighter };
 
   constructor(
     private readonly dataService: DataService,
@@ -47,5 +47,9 @@ export class ToolbarComponent {
 
   collapseAll() {
     this.selectedFile.tree.toggleAll(true);
+  }
+
+  highlight() {
+    this.selectionService.highlightSelection();
   }
 }

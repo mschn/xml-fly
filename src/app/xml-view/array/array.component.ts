@@ -1,27 +1,27 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AbstractNodeComponent } from '../abstract-node/abstract-node.component';
 import { DataService } from '../../services/data.service';
 import { Elt } from '../../data/elt';
 import { SelectionService } from '../../services/selection.service';
 import { Attr } from '../../data/attr';
-import { faPlusSquare, faMinusSquare, faSlash, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faMinusSquare, faSlash, faTimesCircle, faHighlighter } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-array',
   templateUrl: './array.component.html',
   styleUrls: ['./array.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArrayComponent extends AbstractNodeComponent implements OnInit {
   @Input() nodes: Elt[];
 
-  icons = { faPlusSquare, faMinusSquare, faSlash, faTimesCircle };
+  icons = { faPlusSquare, faMinusSquare, faSlash, faTimesCircle, faHighlighter };
 
-  constructor(dataService: DataService, selectionService: SelectionService) {
-    super(dataService, selectionService);
+  constructor(dataService: DataService, selectionService: SelectionService, readonly cdr: ChangeDetectorRef) {
+    super(dataService, selectionService, cdr);
   }
 
   ngOnInit() {
-    super.ngOnInit();
     this.nodes.forEach((n: any) => {
       n.viewRef = this;
     });
@@ -76,7 +76,9 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit {
 
   onSubNodeClick(event: Event, node: Elt) {
     event.stopPropagation();
+    this.selectionService?.selectedFile?.selection?.element?.viewRef?.cdr?.markForCheck();
     this.selectionService.selectNode(node, this);
+    this.cdr.markForCheck();
   }
 
   show(event: Event) {

@@ -52,39 +52,51 @@
     border-left: 4px solid transparent;
   }
 
-  .header.selected {
-    & > .tagname {
-      background: $selected-bg-col;
-      border-radius: 5px;
-      border-right: 0;
+  &.selected {
+    background: $selected-bg-col;
+    border-radius: 5px;
+  }
+
+  .highlighted {
+    background: $highlight-bg-col;
+    border-radius: 5px;
+    border: $highlight-border;
+
+    .highlight-text {
+      background-color: $highlight-head-bg-col;
+      color: white;
+      border-radius: 5px 5px 0 0;
+      padding: 0.5rem;
+
+      .input[role='textbox'] {
+        white-space: pre-wrap;
+      }
     }
   }
 
-  &.text-node > .header.selected {
-    & > .tagname {
-      border-radius: 5px 0 0 5px;
-    }
-    & > .value {
-      background: $selected-bg-col;
-      border-radius: 0 5px 5px 0;
-    }
-  }
-
-  &.text-node.noTagName > .header.selected > .value {
+  &.text-node.noTagName.selected > .header > .value {
     border-radius: 5px;
   }
 
   .attr {
     .selected {
-      & > .attr-name {
+      & .attr-name {
         background: $selected-bg-col;
         border-radius: 5px 0 0 5px;
         border-right: 0;
       }
 
-      & > .attr-value {
+      & .attr-value {
         background: $selected-bg-col;
         border-radius: 0 5px 5px 0;
+      }
+
+      &.highlighted .attr-name {
+        border-radius: 0 0 0 5px;
+      }
+
+      &.highlighted .attr-value {
+        border-radius: 0 0 5px 0;
       }
     }
   }
@@ -97,4 +109,15 @@
 
 .value {
   cursor: pointer;
+}
+
+.selected ::ng-deep tr {
+  th {
+    border-color: $selected-array-col !important;
+    background: $selected-array-col !important;
+  }
+
+  td {
+    border-color: $selected-array-col !important;
+  }
 }

@@ -36,7 +36,7 @@ export class SelectionService {
       file = this.selectedFile;
     }
     if (this.selectedFile) {
-      this.selectedFile.clearSelection();
+      this.clearSelection();
     }
     this.deselectFile();
     this.dataService.removeFile(file);
@@ -48,16 +48,50 @@ export class SelectionService {
   }
 
   selectNode(node: Elt, source: AbstractNodeComponent): void {
-    this.selectedFile.selectNode(node, source);
+    const sel = this.selectedFile.selection;
+    sel.deselect();
+    sel.selectNode(node);
+    node.selected = true;
+    node.selection = sel;
+    node.viewRef = source;
     node.expandParent();
     source.scrollIfNeeded();
   }
 
-  clearSelection() {
-    this.selectedFile.clearSelection();
+  selectAttr(attr: Attr, node: Elt, source: AbstractNodeComponent): void {
+    const sel = this.selectedFile.selection;
+    sel.deselect();
+    sel.selectAttr(attr, node);
+    node.selected = true;
+    node.selection = sel;
   }
 
-  selectAttr(attr: Attr, node: Elt, source: AbstractNodeComponent): void {
-    this.selectedFile.selectAttr(attr, node, source);
+  clearSelection() {
+    const sel = this.selectedFile.selection;
+    sel.deselect();
+    sel.clear();
+  }
+
+  highlightSelection() {
+    const sel = this.selectedFile.selection;
+    const hl = sel.element.highlights;
+    if (!this.selectedFile || !sel.element) {
+      return;
+    }
+    if (sel?.type === 'Node') {
+      if (hl.node == null) {
+        hl.node = `Add a custom node annotation here`;
+      } else {
+        hl.node = null;
+      }
+    } else {
+      if (hl.attrs[sel.attr.name] == null) {
+        hl.attrs[sel.attr.name] = `Add a custom attribute annotation here`;
+      } else {
+        hl.attrs[sel.attr.name] = null;
+      }
+
+    }
+    this.selectedFile.selection.element.viewRef.cdr.markForCheck();
   }
 }
