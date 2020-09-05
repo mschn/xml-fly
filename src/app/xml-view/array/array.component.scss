@@ -1,89 +1,103 @@
 @import '../../colors.scss';
 
 .array {
-    .header {
-        white-space: nowrap;
+  .header {
+    white-space: nowrap;
+  }
+
+  .tag {
+    color: $tag-col;
+  }
+
+  .array-len {
+    color: $attr-val-col;
+  }
+
+  .attr-name {
+    color: $attr-col;
+    white-space: nowrap;
+  }
+
+  .tagname {
+    color: $tagname-col;
+
+    &.selected {
+      background-color: $selected-bg-col;
+    }
+  }
+
+  .attr-val {
+    color: $attr-val-col;
+    cursor: pointer;
+    &.selected > div {
+      background-color: $selected-bg-col;
     }
 
-    .tag {
-      color: $tag-col;
+    &.highlighted {
+      background: $highlight-bg-col;
+      border: $highlight-border;
+
+      .highlight-text {
+        background-color: $highlight-head-bg-col;
+        color: white;
+        padding: 0.5rem;
+
+        .input[role='textbox'] {
+          white-space: pre-wrap;
+        }
+      }
+    }
+  }
+
+  .tag-val {
+    color: $text-col;
+  }
+
+  table {
+    border: 1px solid $array-col;
+    .array-index {
+      width: 3em;
+      min-width: 3em;
+      cursor: pointer;
     }
 
-    .array-len {
-      color: $attr-val-col;
-    }
-
-    .attr-name {
-      color: $attr-col;
-      white-space: nowrap;
-    }
-
-    .tagname {
-      color: $tagname-col;
-
+    tr {
       &.selected {
         background-color: $selected-bg-col;
       }
-    }
 
-    .attr-val {
-      color: $attr-val-col;
-      cursor: pointer;
-      &.selected > div {
-        background-color: $selected-bg-col;
-      }
-    }
-
-    .tag-val {
-      color: $text-col;
-    }
-
-    table {
+      th {
         border: 1px solid $array-col;
-        .array-index {
-            width: 3em;
-            min-width: 3em;
-            cursor: pointer;
-        }
-
-        tr {
-            &.selected {
-              background-color: $selected-bg-col;
-            }
-
-            th {
-                border: 1px solid $array-col;
-                background: $array-col;
-                font-weight: normal;
-                white-space: nowrap;
-            }
-            td {
-                vertical-align: top;
-                border: 1px solid $array-col;
-                padding: 0;
-
-                &.empty-cell {
-                  fa-icon {
-                    color: grey;
-                    margin: .3rem 0 0 .3rem;
-                    display: block;
-                  }
-                }
-            }
-            td:first-child {
-              color: $tag-col;
-            }
-
-        }
-    }
-
-    .btn-sm {
-        line-height: 1;
+        background: $array-col;
+        font-weight: normal;
+        white-space: nowrap;
+      }
+      td {
+        vertical-align: top;
+        border: 1px solid $array-col;
         padding: 0;
 
-        fa-icon {
-          color: white;
-          margin: 0.3rem;
+        &.empty-cell {
+          fa-icon {
+            color: grey;
+            margin: 0.3rem 0 0 0.3rem;
+            display: block;
+          }
         }
+      }
+      td:first-child {
+        color: $tag-col;
+      }
     }
+  }
+
+  .btn-sm {
+    line-height: 1;
+    padding: 0;
+
+    fa-icon {
+      color: white;
+      margin: 0.3rem;
+    }
+  }
 }

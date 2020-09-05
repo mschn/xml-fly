@@ -1,4 +1,7 @@
 import { Attr } from './attr';
+import { Highlights } from './highlights';
+import { Selection } from './selection';
+import { AbstractNodeComponent } from '../xml-view/abstract-node/abstract-node.component';
 
 export class Elt {
   /** parent in XML tree */
@@ -20,20 +23,28 @@ export class Elt {
   /** True if node should be collapsed */
   collapsed: boolean;
   /** Reference to the view component displaying this node */
-  viewRef: any;
+  viewRef: AbstractNodeComponent;
+  highlights: Highlights = new Highlights();
+  selection: Selection;
+  selected = false;
 
   getPath(): string[] {
     const paths = [];
     let curNode: Elt = this;
     while (curNode.parent) {
-      paths.push(curNode.name);
+      let pathElt = curNode.name;
+      if (curNode.parent.children[curNode.name].length > 1) {
+        const idx = curNode.parent.children[curNode.name].indexOf(curNode);
+        pathElt = (`${pathElt}[${idx}]`);
+      }
+      paths.push(pathElt);
       curNode = curNode.parent;
     }
     return paths.reverse();
   }
 
   expandParent() {
-    if (this.parent) {
+    if (this.parent && this.parent.collapsed) {
       this.parent.collapsed = false;
       this.parent.expandParent();
     }
@@ -49,6 +60,7 @@ export class Elt {
         child.toggleAll(state);
       });
     });
+    this.viewRef.cdr.detectChanges();
   }
 
   toXmlString(): string {
@@ -60,7 +72,17 @@ export class Elt {
         str.push(` ${attr.name}="${val}"`);
       });
     }
-    str.push(`>`)
+    if (this.highlights?.node) {
+      str.push(` __HL="${this.encodeXml(this.highlights.node)}"`);
+    }
+    const attrHl = Object.entries(this.highlights.attrs);
+    if (attrHl.length > 0) {
+      attrHl.forEach(hl => {
+        str.push(` __HL_${hl[0]}="${this.encodeXml(hl[1])}"`);
+      });
+    }
+
+    str.push(`>`);
 
     if (this.children) {
       Object.values(this.children).forEach(chArr => {
@@ -71,7 +93,7 @@ export class Elt {
       str.push(this.encodeXml(this.text));
     }
 
-    str.push(`</${this.name}>`)
+    str.push(`</${this.name}>`);
     return str.join('');
   }
 

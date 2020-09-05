@@ -30,7 +30,7 @@
       <tbody>
         <tr
           *ngFor="let node of nodes; let i = index"
-          [class.selected]="selection && selection.element === node && selection.type === 'Node'"
+          [class.selected]="node.selected && node.selection.element === node && node.selection.type === 'Node'"
           (click)="onSubNodeClick($event, node)"
         >
           <td class="p-1 array-index">{{ i }}.</td>
@@ -42,9 +42,16 @@
               <td
                 *ngIf="attr"
                 class="attr-val"
-                [class.selected]="selected && selectedAttr === attr"
+                [class.selected]="node.selected && node.selection.attr === attr"
+                [class.highlighted]="hasAttrHighlight(node, attr)"
                 (click)="onAttrClick($event, attr, node)"
               >
+
+              <div *ngIf="hasAttrHighlight(node, attr)" class="highlight-text">
+                <fa-icon class="align-top mt-2 mr-2" size="lg"  [icon]="icons.faHighlighter"></fa-icon>
+                <div class="d-inline-block input" role="textbox" contenteditable [textContent]="node.highlights.attrs[attr.name]" (focusout)="highlightFocusAttrOut($event, node, attr)"></div>
+              </div>
+
                 <div class="p-1">
                   {{ attr.value }}
                 </div>

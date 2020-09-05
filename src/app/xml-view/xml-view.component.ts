@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Elt } from '../data/elt';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { XmlFile } from '../data/xml-file';
 
 @Component({

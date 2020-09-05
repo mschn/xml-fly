@@ -29,7 +29,7 @@ describe('ArrayComponent', () => {
     await service.parseFile(uneven_xml).then((elt) => {
       component.nodes = Object.values(elt.children)[0];
     });
-
+    component.cdr.detectChanges();
     fixture.detectChanges();
 
     const arr = document.querySelectorAll('[data-array=entry]');
@@ -81,6 +81,7 @@ describe('ArrayComponent', () => {
     await service.parseFile(uneven_xml2).then((elt) => {
       component.nodes = Object.values(elt.children)[0];
     });
+    component.cdr.detectChanges();
     fixture.detectChanges();
 
     const arr = document.querySelectorAll('[data-array=Actor]');
