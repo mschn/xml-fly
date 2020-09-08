@@ -50,20 +50,28 @@ export class SelectionService {
   selectNode(node: Elt, source: AbstractNodeComponent): void {
     const sel = this.selectedFile.selection;
     sel.deselect();
-    sel.selectNode(node);
-    node.selected = true;
-    node.selection = sel;
-    node.viewRef = source;
-    node.expandParent();
-    source.scrollIfNeeded();
+    if (sel.element === node && !sel.attr) {
+      this.clearSelection();
+    } else {
+      sel.selectNode(node);
+      node.selected = true;
+      node.selection = sel;
+      node.viewRef = source;
+      node.expandParent();
+      source.scrollIfNeeded();
+    }
   }
 
   selectAttr(attr: Attr, node: Elt, source: AbstractNodeComponent): void {
     const sel = this.selectedFile.selection;
     sel.deselect();
-    sel.selectAttr(attr, node);
-    node.selected = true;
-    node.selection = sel;
+    if (sel.attr === attr) {
+      this.clearSelection();
+    } else {
+      sel.selectAttr(attr, node);
+      node.selected = true;
+      node.selection = sel;
+    }
   }
 
   clearSelection() {
