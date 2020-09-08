@@ -34,7 +34,7 @@ export class ToolbarComponent {
   }
 
   showSearch(enable: boolean) {
-    this.dataService.setSearchVisible(enable);
+    this.selectionService.showSearch();
   }
 
   goHome() {

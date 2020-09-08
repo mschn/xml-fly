@@ -1,18 +1,13 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { HotkeyModule } from 'angular2-hotkeys';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HotkeyModule.forRoot()
-      ],
-      declarations: [
-        AppComponent, ToolbarComponent
-      ],
-      providers: []
+      imports: [],
+      declarations: [AppComponent, ToolbarComponent],
+      providers: [],
     }).compileComponents();
   }));
 
@@ -21,5 +16,4 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
-
 });

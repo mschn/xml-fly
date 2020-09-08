@@ -86,6 +86,10 @@
         border-right: 0;
       }
 
+      & .equals {
+        background: $selected-bg-col;
+      }
+
       & .attr-value {
         background: $selected-bg-col;
         border-radius: 0 5px 5px 0;

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { XmlFile } from '../data/xml-file';
 import { SearchResult } from '../data/search-result';
-import { Highlights } from '../data/highlights';
 
 @Injectable({
   providedIn: 'root',
@@ -10,31 +9,13 @@ import { Highlights } from '../data/highlights';
 export class DataService {
   private _files = new BehaviorSubject<XmlFile[]>([]);
   private _selectedFile = new BehaviorSubject<XmlFile>(null);
-  private _searchVisible = new BehaviorSubject<boolean>(false);
-  private _searchText: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  private _searchResults: BehaviorSubject<SearchResult[]> = new BehaviorSubject<SearchResult[]>(null);
   private _isLoading = new BehaviorSubject<boolean>(false);
 
   readonly files = this._files.asObservable();
   readonly selectedFile = this._selectedFile.asObservable();
-  readonly searchVisible = this._searchVisible.asObservable();
-  readonly searchText = this._searchText.asObservable();
-  readonly searchResults = this._searchResults.asObservable();
   readonly isLoading = this._isLoading.asObservable();
 
   constructor() {}
-
-  setSearchVisible(visible: boolean) {
-    this._searchVisible.next(visible);
-  }
-
-  setSearchText(text: string) {
-    this._searchText.next(text);
-  }
-
-  setSearchResults(res: SearchResult[]) {
-    this._searchResults.next(res);
-  }
 
   setIsLoading(loading: boolean) {
     this._isLoading.next(loading);

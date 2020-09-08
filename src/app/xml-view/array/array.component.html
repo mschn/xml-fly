@@ -9,7 +9,11 @@
       </button>
     </ng-container>
 
-    <span class="tagname p-1"> <span class="tag">&lt;</span>{{ getNodeName() }}<span class="tag">&gt;</span> </span>
+    <span class="tagname p-1">
+      <span class="tag">&lt;</span>
+      <span [innerHTML]="getValue(getNodeName())"></span>
+      <span class="tag">&gt;</span>
+    </span>
     <span class="py-1 array-len"> ({{ getNodeLen() }}) </span>
   </div>
 
@@ -18,11 +22,18 @@
       <thead *ngIf="!isText()">
         <tr>
           <th class="p-1 array-index"></th>
-          <th class="p-1 attr-name" *ngFor="let attr of getAttributeNames()" (click)="onNodeClick($event)">
-            {{ attr }}
-          </th>
+          <th
+            class="p-1 attr-name"
+            *ngFor="let attr of getAttributeNames()"
+            (click)="onNodeClick($event)"
+            [innerHTML]="getValue(attr)"
+          ></th>
           <ng-container *ngFor="let childNode of getChildrenNames()">
-            <th class="p-1 tag-name"><span class="tag">&lt;</span>{{ childNode }}<span class="tag">&gt;</span></th>
+            <th class="p-1 tag-name">
+              <span class="tag">&lt;</span>
+              <span [innerHTML]="getValue(childNode)"></span>
+              <span class="tag">&gt;</span>
+            </th>
           </ng-container>
         </tr>
       </thead>
@@ -34,9 +45,7 @@
           (click)="onSubNodeClick($event, node)"
         >
           <td class="p-1 array-index">{{ i }}.</td>
-          <td class="p-1 tag-val" *ngIf="node.isText">
-            {{ node.shortText }}
-          </td>
+          <td class="p-1 tag-val" *ngIf="node.isText" [innerHTML]="getTextValue(node.shortText, node)"></td>
           <ng-container *ngIf="!node.isText">
             <ng-container *ngFor="let attr of getAttrList(node)">
               <td
@@ -46,15 +55,18 @@
                 [class.highlighted]="hasAttrHighlight(node, attr)"
                 (click)="onAttrClick($event, attr, node)"
               >
-
-              <div *ngIf="hasAttrHighlight(node, attr)" class="highlight-text">
-                <fa-icon class="align-top mt-2 mr-2" size="lg"  [icon]="icons.faHighlighter"></fa-icon>
-                <div class="d-inline-block input" role="textbox" contenteditable [textContent]="node.highlights.attrs[attr.name]" (focusout)="highlightFocusAttrOut($event, node, attr)"></div>
-              </div>
-
-                <div class="p-1">
-                  {{ attr.value }}
+                <div *ngIf="hasAttrHighlight(node, attr)" class="highlight-text">
+                  <fa-icon class="align-top mt-2 mr-2" size="lg" [icon]="icons.faHighlighter"></fa-icon>
+                  <div
+                    class="d-inline-block input"
+                    role="textbox"
+                    contenteditable
+                    [textContent]="node.highlights.attrs[attr.name]"
+                    (focusout)="highlightFocusAttrOut($event, node, attr)"
+                  ></div>
                 </div>
+
+                <div class="p-1" [innerHTML]="getTextValue(attr.value, node)"></div>
               </td>
               <td *ngIf="!attr" class="empty-cell">
                 <fa-icon [icon]="icons.faTimesCircle"></fa-icon>

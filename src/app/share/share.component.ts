@@ -96,6 +96,6 @@ export class ShareComponent implements OnInit, OnDestroy {
   }
 
   copyUrl() {
-    navigator.clipboard.writeText(this.encodedUrl).then((_) => {});
+    navigator?.clipboard.writeText(this.encodedUrl).then((_) => {});
   }
 }

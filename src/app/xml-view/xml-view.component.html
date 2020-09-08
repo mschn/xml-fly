@@ -1,5 +1,5 @@
 <div class="d-flex flex-column h-100">
+  <app-search *ngIf="file.searchVisible" [file]="file"></app-search>
   <app-node class="flex-grow-1 overflow-auto pr-2" [node]="file.tree"></app-node>
   <app-selection [node]="file"></app-selection>
 </div>
-
