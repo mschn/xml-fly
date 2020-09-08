@@ -1,11 +1,15 @@
 @import '../colors.scss';
 
 .main {
-    background-color: #2d2d2d;
-    color: $text-col;
+  position: absolute;
+  right: 2rem;
+  background-color: $left-bar-bg-col;
+  border: 1px solid $left-bar-border-col;
+  border-top: 0;
+  border-radius: 0 0 5px 5px;
 
-    .search-input {
-        flex-grow: 0;
-        width: 10em;
-    }
+  .search-input {
+    flex-grow: 0;
+    width: 10em;
+  }
 }

@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { DataService } from './data.service';
 import { XmlService } from './xml.service';
-import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { XmlFile } from '../data/xml-file';
 import { SelectionService } from './selection.service';
 
@@ -12,25 +11,8 @@ export class FileService {
   constructor(
     private readonly dataService: DataService,
     private readonly selectionService: SelectionService,
-    private readonly hotkeysService: HotkeysService,
     private readonly xmlService: XmlService
-  ) {
-    this.hotkeysService.add(
-      new Hotkey('ctrl+o', (event: KeyboardEvent): boolean => {
-        const btn = document.querySelector('#open-file') as HTMLElement;
-        btn.click();
-        event.preventDefault();
-        return false;
-      })
-    );
-    this.hotkeysService.add(
-      new Hotkey('ctrl+f', (event: KeyboardEvent): boolean => {
-        this.dataService.setSearchVisible(true);
-        event.preventDefault();
-        return false;
-      })
-    );
-  }
+  ) {}
 
   openFileInput(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -77,7 +59,7 @@ export class FileService {
         const xmlFile = new XmlFile();
         xmlFile.name = file.name;
         xmlFile.xmlFileContent = reader.result.toString();
-        this.doOpen(xmlFile).then(_ => resolve());
+        this.doOpen(xmlFile).then((_) => resolve());
       };
     });
   }

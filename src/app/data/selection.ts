@@ -1,5 +1,5 @@
 import { Elt } from './elt';
-import { AbstractNodeComponent } from '../xml-view/abstract-node/abstract-node.component';
+import { Attr } from './attr';
 
 export class Selection {
   type: 'Node' | 'Attr';

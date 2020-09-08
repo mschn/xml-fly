@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { DataService } from '../services/data.service';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 import { SearchService } from '../services/search.service';
-import { SearchResult } from '../data/search-result';
 import { SelectionService } from '../services/selection.service';
+import { XmlFile } from '../data/xml-file';
+import { faSearch, faChevronRight, faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search',
@@ -11,56 +10,52 @@ import { SelectionService } from '../services/selection.service';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
-  @ViewChild('searchBox') searchBox: ElementRef;
+  @Input() file: XmlFile;
+  @ViewChild('searchBox', { static: true }) searchBox: ElementRef;
 
-  searchVisible: boolean;
-  searchText = '';
-
-  searchResults: SearchResult[];
   currentResult: number;
+  searchDone = false;
 
-  subs: Subscription[] = [];
+  icons = { faSearch, faChevronRight, faChevronLeft, faTimes };
 
-  constructor(
-    private readonly data: DataService,
-    private readonly selectionService: SelectionService,
-    private readonly searchService: SearchService
-  ) {}
+  constructor(private readonly selectionService: SelectionService, private readonly searchService: SearchService) {}
 
   ngOnInit() {
-    this.subs.push(
-      this.data.searchVisible.subscribe((searchVisible) => {
-        this.searchVisible = searchVisible;
-        if (searchVisible) {
-          setTimeout((_) => this.focusSearch());
-        }
-      })
-    );
-    this.subs.push(
-      this.data.searchResults.subscribe((res) => {
-        this.currentResult = 0;
-        this.searchResults = res;
-        if (res && res.length > 0) {
-          this.gotoResult();
-        }
-      })
-    );
+    this.focusSearch();
   }
 
-  ngOnDestroy() {
-    this.subs.forEach((sub) => sub.unsubscribe());
+  ngOnDestroy() {}
+
+  onEnter(event: KeyboardEvent) {
+    if (event.key !== 'Enter') {
+      return;
+    }
+    if (this.searchDone) {
+      if (event.shiftKey) {
+        this.prevResult();
+      } else {
+        this.nextResult();
+      }
+    } else {
+      this.doSearch();
+    }
   }
 
   doSearch() {
-    if (this.searchText && this.searchText.trim().length > 0) {
-      this.searchService.doSearch(this.searchText);
+    if (this.file.searchText && this.file.searchText.trim().length > 0) {
+      this.clearResults();
+      this.searchService.doSearch(this.file.searchText);
+      this.currentResult = 0;
+      this.searchDone = true;
+      this.refreshResults();
+      this.gotoResult();
     }
   }
 
   nextResult() {
-    if (this.searchResults && this.searchResults.length > 0) {
+    if (this.file.searchResults && this.file.searchResults.length > 0) {
       this.currentResult++;
-      if (this.currentResult >= this.searchResults.length) {
+      if (this.currentResult >= this.file.searchResults.length) {
         this.currentResult = 0;
       }
       this.gotoResult();
@@ -68,18 +63,28 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   prevResult() {
-    if (this.searchResults && this.searchResults.length > 0) {
+    if (this.file.searchResults && this.file.searchResults.length > 0) {
       this.currentResult--;
       if (this.currentResult < 0) {
-        this.currentResult = this.searchResults.length - 1;
+        this.currentResult = this.file.searchResults.length - 1;
       }
       this.gotoResult();
     }
   }
 
   gotoResult() {
-    const elt = this.searchResults[this.currentResult].elt;
-    this.selectionService.selectNode(elt, elt.viewRef);
+    if (this.file.searchResults.length === 0) {
+      return;
+    }
+    this.selectionService.clearSelection();
+    const elt = this.file.searchResults[this.currentResult].elt;
+    const attr = this.file.searchResults[this.currentResult].attr;
+    if (attr) {
+      this.selectionService.selectAttr(attr, elt, elt.viewRef);
+    } else {
+      this.selectionService.selectNode(elt, elt.viewRef);
+    }
+    this.refreshNode();
   }
 
   focusSearch() {
@@ -87,6 +92,27 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.data.setSearchVisible(false);
+    this.clearResults();
+    this.searchDone = false;
+    this.file.searchResults = [];
+    this.file.searchVisible = false;
+  }
+
+  refreshNode() {
+    this.file.searchResults[this.currentResult].elt.viewRef.cdr.markForCheck();
+  }
+
+  refreshResults() {
+    this.file.searchResults.forEach((res) => res.elt.viewRef.cdr.markForCheck());
+  }
+
+  clearResults() {
+    if (this.file?.searchResults?.length) {
+      this.file.searchResults.forEach((res) => {
+        res.searchText = null;
+        res.elt.viewRef.cdr.markForCheck();
+        res.elt.searchResults = [];
+      });
+    }
   }
 }

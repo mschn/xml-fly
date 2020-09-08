@@ -11,23 +11,23 @@ import { Subscription } from 'rxjs';
   selector: 'app-node',
   templateUrl: './node.component.html',
   styleUrls: ['./node.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NodeComponent extends AbstractNodeComponent implements OnInit, OnDestroy {
-
   @Input() node: Elt;
   @Input() noTagName = false;
   @Input() arrayInParent = false;
-
-  searchText: string;
 
   icons = { faPlusSquare, faMinusSquare, faHighlighter };
 
   private subscriptions = new Subscription();
 
-  constructor(readonly dataService: DataService, readonly selectionService: SelectionService, readonly cdr: ChangeDetectorRef) {
+  constructor(
+    readonly dataService: DataService,
+    readonly selectionService: SelectionService,
+    readonly cdr: ChangeDetectorRef
+  ) {
     super(dataService, selectionService, cdr);
-    this.subscriptions.add(this.dataService.searchText.subscribe((searchText) => this.searchText = searchText));
   }
 
   ngOnInit() {
@@ -57,10 +57,16 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit, OnDe
 
   show(event: Event) {
     this.node.collapsed = false;
+    this.cdr.markForCheck();
+    event.stopPropagation();
+    return false;
   }
 
   hide(event: Event) {
     this.node.collapsed = true;
+    this.cdr.markForCheck();
+    event.stopPropagation();
+    return false;
   }
 
   onNodeClick(event: Event): void {
@@ -71,6 +77,6 @@ export class NodeComponent extends AbstractNodeComponent implements OnInit, OnDe
   }
 
   getValue(value: string): string {
-    return value.replace(this.searchText, `<span class="search-result">${this.searchText}</span>`);
+    return this.getTextValue(value, this.node);
   }
 }

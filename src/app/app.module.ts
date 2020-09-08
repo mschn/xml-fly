@@ -7,7 +7,6 @@ import { NodeComponent } from './xml-view/node/node.component';
 import { ArrayComponent } from './xml-view/array/array.component';
 import { AbstractNodeComponent } from './xml-view/abstract-node/abstract-node.component';
 import { SelectionComponent } from './selection/selection.component';
-import { HotkeyModule } from 'angular2-hotkeys';
 import { FormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -28,7 +27,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     StartComponent,
     ShareComponent,
   ],
-  imports: [BrowserModule, NgbModule, FormsModule, HotkeyModule.forRoot(), FontAwesomeModule],
+  imports: [BrowserModule, NgbModule, FormsModule, FontAwesomeModule],
   providers: [],
   bootstrap: [AppComponent],
 })

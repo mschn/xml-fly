@@ -2,6 +2,7 @@ import { Attr } from './attr';
 import { Highlights } from './highlights';
 import { Selection } from './selection';
 import { AbstractNodeComponent } from '../xml-view/abstract-node/abstract-node.component';
+import { SearchResult } from './search-result';
 
 export class Elt {
   /** parent in XML tree */
@@ -27,6 +28,7 @@ export class Elt {
   highlights: Highlights = new Highlights();
   selection: Selection;
   selected = false;
+  searchResults: SearchResult[] = [];
 
   getPath(): string[] {
     const paths = [];
@@ -35,7 +37,7 @@ export class Elt {
       let pathElt = curNode.name;
       if (curNode.parent.children[curNode.name].length > 1) {
         const idx = curNode.parent.children[curNode.name].indexOf(curNode);
-        pathElt = (`${pathElt}[${idx}]`);
+        pathElt = `${pathElt}[${idx}]`;
       }
       paths.push(pathElt);
       curNode = curNode.parent;
@@ -44,14 +46,26 @@ export class Elt {
   }
 
   expandParent() {
-    if (this.parent && this.parent.collapsed) {
-      this.parent.collapsed = false;
+    if (this.parent) {
+      this.parent.expand();
+      if (this.parent.children[this.name].length > 1) {
+        this.parent.children[this.name][0].expand();
+      }
       this.parent.expandParent();
+    }
+  }
+
+  expand() {
+    if (this.collapsed !== false) {
+      this.collapsed = false;
+      this?.viewRef?.cdr.detectChanges();
     }
   }
 
   toggleAll(state: boolean) {
     this.collapsed = state;
+    this.viewRef.cdr.detectChanges();
+
     if (!this.children) {
       return;
     }
@@ -60,14 +74,13 @@ export class Elt {
         child.toggleAll(state);
       });
     });
-    this.viewRef.cdr.detectChanges();
   }
 
   toXmlString(): string {
     const str: string[] = [];
     str.push(`<${this.name}`);
     if (this.attributes) {
-      Object.values(this.attributes).forEach(attr => {
+      Object.values(this.attributes).forEach((attr) => {
         const val = this.encodeXml(attr.value);
         str.push(` ${attr.name}="${val}"`);
       });
@@ -77,7 +90,7 @@ export class Elt {
     }
     const attrHl = Object.entries(this.highlights.attrs);
     if (attrHl.length > 0) {
-      attrHl.forEach(hl => {
+      attrHl.forEach((hl) => {
         str.push(` __HL_${hl[0]}="${this.encodeXml(hl[1])}"`);
       });
     }
@@ -85,8 +98,8 @@ export class Elt {
     str.push(`>`);
 
     if (this.children) {
-      Object.values(this.children).forEach(chArr => {
-        chArr.forEach(child => str.push(child.toXmlString()));
+      Object.values(this.children).forEach((chArr) => {
+        chArr.forEach((child) => str.push(child.toXmlString()));
       });
     }
     if (this.text) {
@@ -98,7 +111,8 @@ export class Elt {
   }
 
   private encodeXml(str: string): string {
-    return str.replace(/&/g, '&amp;')
+    return str
+      .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')

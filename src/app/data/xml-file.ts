@@ -1,5 +1,6 @@
 import { Elt } from './elt';
 import { Selection } from './selection';
+import { SearchResult } from './search-result';
 
 export class XmlFile {
   name: string;
@@ -8,12 +9,7 @@ export class XmlFile {
   selection: Selection = new Selection();
   tree: Elt;
 
-  select() {
-    this.selected = true;
-  }
-
-  deselect() {
-    this.selected = false;
-  }
-
+  searchVisible = false;
+  searchText: string;
+  searchResults: SearchResult[];
 }

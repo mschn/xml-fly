@@ -10,7 +10,7 @@ import { faPlusSquare, faMinusSquare, faSlash, faTimesCircle, faHighlighter } fr
   selector: 'app-array',
   templateUrl: './array.component.html',
   styleUrls: ['./array.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArrayComponent extends AbstractNodeComponent implements OnInit {
   @Input() nodes: Elt[];
@@ -82,10 +82,12 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit {
   }
 
   show(event: Event) {
+    // this.nodes.forEach(node => node.collapsed = false);
     this.nodes[0].collapsed = false;
   }
 
   hide(event: Event) {
+    // this.nodes.forEach(node => node.collapsed = true);
     this.nodes[0].collapsed = true;
   }
 
@@ -116,5 +118,9 @@ export class ArrayComponent extends AbstractNodeComponent implements OnInit {
         return arr;
       }
     }
+  }
+
+  getValue(value: string): string {
+    return this.getTextValue(value, this.nodes[0]);
   }
 }

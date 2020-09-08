@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/co
 import { DataService } from '../../services/data.service';
 import { Elt } from '../../data/elt';
 import { SelectionService } from '../../services/selection.service';
+import scrollIntoView from 'scroll-into-view-if-needed';
 
 @Component({
   selector: 'app-abstract-node',
@@ -24,16 +25,15 @@ export class AbstractNodeComponent {
   }
 
   scrollIfNeeded() {
-    // TODO dont scroll when already in view
-
-    const elt = this.nodeRef.nativeElement;
-    const rect = elt.getBoundingClientRect();
-    if (rect.bottom > window.innerHeight) {
-      elt.scrollIntoView();
+    let elt = this.nodeRef.nativeElement;
+    const header = elt.querySelector('.header .tagname');
+    const searchRes = elt.querySelector('.search-result');
+    if (searchRes) {
+      elt = searchRes;
+    } else if (header) {
+      elt = header;
     }
-    if (rect.top < 0) {
-      elt.scrollIntoView();
-    }
+    scrollIntoView(elt, { behavior: 'smooth', scrollMode: 'if-needed' });
   }
 
   hasNodeHighlight(node: Elt): boolean {
@@ -50,5 +50,15 @@ export class AbstractNodeComponent {
 
   highlightFocusAttrOut(event, node: Elt, attr: Attr) {
     node.highlights.attrs[attr.name] = event.target.innerText;
+  }
+
+  getTextValue(value: string, node: Elt): string {
+    if (node.searchResults.length > 0) {
+      const searchText = node.searchResults[0].searchText;
+      const re = new RegExp(searchText, 'gi');
+      return value.replace(re, `<span class="search-result">${searchText}</span>`);
+    } else {
+      return value;
+    }
   }
 }

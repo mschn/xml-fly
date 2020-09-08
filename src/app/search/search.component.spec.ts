@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchComponent } from './search.component';
+import { XmlFile } from '../data/xml-file';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -16,6 +17,7 @@ describe('SearchComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
+    component.file = new XmlFile();
     fixture.detectChanges();
   });
 

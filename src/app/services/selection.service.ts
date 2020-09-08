@@ -3,6 +3,7 @@ import { DataService } from './data.service';
 import { XmlFile } from '../data/xml-file';
 import { Elt } from '../data/elt';
 import { AbstractNodeComponent } from '../xml-view/abstract-node/abstract-node.component';
+import { Attr } from '../data/attr';
 
 @Injectable({
   providedIn: 'root',
@@ -18,15 +19,15 @@ export class SelectionService {
 
   selectFile(file: XmlFile): void {
     if (this.selectedFile) {
-      this.selectedFile.deselect();
+      this.selectedFile.selected = false;
     }
-    file.select();
+    file.selected = true;
     this.dataService.setSelectedFile(file);
   }
 
   deselectFile() {
     if (this.selectedFile) {
-      this.selectedFile.deselect();
+      this.selectedFile.selected = false;
     }
     this.dataService.setSelectedFile(null);
   }
@@ -49,35 +50,45 @@ export class SelectionService {
 
   selectNode(node: Elt, source: AbstractNodeComponent): void {
     const sel = this.selectedFile.selection;
-    sel.deselect();
     if (sel.element === node && !sel.attr) {
       this.clearSelection();
-    } else {
-      sel.selectNode(node);
-      node.selected = true;
-      node.selection = sel;
-      node.viewRef = source;
-      node.expandParent();
-      source.scrollIfNeeded();
+      return;
     }
+    this.clearSelection();
+    sel.selectNode(node);
+    node.selected = true;
+    node.selection = sel;
+    node.viewRef = source;
+    node.expand();
+    node.expandParent();
+    source.scrollIfNeeded();
+    this.refreshNode();
   }
 
   selectAttr(attr: Attr, node: Elt, source: AbstractNodeComponent): void {
     const sel = this.selectedFile.selection;
-    sel.deselect();
     if (sel.attr === attr) {
       this.clearSelection();
-    } else {
-      sel.selectAttr(attr, node);
-      node.selected = true;
-      node.selection = sel;
+      return;
     }
+    this.clearSelection();
+    sel.selectAttr(attr, node);
+    node.selected = true;
+    node.selection = sel;
+    node.viewRef = source;
+    node.expand();
+    node.expandParent();
+    source.scrollIfNeeded();
   }
 
   clearSelection() {
     const sel = this.selectedFile.selection;
+    const ref = this.selectedFile.selection.element?.viewRef;
     sel.deselect();
     sel.clear();
+    if (ref) {
+      ref.cdr.markForCheck();
+    }
   }
 
   highlightSelection() {
@@ -98,8 +109,17 @@ export class SelectionService {
       } else {
         hl.attrs[sel.attr.name] = null;
       }
-
     }
-    this.selectedFile.selection.element.viewRef.cdr.markForCheck();
+    this.refreshNode();
+  }
+
+  showSearch(state = true) {
+    if (this.selectedFile) {
+      this.selectedFile.searchVisible = state;
+    }
+  }
+
+  refreshNode() {
+    this.selectedFile?.selection?.element?.viewRef.cdr.markForCheck();
   }
 }

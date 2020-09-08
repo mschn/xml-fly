@@ -12,7 +12,13 @@
 >
   <div *ngIf="hasNodeHighlight(node)" class="highlight-text">
     <fa-icon class="align-top mt-2 mr-2" size="lg" [icon]="icons.faHighlighter"></fa-icon>
-    <div class="d-inline-block input" role="textbox" contenteditable [textContent]="node.highlights.node" (focusout)="highlightFocusOut($event, node)"></div>
+    <div
+      class="d-inline-block input"
+      role="textbox"
+      contenteditable
+      [textContent]="node.highlights.node"
+      (focusout)="highlightFocusOut($event, node)"
+    ></div>
   </div>
   <div class="header d-flex flex-row">
     <!-- expand / collapse button -->
@@ -29,9 +35,7 @@
     <div *ngIf="!noTagName" class="py-1 tagname">
       <span class="tag">&lt;</span><span [innerHTML]="getValue(node.name)"></span><span class="tag">&gt;</span>
     </div>
-    <div *ngIf="node.isText" class="value p-1">
-      {{ node.shortText }}
-    </div>
+    <div *ngIf="node.isText" class="value p-1" [innerHTML]="getValue(node.shortText)"></div>
   </div>
 
   <!-- attributes -->
@@ -42,19 +46,22 @@
       (click)="onAttrClick($event, attr, node)"
       [class.highlighted]="hasAttrHighlight(node, attr)"
     >
-    <div *ngIf="hasAttrHighlight(node, attr)" class="highlight-text">
-      <fa-icon class="align-top mt-2 mr-2" size="lg"  [icon]="icons.faHighlighter"></fa-icon>
-      <div class="d-inline-block input" role="textbox" contenteditable [textContent]="node.highlights.attrs[attr.name]" (focusout)="highlightFocusAttrOut($event, node, attr)"></div>
-    </div>
-
-    <div class="d-flex flex-row">
-      <div class="attr-name p-1 indent-node">{{ attr.name }} <span class="equals">=</span></div>
-      <div class="attr-value p-1 pl-0 flex-fill">
-        {{ attr.value }}
+      <div *ngIf="hasAttrHighlight(node, attr)" class="highlight-text">
+        <fa-icon class="align-top mt-2 mr-2" size="lg" [icon]="icons.faHighlighter"></fa-icon>
+        <div
+          class="d-inline-block input"
+          role="textbox"
+          contenteditable
+          [textContent]="node.highlights.attrs[attr.name]"
+          (focusout)="highlightFocusAttrOut($event, node, attr)"
+        ></div>
       </div>
 
-    </div>
-
+      <div class="d-flex flex-row">
+        <div class="attr-name p-1 indent-node" [innerHTML]="getValue(attr.name)"></div>
+        <div class="equals p-1">=</div>
+        <div class="attr-value p-1 pl-0 flex-fill" [innerHTML]="getValue(attr.value)"></div>
+      </div>
     </div>
   </div>
 

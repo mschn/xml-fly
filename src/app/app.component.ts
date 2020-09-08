@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { DataService } from './services/data.service';
 import { FileService } from './services/file.service';
 import { XmlFile } from './data/xml-file';
 import { SelectionService } from './services/selection.service';
 import { EncodeService } from './services/encode.service';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import * as mousetrap from 'mousetrap';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,13 +27,27 @@ export class AppComponent implements OnInit {
     private readonly dataService: DataService,
     private readonly selectionService: SelectionService,
     private readonly fileService: FileService,
-    private readonly encodeService: EncodeService
-  ) { }
+    private readonly encodeService: EncodeService,
+    private readonly zone: NgZone
+  ) {}
 
   ngOnInit() {
     this.dataService.files.subscribe((files) => (this.files = files));
     this.dataService.isLoading.subscribe((loading) => (this.loading = loading));
     this.dataService.selectedFile.subscribe((selectedFile) => (this.selectedFile = selectedFile));
+
+    mousetrap.bind('ctrl+o', (e) => {
+      const btn = document.querySelector('#open-file') as HTMLElement;
+      btn.click();
+      e.preventDefault();
+      return false;
+    });
+
+    mousetrap.bind('ctrl+f', (e) => {
+      this.zone.run(() => this.selectionService.showSearch(true));
+      e.preventDefault();
+      return false;
+    });
 
     this.loadUrlFile();
   }

@@ -7,24 +7,24 @@
   </label>
 
   <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="share()" ngbTooltip="Share"
-    [disabled]="!selectedFile">
+    [disabled]="!selectedFile" [class.text-light]="selectedFile">
     <fa-icon [icon]="icons.faShareAlt" size="2x"></fa-icon>
   </button>
 
   <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="showSearch(true)" ngbTooltip="Search"
-    [disabled]="!selectedFile">
+    [disabled]="!selectedFile" [class.text-light]="selectedFile">
     <fa-icon [icon]="icons.faSearch" size="2x"></fa-icon>
   </button>
   <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="expandAll()" ngbTooltip="Expand all"
-    [disabled]="!selectedFile">
+    [disabled]="!selectedFile" [class.text-light]="selectedFile">
     <fa-icon [icon]="icons.faPlusSquare" size="2x"></fa-icon>
   </button>
   <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="collapseAll()" ngbTooltip="Collapse all"
-    [disabled]="!selectedFile">
+    [disabled]="!selectedFile" [class.text-light]="selectedFile">
     <fa-icon [icon]="icons.faMinusSquare" size="2x"></fa-icon>
   </button>
   <button class="btn btn-sm btn-outline-secondary border-0 mb-2" (click)="highlight()" ngbTooltip="Highlight selection"
-    [disabled]="!selectedFile">
+    [disabled]="!selectedFile" [class.text-light]="selectedFile">
     <fa-icon [icon]="icons.faHighlighter" size="2x"></fa-icon>
   </button>
 
