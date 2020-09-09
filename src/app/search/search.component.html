@@ -10,26 +10,26 @@
       placeholder="Search..."
       autofocus
     />
-    <button class="btn btn-outline-secondary border-0 text-light mr-1" type="button" (click)="doSearch()">
+    <button class="btn btn-outline-secondary border-0 text-light mr-1 btn-dosearch" type="button" (click)="doSearch()">
       <fa-icon [icon]="icons.faSearch"></fa-icon>
     </button>
 
     <div *ngIf="file?.searchResults?.length > 0" class="my-1">
-      <button class="btn btn-small btn-outline-secondary border-0 text-light mr-1" type="button" (click)="prevResult()">
+      <button class="btn btn-small btn-outline-secondary border-0 text-light mr-1 btn-prev" type="button" (click)="prevResult()">
         <fa-icon [icon]="icons.faChevronLeft"></fa-icon>
       </button>
-      <button class="btn btn-small btn-outline-secondary border-0 text-light" type="button" (click)="nextResult()">
+      <button class="btn btn-small btn-outline-secondary border-0 text-light btn-next" type="button" (click)="nextResult()">
         <fa-icon [icon]="icons.faChevronRight"></fa-icon>
       </button>
     </div>
 
-    <button class="btn btn-outline-secondary border-0 text-light m-1" (click)="close()">
+    <button class="btn btn-outline-secondary border-0 text-light m-1 btn-close" (click)="close()">
       <fa-icon [icon]="icons.faTimes"></fa-icon>
     </button>
   </div>
 
   <div *ngIf="searchDone && file?.searchResults?.length === 0" class="m-1 ml-2">Not found.</div>
   <div *ngIf="file?.searchResults?.length > 0" class="m-1">
-    <span class="ml-1"> Result {{ currentResult + 1 }} of {{ file.searchResults.length }} </span>
+    <span class="ml-1 search-results"> Result {{ currentResult + 1 }} of {{ file.searchResults.length }} </span>
   </div>
 </div>
